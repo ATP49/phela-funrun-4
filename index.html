@@ -2,55 +2,190 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phe-la Funrun 4th - โหลดระบบ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Phe-la Funrun 4th - เข้าสู่ระบบ</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        body { font-family: 'Prompt', sans-serif; text-align: center; padding: 40px 20px; background: #f0f4f8; color: #333; margin: 0; }
-        .box { background: white; padding: 30px 20px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 400px; margin: 0 auto; }
-        .spinner { margin: 20px auto; width: 45px; height: 45px; border: 4px solid #e2e8f0; border-top-color: #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
-        .highlight { color: #dc3545; font-weight: bold; font-size: 1.1rem; background: #ffe6e6; padding: 5px 10px; border-radius: 5px; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        /* จัดรูปแบบพื้นฐาน */
+        body { 
+            margin: 0; 
+            font-family: 'Prompt', sans-serif; 
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: #1e293b;
+        }
+        
+        /* กล่องการ์ดหลัก */
+        .card-container { 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            width: 90%; 
+            max-width: 420px; 
+            border-radius: 24px; 
+            padding: 35px 25px; 
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15); 
+            text-align: center; 
+            box-sizing: border-box; 
+            animation: slideUp 0.6s ease-out; 
+        }
+        
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        /* ส่วนหัว (Header) */
+        .header-icon { font-size: 3.5rem; color: #0d6efd; margin-bottom: 15px; }
+        h2 { margin: 0 0 8px; font-weight: 700; font-size: 1.6rem; color: #0f172a; }
+        p.subtitle { color: #64748b; margin: 0 0 25px; font-size: 0.95rem; }
+        
+        /* อนิเมชันโหลดหน้าเว็บ */
+        .loader-area { display: block; }
+        .spinner { 
+            width: 50px; height: 50px; 
+            border: 4px solid #f1f5f9; border-top-color: #0d6efd; 
+            border-radius: 50%; 
+            animation: spin 1s linear infinite; 
+            margin: 0 auto 20px; 
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* ดีไซน์คู่มือสำหรับ iOS (ซ่อนไว้ก่อน) */
+        .ios-guide { display: none; text-align: left; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .alert-box { 
+            background: #fff8f1; border-left: 4px solid #f59e0b; 
+            padding: 12px 15px; border-radius: 8px; 
+            font-size: 0.85rem; color: #b45309; margin-bottom: 20px; 
+        }
+        
+        .step-box { 
+            background: #f8fafc; border: 1px solid #e2e8f0; 
+            padding: 15px; border-radius: 16px; margin-bottom: 12px; 
+            display: flex; align-items: center; gap: 15px; 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+        }
+        
+        .step-icon { 
+            width: 45px; height: 45px; background: #eff6ff; 
+            color: #0d6efd; border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 1.3rem; flex-shrink: 0; 
+        }
+        
+        .step-text { font-size: 0.9rem; color: #475569; line-height: 1.4; }
+        .step-text b { color: #0f172a; font-size: 0.95rem; }
+        
+        /* ปุ่มกดก๊อปปี้ลิงก์ */
+        .btn-copy { 
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            width: 100%; padding: 16px; 
+            background: #0f172a; color: white; 
+            border: none; border-radius: 14px; 
+            font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 1rem; 
+            margin-top: 25px; cursor: pointer; transition: 0.2s; box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.3);
+        }
+        .btn-copy:active { transform: scale(0.97); }
     </style>
 </head>
 <body>
-    <div class="box" id="contentBox">
-        <div class="spinner"></div>
-        <h3 style="color:#0d6efd; margin-bottom: 5px;">Phe-la Funrun 4th</h3>
-        <p style="color: #64748b; font-size: 0.95rem;">กำลังตรวจสอบระบบและพาท่านเข้าสู่หน้าลงทะเบียน...</p>
+
+    <div class="card-container">
+        <div class="header-icon"><i class="fas fa-running"></i></div>
+        <h2>Phe-la Funrun 4th</h2>
+        <p class="subtitle" id="statusText">กำลังพาท่านเข้าสู่หน้าลงทะเบียน...</p>
+        
+        <div class="loader-area" id="loaderArea">
+            <div class="spinner"></div>
+            <div style="color: #0d6efd; font-weight: 600; font-size: 0.9rem;">กรุณารอสักครู่...</div>
+        </div>
+
+        <div class="ios-guide" id="iosGuideArea">
+            <div class="alert-box">
+                <i class="fas fa-exclamation-triangle me-1"></i> เพื่อการแนบหลักฐาน (สลิปโอนเงิน) ที่สมบูรณ์แบบ กรุณาเปิดผ่านเบราว์เซอร์ปกติครับ
+            </div>
+            
+            <div style="font-weight: 700; color: #0f172a; margin-bottom: 12px; font-size: 1.05rem;">วิธีเข้าสู่ระบบง่ายๆ (2 วินาที) :</div>
+            
+            <div class="step-box">
+                <div class="step-icon"><i class="fas fa-ellipsis-h"></i></div>
+                <div class="step-text">
+                    <b>ขั้นที่ 1</b><br>แตะที่สัญลักษณ์ <b>จุด 3 จุด (...)</b> หรือ <b>แชร์</b> ที่มุมขวาบน หรือ ล่างขวาของหน้าจอ
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-icon"><i class="fab fa-safari"></i></div>
+                <div class="step-text">
+                    <b>ขั้นที่ 2</b><br>เลือกเมนูคำว่า <b>"เปิดในเบราว์เซอร์"</b> หรือ <b>"เปิดใน Safari"</b>
+                </div>
+            </div>
+
+            <button class="btn-copy" id="copyBtn" onclick="copyMyLink()">
+                <i class="fas fa-link"></i> คัดลอกลิงก์ไปเปิดเอง
+            </button>
+        </div>
     </div>
 
     <script>
-        // ลิงก์ระบบ Google Apps Script ของคุณ
-        var gasLink = "https://script.google.com/macros/s/AKfycbwh68q2FlHQE2062tQLuNPMfUfCakFVTtMzk7SeMPZCvAS4iuPD2hQK3bkIyGORW421SQ/exec";
+        // ลิงก์ระบบ Google Apps Script จริงของคุณ
+        const gasLink = "https://script.google.com/macros/s/AKfycbwh68q2FlHQE2062tQLuNPMfUfCakFVTtMzk7SeMPZCvAS4iuPD2hQK3bkIyGORW421SQ/exec";
 
         // ตรวจสอบอุปกรณ์และเบราว์เซอร์
-        var ua = navigator.userAgent || navigator.vendor || window.opera;
-        var isFB = (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1) || (ua.indexOf("Instagram") > -1) || (ua.indexOf("Line") > -1);
-        var isAndroid = /android/i.test(ua);
-        var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+        const ua = navigator.userAgent || navigator.vendor || window.opera;
+        const isFB = (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1) || (ua.indexOf("Line") > -1);
+        const isAndroid = /android/i.test(ua);
+        const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
 
-        if (isFB) {
-            if (isAndroid) {
-                // สำหรับ Android: บังคับเตะออกไปเปิด Google Chrome อัตโนมัติ
-                var intentUrl = "intent://script.google.com/macros/s/AKfycbwh68q2FlHQE2062tQLuNPMfUfCakFVTtMzk7SeMPZCvAS4iuPD2hQK3bkIyGORW421SQ/exec#Intent;scheme=https;package=com.android.chrome;end";
-                window.location.replace(intentUrl);
-            } else if (isIOS) {
-                // สำหรับ iPhone: ระบบ Apple บล็อกการเด้ง ต้องแสดงวิธีให้ผู้ใช้กดเอง
-                document.getElementById('contentBox').innerHTML = `
-                    <h3 style="color:#dc3545; margin-top: 0;">⚠️ โปรดอ่านก่อนสมัคร</h3>
-                    <p style="font-size: 0.95rem;">ระบบของ Apple ไม่อนุญาตให้อัปโหลดสลิปผ่านแอป Facebook</p>
-                    <div style="text-align: left; background: #f8fafc; padding: 15px; border-radius: 10px; border: 1px solid #e2e8f0; margin-top: 20px;">
-                        <b>วิธีแก้ไข (ใช้เวลา 3 วินาที):</b><br><br>
-                        1. กดที่ <b>จุด 3 จุด (...)</b> หรือสัญลักษณ์ <b>แชร์</b> ที่มุมขวาบน/ล่างของหน้าจอ<br><br>
-                        2. เลือกเมนู <span class="highlight">เปิดในเบราว์เซอร์เริ่มต้น</span> หรือ <span class="highlight">เปิดใน Safari</span>
-                    </div>
-                `;
+        setTimeout(function() {
+            if (isFB) {
+                if (isAndroid) {
+                    // Android: บังคับเตะออก Chrome เนียนๆ
+                    const intentUrl = "intent://script.google.com/macros/s/AKfycbwh68q2FlHQE2062tQLuNPMfUfCakFVTtMzk7SeMPZCvAS4iuPD2hQK3bkIyGORW421SQ/exec#Intent;scheme=https;package=com.android.chrome;end";
+                    window.location.replace(intentUrl);
+                } else if (isIOS) {
+                    // iPhone/iPad: ซ่อนหน้าโหลด โชว์หน้าคู่มือสุดสวย
+                    document.getElementById('loaderArea').style.display = 'none';
+                    document.getElementById('statusText').innerText = "⚠️ ตรวจพบการเปิดผ่านแอปพลิเคชัน";
+                    document.getElementById('statusText').style.color = "#dc3545";
+                    document.getElementById('iosGuideArea').style.display = 'block';
+                } else {
+                    window.location.replace(gasLink);
+                }
             } else {
+                // เบราว์เซอร์ปกติ เข้าได้เลย
                 window.location.replace(gasLink);
             }
-        } else {
-            // ถ้าเปิดจาก Chrome/Safari อยู่แล้ว ให้วิ่งเข้าเว็บปกติเลย
-            window.location.replace(gasLink);
+        }, 800);
+
+        // ฟังก์ชันสำหรับปุ่มคัดลอกลิงก์
+        function copyMyLink() {
+            // สร้างตัวแปรชั่วคราวเพื่อก๊อปปี้ข้อความ (รองรับ iOS เก่าๆ ด้วย)
+            const tempInput = document.createElement("input");
+            tempInput.value = gasLink;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            // เปลี่ยนหน้าตาปุ่มเพื่อบอกว่าก๊อปปี้สำเร็จ
+            const btn = document.getElementById('copyBtn');
+            btn.innerHTML = '<i class="fas fa-check-circle"></i> คัดลอกสำเร็จ! วางใน Safari ได้เลย';
+            btn.style.background = '#10b981'; // เปลี่ยนเป็นสีเขียว
+            btn.style.boxShadow = '0 10px 15px -3px rgba(16, 185, 129, 0.4)';
+            
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-link"></i> คัดลอกลิงก์ไปเปิดเอง';
+                btn.style.background = '#0f172a';
+                btn.style.boxShadow = '0 10px 15px -3px rgba(15, 23, 42, 0.3)';
+            }, 4000);
         }
     </script>
 </body>
