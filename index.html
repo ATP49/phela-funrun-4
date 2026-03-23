@@ -3,39 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phe-la Funrun 4th - กำลังพาท่านเข้าสู่ระบบ</title>
-    <meta http-equiv="refresh" content="1.5;url=https://script.google.com/macros/s/AKfycbwh68q2FlHQE2062tQLuNPMfUfCakFVTtMzk7SeMPZCvAS4iuPD2hQK3bkIyGORW421SQ/exec">
+    <title>Phe-la Funrun 4th - โหลดระบบ</title>
     <style>
-        body { font-family: 'Prompt', sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background-color: #f0f4f8; margin: 0; color: #333; padding: 20px; box-sizing: border-box; }
-        .box { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 400px; width: 100%; text-align: center; }
-        .spinner { width: 45px; height: 45px; border: 4px solid #e2e8f0; border-top-color: #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .btn-go { display: inline-block; padding: 15px 20px; background: #0d6efd; color: white; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 1.1rem; margin-top: 15px; width: 100%; box-sizing: border-box; box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3); transition: 0.3s; }
-        .btn-go:hover { background: #0b5ed7; }
-        .warning { font-size: 0.85rem; color: #dc3545; margin-top: 20px; background: #ffe6e6; padding: 15px; border-radius: 8px; text-align: left; line-height: 1.5; }
+        body { font-family: 'Prompt', sans-serif; text-align: center; padding: 40px 20px; background: #f0f4f8; color: #333; margin: 0; }
+        .box { background: white; padding: 30px 20px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 400px; margin: 0 auto; }
+        .spinner { margin: 20px auto; width: 45px; height: 45px; border: 4px solid #e2e8f0; border-top-color: #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
+        .highlight { color: #dc3545; font-weight: bold; font-size: 1.1rem; background: #ffe6e6; padding: 5px 10px; border-radius: 5px; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <div class="box">
+    <div class="box" id="contentBox">
         <div class="spinner"></div>
-        <h3 style="margin-top:0; color:#0d6efd; margin-bottom: 5px;">Phe-la Funrun 4th</h3>
-        <p style="margin-top:0; font-size: 0.95rem; color: #64748b;">ระบบกำลังพาท่านเข้าสู่หน้าลงทะเบียน...</p>
-        
-        <a href="https://script.google.com/macros/s/AKfycbwh68q2FlHQE2062tQLuNPMfUfCakFVTtMzk7SeMPZCvAS4iuPD2hQK3bkIyGORW421SQ/exec" target="_blank" class="btn-go">
-            👉 คลิกที่นี่เพื่อเข้าสู่ระบบ
-        </a>
-
-        <div class="warning">
-            <b>⚠️ วิธีแก้ปัญหาแนบสลิปไม่ได้ / หน้าจอขาว:</b><br>
-            หากท่านเปิดจากแอป Facebook ให้กดที่ <b>จุด 3 จุด (...)</b> บริเวณมุมขวาบนของหน้าจอ แล้วเลือก <b>"เปิดในเบราว์เซอร์"</b> (Open in Browser) หรือ <b>"เปิดใน Chrome / Safari"</b>
-        </div>
+        <h3 style="color:#0d6efd; margin-bottom: 5px;">Phe-la Funrun 4th</h3>
+        <p style="color: #64748b; font-size: 0.95rem;">กำลังตรวจสอบระบบและพาท่านเข้าสู่หน้าลงทะเบียน...</p>
     </div>
 
     <script>
-        // คำสั่งเด้งหน้าเว็บสำรองผ่าน JavaScript
-        setTimeout(function() {
-            window.location.replace("https://script.google.com/macros/s/AKfycbwh68q2FlHQE2062tQLuNPMfUfCakFVTtMzk7SeMPZCvAS4iuPD2hQK3bkIyGORW421SQ/exec");
-        }, 1500);
+        // ลิงก์ระบบ Google Apps Script ของคุณ
+        var gasLink = "https://script.google.com/macros/s/AKfycbwh68q2FlHQE2062tQLuNPMfUfCakFVTtMzk7SeMPZCvAS4iuPD2hQK3bkIyGORW421SQ/exec";
+
+        // ตรวจสอบอุปกรณ์และเบราว์เซอร์
+        var ua = navigator.userAgent || navigator.vendor || window.opera;
+        var isFB = (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1) || (ua.indexOf("Instagram") > -1) || (ua.indexOf("Line") > -1);
+        var isAndroid = /android/i.test(ua);
+        var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+
+        if (isFB) {
+            if (isAndroid) {
+                // สำหรับ Android: บังคับเตะออกไปเปิด Google Chrome อัตโนมัติ
+                var intentUrl = "intent://script.google.com/macros/s/AKfycbwh68q2FlHQE2062tQLuNPMfUfCakFVTtMzk7SeMPZCvAS4iuPD2hQK3bkIyGORW421SQ/exec#Intent;scheme=https;package=com.android.chrome;end";
+                window.location.replace(intentUrl);
+            } else if (isIOS) {
+                // สำหรับ iPhone: ระบบ Apple บล็อกการเด้ง ต้องแสดงวิธีให้ผู้ใช้กดเอง
+                document.getElementById('contentBox').innerHTML = `
+                    <h3 style="color:#dc3545; margin-top: 0;">⚠️ โปรดอ่านก่อนสมัคร</h3>
+                    <p style="font-size: 0.95rem;">ระบบของ Apple ไม่อนุญาตให้อัปโหลดสลิปผ่านแอป Facebook</p>
+                    <div style="text-align: left; background: #f8fafc; padding: 15px; border-radius: 10px; border: 1px solid #e2e8f0; margin-top: 20px;">
+                        <b>วิธีแก้ไข (ใช้เวลา 3 วินาที):</b><br><br>
+                        1. กดที่ <b>จุด 3 จุด (...)</b> หรือสัญลักษณ์ <b>แชร์</b> ที่มุมขวาบน/ล่างของหน้าจอ<br><br>
+                        2. เลือกเมนู <span class="highlight">เปิดในเบราว์เซอร์เริ่มต้น</span> หรือ <span class="highlight">เปิดใน Safari</span>
+                    </div>
+                `;
+            } else {
+                window.location.replace(gasLink);
+            }
+        } else {
+            // ถ้าเปิดจาก Chrome/Safari อยู่แล้ว ให้วิ่งเข้าเว็บปกติเลย
+            window.location.replace(gasLink);
+        }
     </script>
 </body>
 </html>
