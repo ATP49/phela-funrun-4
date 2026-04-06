@@ -23,7 +23,6 @@
     .btn-submit { padding: 14px; font-weight: 700; border-radius: 12px; font-size: 1.15rem; letter-spacing: 0.5px; }
     .waiver-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; font-size: 0.85rem; color: #475569; margin-bottom: 15px; line-height: 1.6; text-align: justify; }
     .status-card { background: #fff; border-left: 5px solid #0d6efd; padding: 20px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-    
     #loadingScreen { position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     #fbBypassScreen { position: fixed; inset: 0; background: #f1f5f9; z-index: 10000; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; }
     .fb-box { background: white; padding: 30px 20px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 400px; width: 100%; }
@@ -52,390 +51,101 @@
 
 <div class="main-card" id="appMain" style="display:none;">
   <img id="bannerImg" style="width:100%; display:none; object-fit:cover;">
-  <div class="header-box">
-    <h2 class="fw-bold mb-1" id="displayEventName">Phe-la Funrun 4th</h2>
-    <p class="mb-0 opacity-75">ระบบรับสมัครออนไลน์</p>
-  </div>
-
-  <div class="nav-tabs-custom">
-    <div class="nav-tab-item active" onclick="switchTab('info')"><i class="fas fa-info-circle mb-1 d-block"></i> รายละเอียด</div>
-    <div class="nav-tab-item" onclick="switchTab('reg')"><i class="fas fa-edit mb-1 d-block"></i> สมัครวิ่ง</div>
-    <div class="nav-tab-item" onclick="switchTab('track')"><i class="fas fa-search mb-1 d-block"></i> ตรวจสอบ</div>
-  </div>
-
+  <div class="header-box"><h2 class="fw-bold mb-1" id="displayEventName">Phe-la Funrun 4th</h2><p class="mb-0 opacity-75">ระบบรับสมัครออนไลน์</p></div>
+  <div class="nav-tabs-custom"><div class="nav-tab-item active" onclick="switchTab('info')"><i class="fas fa-info-circle mb-1 d-block"></i> รายละเอียด</div><div class="nav-tab-item" onclick="switchTab('reg')"><i class="fas fa-edit mb-1 d-block"></i> สมัครวิ่ง</div><div class="nav-tab-item" onclick="switchTab('track')"><i class="fas fa-search mb-1 d-block"></i> ตรวจสอบ</div></div>
   <div class="p-4 p-md-5">
-    <div id="tab-info">
-      <h5 class="section-title"><i class="fas fa-map-marked-alt me-2"></i>รายละเอียดงาน & เส้นทางวิ่ง</h5>
-      <img id="detailImg" class="img-fluid-custom">
-      <img id="routeImg" class="img-fluid-custom">
-      <h5 class="section-title mt-4"><i class="fas fa-trophy me-2"></i>รางวัลการแข่งขัน</h5>
-      <img id="trophyImg" class="img-fluid-custom">
-      <img id="medalImg" class="img-fluid-custom">
-      <button class="btn btn-primary w-100 py-3 mt-4 fw-bold rounded-pill shadow" onclick="switchTab('reg')">ไปหน้าแบบฟอร์มรับสมัคร <i class="fas fa-arrow-right ms-2"></i></button>
-    </div>
-
+    <div id="tab-info"><h5 class="section-title"><i class="fas fa-map-marked-alt me-2"></i>รายละเอียดงาน & เส้นทางวิ่ง</h5><img id="detailImg" class="img-fluid-custom"><img id="routeImg" class="img-fluid-custom"><h5 class="section-title mt-4"><i class="fas fa-trophy me-2"></i>รางวัลการแข่งขัน</h5><img id="trophyImg" class="img-fluid-custom"><img id="medalImg" class="img-fluid-custom"><button class="btn btn-primary w-100 py-3 mt-4 fw-bold rounded-pill shadow" onclick="switchTab('reg')">ไปหน้าแบบฟอร์มรับสมัคร <i class="fas fa-arrow-right ms-2"></i></button></div>
     <div id="tab-reg" style="display:none;">
       <form id="regForm" onsubmit="handleFormSubmit(event)">
-        
-        <div id="runnerCountAlert" class="alert alert-info text-center fw-bold shadow-sm mb-4" style="display:none;">
-          <i class="fas fa-user-plus me-2"></i> คุณกำลังลงทะเบียนต่อเนื่องคนที่ <span id="runnerNumberDisplay" class="fs-5 text-primary">1</span>
-        </div>
-
-        <h5 class="section-title"><i class="fas fa-user me-2"></i>1. ข้อมูลส่วนตัวผู้สมัคร</h5>
+        <div id="runnerCountAlert" class="alert alert-info text-center fw-bold shadow-sm mb-4" style="display:none;"><i class="fas fa-user-plus me-2"></i> คุณกำลังลงทะเบียนคนที่ <span id="runnerNumberDisplay" class="fs-5 text-primary">1</span></div>
+        <h5 class="section-title">1. ข้อมูลส่วนตัวผู้สมัคร</h5>
         <div class="mb-3"><label class="form-label required">ชื่อ-นามสกุล</label><input type="text" class="form-control" name="fullName" required></div>
-        
-        <div class="row g-3 mb-3">
-          <div class="col-md-6"><label class="form-label required">เพศ</label><select class="form-select" name="gender" required><option value="" selected disabled>เลือกเพศ</option><option value="ชาย">ชาย</option><option value="หญิง">หญิง</option></select></div>
-          <div class="col-md-6"><label class="form-label required">กรุ๊ปเลือด</label><select class="form-select" name="bloodGroup" required><option value="" selected disabled>เลือก</option><option value="A">A</option><option value="B">B</option><option value="O">O</option><option value="AB">AB</option></select></div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label required">วัน/เดือน/ปีเกิด (พ.ศ.)</label>
-          <div class="row g-2">
-            <div class="col-4"><select class="form-select" id="dobDay" required><option value="" disabled selected>วัน</option></select></div>
-            <div class="col-4"><select class="form-select" id="dobMonth" required><option value="" disabled selected>เดือน</option><option value="ม.ค.">ม.ค.</option><option value="ก.พ.">ก.พ.</option><option value="มี.ค.">มี.ค.</option><option value="เม.ย.">เม.ย.</option><option value="พ.ค.">พ.ค.</option><option value="มิ.ย.">มิ.ย.</option><option value="ก.ค.">ก.ค.</option><option value="ส.ค.">ส.ค.</option><option value="ก.ย.">ก.ย.</option><option value="ต.ค.">ต.ค.</option><option value="พ.ย.">พ.ย.</option><option value="ธ.ค.">ธ.ค.</option></select></div>
-            <div class="col-4"><select class="form-select" id="dobYear" required><option value="" disabled selected>พ.ศ.</option></select></div>
-          </div>
-          <input type="hidden" name="dob" id="fullDob">
-        </div>
-
+        <div class="row g-3 mb-3"><div class="col-md-6"><label class="form-label required">เพศ</label><select class="form-select" name="gender" required><option value="" selected disabled>เลือกเพศ</option><option value="ชาย">ชาย</option><option value="หญิง">หญิง</option></select></div><div class="col-md-6"><label class="form-label required">กรุ๊ปเลือด</label><select class="form-select" name="bloodGroup" required><option value="" selected disabled>เลือก</option><option value="A">A</option><option value="B">B</option><option value="O">O</option><option value="AB">AB</option></select></div></div>
+        <div class="mb-3"><label class="form-label required">วัน/เดือน/ปีเกิด (พ.ศ.)</label><div class="row g-2"><div class="col-4"><select class="form-select" id="dobDay" required><option value="" disabled selected>วัน</option></select></div><div class="col-4"><select class="form-select" id="dobMonth" required><option value="" disabled selected>เดือน</option><option value="ม.ค.">ม.ค.</option><option value="ก.พ.">ก.พ.</option><option value="มี.ค.">มี.ค.</option><option value="เม.ย.">เม.ย.</option><option value="พ.ค.">พ.ค.</option><option value="มิ.ย.">มิ.ย.</option><option value="ก.ค.">ก.ค.</option><option value="ส.ค.">ส.ค.</option><option value="ก.ย.">ก.ย.</option><option value="ต.ค.">ต.ค.</option><option value="พ.ย.">พ.ย.</option><option value="ธ.ค.">ธ.ค.</option></select></div><div class="col-4"><select class="form-select" id="dobYear" required><option value="" disabled selected>พ.ศ.</option></select></div></div><input type="hidden" name="dob" id="fullDob"></div>
         <div class="mb-3"><label class="form-label required">โรคประจำตัว (ไม่มีให้ขีด -)</label><input type="text" class="form-control" name="disease" required></div>
-
-        <div class="p-3 bg-light border rounded-3 mb-3">
-          <label class="form-label required text-primary">ที่อยู่ปัจจุบัน / จัดส่งไปรษณีย์</label>
-          <input type="text" id="a1" class="form-control mb-2" placeholder="บ้านเลขที่, หมู่, ซอย, ถนน" required>
-          <div class="row g-2">
-            <div class="col-6"><input type="text" id="a2" class="form-control" placeholder="ตำบล" required></div>
-            <div class="col-6"><input type="text" id="a3" class="form-control" placeholder="อำเภอ" required></div>
-            <div class="col-6"><input type="text" id="a4" class="form-control" placeholder="จังหวัด" required></div>
-            <div class="col-6"><input type="text" id="a5" class="form-control" placeholder="รหัสไปรษณีย์" required></div>
-          </div>
-          <input type="hidden" name="address" id="fullAddr">
-        </div>
-
-        <div class="row g-3 mb-4">
-          <div class="col-md-6"><label class="form-label required">เบอร์โทรศัพท์ (10 หลัก)</label><input type="tel" class="form-control" name="phone" pattern="[0-9]{10}" required></div>
-          <div class="col-md-6"><label class="form-label required">ผู้ติดต่อฉุกเฉิน (ชื่อ-เบอร์)</label><input type="text" class="form-control" name="emergencyContact" required></div>
-        </div>
-
-        <h5 class="section-title"><i class="fas fa-tshirt me-2"></i>2. การแข่งขันและไซส์เสื้อ</h5>
-        <div class="text-center mb-3">
-          <img id="shirtImg" style="width: 100%; max-width: 350px; border-radius: 12px; display: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin: 0 auto;" alt="แบบเสื้อวิ่ง">
-        </div>
-
-        <div class="row g-3 mb-3">
-          <div class="col-md-6">
-            <label class="form-label required">ประเภทการแข่งขัน</label>
-            <select class="form-select" name="runCategory" id="runCategorySelect" required onchange="calculateTotal()"><option value="" selected disabled>เลือกประเภท</option></select>
-          </div>
-          <div class="col-md-6"><label class="form-label required">รุ่นอายุ</label><select class="form-select" name="ageGroup" required><option value="" selected disabled>เลือกรุ่นอายุ</option><option value="อายุไม่เกิน 15 ปี">อายุไม่เกิน 15 ปี</option><option value="อายุ 16 - 29 ปี">อายุ 16 - 29 ปี</option><option value="อายุ 30 - 39 ปี">อายุ 30 - 39 ปี</option><option value="อายุ 40 - 49 ปี">อายุ 40 - 49 ปี</option><option value="อายุ 50 - 59 ปี">อายุ 50 - 59 ปี</option><option value="อายุ 60 ปีขึ้นไป">อายุ 60 ปีขึ้นไป</option></select></div>
-        </div>
-
-        <div class="row g-3 mb-4">
-          <div class="col-md-6">
-            <label class="form-label required">ไซส์เสื้อ (รอบอก)</label>
-            <select class="form-select" name="shirtSize" id="shirtSizeSelect" required><option value="" selected disabled>เลือกไซส์เสื้อ</option></select>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label required">ช่องทางการรับเสื้อ</label>
-            <select class="form-select" name="receiveType" id="receiveTypeSelect" required onchange="calculateTotal()">
-              <option value="" selected disabled>เลือกการรับเสื้อ</option>
-              <option value="รับด้วยตนเองหน้างาน">รับด้วยตนเองหน้างาน</option>
-              <option value="จัดส่งทางไปรษณีย์">จัดส่งทางไปรษณีย์</option>
-            </select>
-          </div>
-        </div>
-
-        <h5 class="section-title"><i class="fas fa-file-invoice-dollar me-2"></i>3. การชำระเงิน</h5>
-        
-        <div id="paymentCalcArea" class="mb-4" style="display: none;">
-          <div class="alert alert-warning py-3 border-0 shadow-sm" style="background-color: #fffbeb; border: 1px solid #fde68a !important;">
-            <div class="d-flex justify-content-between mb-2 text-secondary">
-              <span>ค่าสมัคร:</span>
-              <span id="basePriceDisplay" class="fw-bold">0 บาท</span>
-            </div>
-            <div class="d-flex justify-content-between mb-2 text-danger" id="shippingFeeRow" style="display: none !important;">
-              <span id="shippingFeeText">ค่าจัดส่ง (คนที่ 1):</span>
-              <span id="shippingFeeAmount" class="fw-bold">+50 บาท</span>
-            </div>
-            <hr style="border-color: #fcd34d;">
-            <div class="d-flex justify-content-between align-items-center">
-              <span class="fw-bold text-dark">ยอดที่ต้องโอนรวม:</span>
-              <span id="totalPriceDisplay" class="fw-bold fs-4 text-primary">0 บาท</span>
-            </div>
-          </div>
-        </div>
-
+        <div class="p-3 bg-light border rounded-3 mb-3"><label class="form-label required text-primary">ที่อยู่ปัจจุบัน / จัดส่งไปรษณีย์</label><input type="text" id="a1" class="form-control mb-2" placeholder="เลขที่, หมู่, ซอย, ถนน" required><div class="row g-2"><div class="col-6"><input type="text" id="a2" class="form-control" placeholder="ตำบล" required></div><div class="col-6"><input type="text" id="a3" class="form-control" placeholder="อำเภอ" required></div><div class="col-6"><input type="text" id="a4" class="form-control" placeholder="จังหวัด" required></div><div class="col-6"><input type="text" id="a5" class="form-control" placeholder="รหัสไปรษณีย์" required></div></div><input type="hidden" name="address" id="fullAddr"></div>
+        <div class="row g-3 mb-4"><div class="col-md-6"><label class="form-label required">เบอร์โทรศัพท์ (10 หลัก)</label><input type="tel" class="form-control" name="phone" pattern="[0-9]{10}" required></div><div class="col-md-6"><label class="form-label required">ผู้ติดต่อฉุกเฉิน (ชื่อ-เบอร์)</label><input type="text" class="form-control" name="emergencyContact" required></div></div>
+        <h5 class="section-title">2. การแข่งขันและไซส์เสื้อ</h5>
+        <div class="text-center mb-3"><img id="shirtImg" style="width: 100%; max-width: 350px; border-radius: 12px; display: none; margin: 0 auto;"></div>
+        <div class="row g-3 mb-3"><div class="col-md-6"><label class="form-label required">ประเภทการแข่งขัน</label><select class="form-select" name="runCategory" id="runCategorySelect" required onchange="calculateTotal()"><option value="" selected disabled>เลือกประเภท</option></select></div><div class="col-md-6"><label class="form-label required">รุ่นอายุ</label><select class="form-select" name="ageGroup" required><option value="" selected disabled>เลือกรุ่นอายุ</option><option value="อายุไม่เกิน 15 ปี">อายุไม่เกิน 15 ปี</option><option value="อายุ 16 - 29 ปี">อายุ 16 - 29 ปี</option><option value="อายุ 30 - 39 ปี">อายุ 30 - 39 ปี</option><option value="อายุ 40 - 49 ปี">อายุ 40 - 49 ปี</option><option value="อายุ 50 - 59 ปี">อายุ 50 - 59 ปี</option><option value="อายุ 60 ปีขึ้นไป">อายุ 60 ปีขึ้นไป</option></select></div></div>
+        <div class="row g-3 mb-4"><div class="col-md-6"><label class="form-label required">ไซส์เสื้อ (รอบอก)</label><select class="form-select" name="shirtSize" id="shirtSizeSelect" required><option value="" selected disabled>เลือกไซส์เสื้อ</option></select></div><div class="col-md-6"><label class="form-label required">ช่องทางการรับเสื้อ</label><select class="form-select" name="receiveType" id="receiveTypeSelect" required onchange="calculateTotal()"><option value="" selected disabled>เลือกการรับเสื้อ</option><option value="รับด้วยตนเองหน้างาน">รับด้วยตนเองหน้างาน</option><option value="จัดส่งทางไปรษณีย์">จัดส่งทางไปรษณีย์</option></select></div></div>
+        <h5 class="section-title">3. การชำระเงิน</h5>
+        <div id="paymentCalcArea" class="mb-4" style="display: none;"><div class="alert alert-warning py-3 border-0 shadow-sm" style="background-color: #fffbeb; border: 1px solid #fde68a !important;"><div class="d-flex justify-content-between mb-2 text-secondary"><span>ค่าสมัคร:</span><span id="basePriceDisplay" class="fw-bold">0 บาท</span></div><div class="d-flex justify-content-between mb-2 text-danger" id="shippingFeeRow" style="display: none !important;"><span id="shippingFeeText">ค่าจัดส่ง:</span><span id="shippingFeeAmount" class="fw-bold">+50 บาท</span></div><hr><div class="d-flex justify-content-between align-items-center"><span class="fw-bold text-dark">ยอดที่ต้องโอนรวม:</span><span id="totalPriceDisplay" class="fw-bold fs-4 text-primary">0 บาท</span></div></div></div>
         <div id="bankInfoArea" class="mb-4"></div>
-        
-        <div class="mb-4">
-          <label class="form-label required text-danger">แนบหลักฐานการโอนเงิน (สลิป)</label>
-          <input type="file" class="form-control" id="fileInp" accept="image/*" required>
-          <input type="hidden" name="slipFile" id="base64Inp">
-        </div>
-
-        <h5 class="section-title"><i class="fas fa-check-square me-2"></i>4. คำรับรอง</h5>
-        <div class="waiver-box mb-3 shadow-sm">
-          <b class="text-primary fs-6">คำรับรองผู้สมัคร:</b><br>ข้าพเจ้ายอมรับเงื่อนไขการแข่งขัน และยืนยันว่าข้อมูลทั้งหมดเป็นความจริง หากกิจกรรมต้องยกเลิกจากเหตุสุดวิสัย ข้าพเจ้ายินยอมให้ผู้จัดดำเนินการตามความเหมาะสม
-        </div>
-        
-        <div class="form-check mb-4 mt-3">
-          <input class="form-check-input" type="checkbox" id="checkAgree" required>
-          <label class="form-check-label fw-bold text-danger" for="checkAgree">ข้าพเจ้าได้อ่านและยอมรับเงื่อนไข</label>
-        </div>
-        
+        <div class="mb-4"><label class="form-label required text-danger">แนบไฟล์สลิป (รูปภาพ)</label><input type="file" class="form-control" id="fileInp" accept="image/*" required><input type="hidden" name="slipFile" id="base64Inp"></div>
+        <div class="form-check mb-4"><input class="form-check-input" type="checkbox" id="checkAgree" required><label class="form-check-label fw-bold" for="checkAgree">ข้าพเจ้าได้อ่านและยอมรับเงื่อนไข</label></div>
         <button type="submit" class="btn btn-primary w-100 btn-submit shadow" id="btnSub">ยืนยันลงทะเบียน</button>
       </form>
-
-      <div id="successMsg" class="text-center" style="display:none; padding:40px 10px;">
-        <i class="fas fa-check-circle text-success mb-3" style="font-size:5rem;"></i>
-        <h3 class="fw-bold text-success mb-2">ลงทะเบียนสำเร็จ!</h3>
-        <p class="text-muted mb-1">รหัสอ้างอิงของคุณคือ</p>
-        <h2 class="fw-bold text-primary mb-4" id="showOrderId"></h2>
-        <button class="btn btn-outline-primary w-100 rounded-pill py-3 fw-bold mb-3" onclick="switchTab('track')">ตรวจสอบสถานะและเลข BIB</button>
-        <button class="btn btn-light border w-100 rounded-pill py-3 fw-bold" onclick="registerNextPerson()"><i class="fas fa-user-plus me-1"></i> ลงทะเบียนคนต่อไป (ค่าจัดส่ง 10 บาท)</button>
-      </div>
+      <div id="successMsg" class="text-center" style="display:none; padding:40px 10px;"><i class="fas fa-check-circle text-success mb-3" style="font-size:5rem;"></i><h3 class="fw-bold text-success">ลงทะเบียนสำเร็จ!</h3><p>รหัสอ้างอิงของคุณคือ</p><h2 class="fw-bold text-primary mb-4" id="showOrderId"></h2><button class="btn btn-outline-primary w-100 py-3 mb-3" onclick="switchTab('track')">ตรวจสอบสถานะ</button><button class="btn btn-light border w-100 py-3" onclick="registerNextPerson()">ลงทะเบียนคนต่อไป</button></div>
     </div>
-
-    <div id="tab-track" style="display:none;">
-      <div class="text-center mb-4"><h5 class="fw-bold text-primary">ตรวจสอบสถานะ & เลข BIB</h5></div>
-      <div class="input-group mb-4 shadow-sm">
-        <span class="input-group-text bg-white"><i class="fas fa-phone"></i></span>
-        <input type="tel" id="schPhone" class="form-control border-start-0 py-3" placeholder="เบอร์โทรศัพท์ 10 หลัก">
-        <button class="btn btn-primary px-4 fw-bold" onclick="doSearch()">ค้นหา</button>
-      </div>
-      <div id="searchResult"></div>
-    </div>
-
+    <div id="tab-track" style="display:none;"><div class="text-center mb-4"><h5 class="fw-bold text-primary">ตรวจสอบสถานะ</h5></div><div class="input-group mb-4"><input type="tel" id="schPhone" class="form-control py-3" placeholder="เบอร์โทรศัพท์ 10 หลัก"><button class="btn btn-primary px-4 fw-bold" onclick="doSearch()">ค้นหา</button></div><div id="searchResult"></div></div>
   </div>
 </div>
 
 <script>
-  // ลิงก์ของคุณอรรถพลใส่ไว้ให้เรียบร้อยแล้วครับ
   const GAS_URL = "https://script.google.com/macros/s/AKfycbwh68q2FlHQE2062tQLuNPMfUfCakFVTtMzk7SeMPZCvAS4iuPD2hQK3bkIyGORW421SQ/exec";
-
   let shirtImages = { vip: "", general: "" };
   let runnerSessionCount = parseInt(sessionStorage.getItem('runnerSessionCount')) || 1;
 
-  function checkBrowser() {
-      const ua = navigator.userAgent || navigator.vendor || window.opera;
-      const isFB = (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1) || (ua.indexOf("Line") > -1);
-      const isAndroid = /android/i.test(ua);
-      const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
-
-      if (isFB) {
-          if (isAndroid) {
-              const intentUrl = `intent://${location.host}${location.pathname}#Intent;scheme=https;package=com.android.chrome;end`;
-              window.location.replace(intentUrl);
-              return false;
-          } else if (isIOS) {
-              document.getElementById('loadingScreen').style.display = 'none';
-              document.getElementById('fbBypassScreen').style.display = 'flex';
-              return false;
-          }
-      }
-      return true;
-  }
-
-  function copyMyLink() {
-      const tempInput = document.createElement("input");
-      tempInput.value = window.location.href;
-      document.body.appendChild(tempInput);
-      tempInput.select(); document.execCommand("copy");
-      document.body.removeChild(tempInput);
-      
-      const btn = document.getElementById('copyBtn');
-      btn.innerHTML = '<i class="fas fa-check-circle me-2"></i> คัดลอกสำเร็จ! วางใน Safari เลย';
-      setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy me-2"></i> คัดลอกลิงก์ไปเปิดเอง'; }, 4000);
-  }
-
-  function switchTab(tab) {
-    ['info','reg','track'].forEach(t => document.getElementById('tab-'+t).style.display = 'none');
-    document.getElementById('tab-'+tab).style.display = 'block';
-    document.querySelectorAll('.nav-tab-item').forEach(el => el.classList.remove('active'));
-    event.currentTarget.classList.add('active');
-    window.scrollTo(0,0);
-  }
+  function checkBrowser() { const ua = navigator.userAgent; const isFB = ua.indexOf("FBAN") > -1 || ua.indexOf("FBAV") > -1; if (isFB) { document.getElementById('loadingScreen').style.display = 'none'; document.getElementById('fbBypassScreen').style.display = 'flex'; return false; } return true; }
+  function copyMyLink() { const temp = document.createElement("input"); temp.value = window.location.href; document.body.appendChild(temp); temp.select(); document.execCommand("copy"); document.body.removeChild(temp); alert("คัดลอกแล้ว นำไปวางใน Safari หรือ Chrome นะครับ"); }
+  function switchTab(tab) { ['info','reg','track'].forEach(t => document.getElementById('tab-'+t).style.display = 'none'); document.getElementById('tab-'+tab).style.display = 'block'; document.querySelectorAll('.nav-tab-item').forEach(el => el.classList.remove('active')); event.currentTarget.classList.add('active'); window.scrollTo(0,0); }
 
   function calculateTotal() {
-    let categoryDropdown = document.getElementById('runCategorySelect');
-    let receiveDropdown = document.getElementById('receiveTypeSelect');
-    
-    if (!categoryDropdown.value) return;
-
-    let selectedText = categoryDropdown.options[categoryDropdown.selectedIndex].text;
-    let match = selectedText.match(/(\d+)\s*บาท/);
-    let basePrice = match ? parseInt(match[1], 10) : 0;
-    
-    let shippingFee = 0;
-    let isShipping = receiveDropdown.value === "จัดส่งทางไปรษณีย์";
-    
-    if (isShipping) {
-       shippingFee = (runnerSessionCount === 1) ? 50 : 10;
-    }
-
-    let totalPrice = basePrice + shippingFee;
-
-    document.getElementById('paymentCalcArea').style.display = 'block';
-    document.getElementById('basePriceDisplay').innerText = basePrice + " บาท";
-    
-    let shippingRow = document.getElementById('shippingFeeRow');
-    if(isShipping) {
-       shippingRow.style.setProperty('display', 'flex', 'important');
-       document.getElementById('shippingFeeText').innerText = (runnerSessionCount === 1) ? "ค่าจัดส่ง (คนที่ 1):" : `ค่าจัดส่ง (คนที่ ${runnerSessionCount}):`;
-       document.getElementById('shippingFeeAmount').innerText = "+" + shippingFee + " บาท";
-    } else {
-       shippingRow.style.setProperty('display', 'none', 'important');
-    }
-
-    document.getElementById('totalPriceDisplay').innerText = totalPrice + " บาท";
+    let cat = document.getElementById('runCategorySelect'); let recv = document.getElementById('receiveTypeSelect'); if (!cat.value) return;
+    let match = cat.options[cat.selectedIndex].text.match(/(\d+)\s*บาท/); let base = match ? parseInt(match[1], 10) : 0;
+    let ship = recv.value === "จัดส่งทางไปรษณีย์" ? (runnerSessionCount === 1 ? 50 : 10) : 0;
+    document.getElementById('paymentCalcArea').style.display = 'block'; document.getElementById('basePriceDisplay').innerText = base + " บาท";
+    let sRow = document.getElementById('shippingFeeRow'); if(ship > 0) { sRow.style.setProperty('display', 'flex', 'important'); document.getElementById('shippingFeeAmount').innerText = "+"+ship+" บาท"; } else sRow.style.setProperty('display', 'none', 'important');
+    document.getElementById('totalPriceDisplay').innerText = (base + ship) + " บาท";
   }
 
   window.onload = function() {
-    if(!checkBrowser()) return;
-
-    if(runnerSessionCount > 1) {
-        document.getElementById('runnerCountAlert').style.display = 'block';
-        document.getElementById('runnerNumberDisplay').innerText = runnerSessionCount;
-    }
-
+    if(!checkBrowser()) return; if(runnerSessionCount > 1) { document.getElementById('runnerCountAlert').style.display = 'block'; document.getElementById('runnerNumberDisplay').innerText = runnerSessionCount; }
     let dy = document.getElementById('dobDay'); for(let i=1;i<=31;i++) dy.innerHTML+=`<option value="${i}">${i}</option>`;
     let yr = document.getElementById('dobYear'); let curr = new Date().getFullYear()+543; for(let i=curr;i>=2450;i--) yr.innerHTML+=`<option value="${i}">${i}</option>`;
-
-    fetch(GAS_URL + "?action=getSettings")
-      .then(res => res.json())
-      .then(s => {
-          document.getElementById('loadingScreen').style.display = 'none';
-          document.getElementById('appMain').style.display = 'block';
-          
-          if(s['ชื่องาน']) document.getElementById('displayEventName').innerText = s['ชื่องาน'];
-          
-          const getThumbUrl = (url) => {
-            if(!url || !url.includes('drive.google.com')) return url;
-            let match = url.match(/[-\w]{25,}/);
-            return match ? 'https://drive.google.com/thumbnail?id=' + match[0] + '&sz=w800' : url;
-          };
-
-          const setImg = (id, key) => { 
-            let url = getThumbUrl(s[key]);
-            if(url) { document.getElementById(id).src = url; document.getElementById(id).style.display = 'block'; }
-          };
-          
-          setImg('bannerImg', 'รูป_Banner'); setImg('detailImg', 'รูป_รายละเอียดงาน'); setImg('routeImg', 'รูป_เส้นทางวิ่ง'); setImg('trophyImg', 'รูป_โล่รางวัล'); setImg('medalImg', 'รูปเหรียญรางวัล');
-          
-          shirtImages.vip = getThumbUrl(s['รูป_เสื้อ_VIP']);
-          shirtImages.general = getThumbUrl(s['รูป_เสื้อ_ทั่วไป']);
-          
-          let categoryStr = s['ประเภทการแข่งขัน'] || "ทั่วไป";
-          let categorySelect = document.getElementById('runCategorySelect');
-          categoryStr.split(',').forEach(c => { if(c.trim() !== '') categorySelect.innerHTML += `<option value="${c.trim()}">${c.trim()}</option>`; });
-
-          let shirtStr = s['ไซส์เสื้อ'] || "S,M,L";
-          let shirtSelect = document.getElementById('shirtSizeSelect');
-          shirtStr.split(',').forEach(size => { if(size.trim() !== '') shirtSelect.innerHTML += `<option value="${size.trim()}">${size.trim()}</option>`; });
-
-          document.getElementById('bankInfoArea').innerHTML = `
-            <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 12px; padding: 20px;" class="shadow-sm">
-              <div class="d-flex justify-content-between mb-3">
-                <div><div class="text-muted small fw-bold"><i class="fas fa-university text-primary"></i> ธนาคาร</div><div class="fw-bold">${s['ธนาคาร']||'-'}</div></div>
-                <div class="text-end"><div class="text-muted small fw-bold"><i class="fas fa-user"></i> ชื่อบัญชี</div><div>${s['ชื่อบัญชี']||'-'}</div></div>
-              </div>
-              <div class="bg-white p-3 rounded-3 border d-flex justify-content-between align-items-center">
-                <div><div class="text-muted small fw-bold">เลขบัญชี</div><div class="fs-4 fw-bold text-primary">${s['เลขบัญชี']||'-'}</div></div>
-              </div>
-            </div>`;
-      })
-      .catch(err => {
-          document.getElementById('loadingScreen').innerHTML = `<h5 class="text-danger"><i class="fas fa-times-circle"></i> เกิดข้อผิดพลาดในการโหลดข้อมูล</h5><p>${err}</p>`;
-      });
+    fetch(GAS_URL + "?action=getSettings").then(res => res.json()).then(s => {
+      document.getElementById('loadingScreen').style.display = 'none'; document.getElementById('appMain').style.display = 'block';
+      if(s['ชื่องาน']) document.getElementById('displayEventName').innerText = s['ชื่องาน'];
+      const getThumb = (url) => { if(!url || !url.includes('id=')) return url; let m = url.match(/id=([-\w]{25,})/); return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w800' : url; };
+      const setI = (id, key) => { let u = getThumb(s[key]); if(u) { document.getElementById(id).src = u; document.getElementById(id).style.display = 'block'; } };
+      setI('bannerImg','รูป_Banner'); setI('detailImg','รูป_รายละเอียดงาน'); setI('routeImg','รูป_เส้นทางวิ่ง'); setI('trophyImg','รูป_โล่รางวัล'); setI('medalImg','รูปเหรียญรางวัล');
+      shirtImages.vip = getThumb(s['รูป_เสื้อ_VIP']); shirtImages.general = getThumb(s['รูป_เสื้อ_ทั่วไป']);
+      s['ประเภทการแข่งขัน'].split(',').forEach(c => document.getElementById('runCategorySelect').innerHTML += `<option value="${c.trim()}">${c.trim()}</option>`);
+      s['ไซส์เสื้อ'].split(',').forEach(sz => document.getElementById('shirtSizeSelect').innerHTML += `<option value="${sz.trim()}">${sz.trim()}</option>`);
+      document.getElementById('bankInfoArea').innerHTML = `<div class="p-3 bg-light border rounded"><div class="fw-bold">ธนาคาร: ${s['ธนาคาร']||'-'}</div><div>ชื่อบัญชี: ${s['ชื่อบัญชี']||'-'}</div><div class="fs-4 text-primary fw-bold">เลขบัญชี: ${s['เลขบัญชี']||'-'}</div></div>`;
+    });
   };
 
-  document.getElementById('runCategorySelect').addEventListener('change', function(e) {
-    let category = e.target.value;
-    let shirtImgElement = document.getElementById('shirtImg');
-    if (category.includes("VIP") || category.includes("พิเศษ")) {
-      if(shirtImages.vip) { shirtImgElement.src = shirtImages.vip; shirtImgElement.style.display = 'block'; }
-    } else {
-      if(shirtImages.general) { shirtImgElement.src = shirtImages.general; shirtImgElement.style.display = 'block'; }
-    }
-  });
+  document.getElementById('runCategorySelect').onchange = function(e) { 
+    let c = e.target.value; let img = document.getElementById('shirtImg'); 
+    let src = (c.includes("VIP")||c.includes("พิเศษ")) ? shirtImages.vip : shirtImages.general;
+    if(src) { img.src = src; img.style.display = 'block'; } calculateTotal();
+  };
 
-  document.getElementById('fileInp').addEventListener('change', function(e) {
-    let reader = new FileReader(); reader.onload = e => document.getElementById('base64Inp').value = e.target.result; reader.readAsDataURL(e.target.files[0]);
-  });
+  document.getElementById('fileInp').onchange = function(e) { let rd = new FileReader(); rd.onload = e => document.getElementById('base64Inp').value = e.target.result; rd.readAsDataURL(e.target.files[0]); };
 
-  function registerNextPerson() {
-    runnerSessionCount++; 
-    sessionStorage.setItem('runnerSessionCount', runnerSessionCount); 
-    
-    document.getElementById('runnerCountAlert').style.display = 'block';
-    document.getElementById('runnerNumberDisplay').innerText = runnerSessionCount;
-
-    document.getElementById('regForm').reset();
-    document.getElementById('base64Inp').value = '';
-    document.getElementById('shirtImg').style.display = 'none'; 
-    document.getElementById('paymentCalcArea').style.display = 'none';
-    document.getElementById('successMsg').style.display = 'none';
-    document.getElementById('regForm').style.display = 'block';
-    document.getElementById('btnSub').disabled = false;
-    document.getElementById('btnSub').innerText = 'ยืนยันลงทะเบียน';
-    window.scrollTo(0,0);
-  }
+  function registerNextPerson() { runnerSessionCount++; sessionStorage.setItem('runnerSessionCount', runnerSessionCount); location.reload(); }
 
   function handleFormSubmit(e) {
-    e.preventDefault();
-    document.getElementById('fullDob').value = `${document.getElementById('dobDay').value} ${document.getElementById('dobMonth').value} ${document.getElementById('dobYear').value}`;
+    e.preventDefault(); document.getElementById('fullDob').value = `${document.getElementById('dobDay').value} ${document.getElementById('dobMonth').value} ${document.getElementById('dobYear').value}`;
     document.getElementById('fullAddr').value = `${document.getElementById('a1').value} ต.${document.getElementById('a2').value} อ.${document.getElementById('a3').value} จ.${document.getElementById('a4').value} ${document.getElementById('a5').value}`;
-    
-    let btn = document.getElementById('btnSub');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> กำลังบันทึกข้อมูล...';
-    
+    let btn = document.getElementById('btnSub'); btn.disabled = true; btn.innerHTML = 'กำลังบันทึก...';
     let fd = new FormData(e.target); let obj = {}; fd.forEach((v, k) => obj[k] = v);
-    
-    fetch(GAS_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "processForm", formObject: obj })
-    })
-    .then(res => res.json())
-    .then(r => {
-        if(r.status === "SUCCESS") {
-            document.getElementById('regForm').style.display = 'none';
-            document.getElementById('successMsg').style.display = 'block';
-            document.getElementById('showOrderId').innerText = r.orderId;
-            window.scrollTo(0,0);
-        } else {
-            Swal.fire('ข้อผิดพลาด', r.message, 'error');
-            btn.disabled = false; btn.innerText = 'ยืนยันลงทะเบียน';
-        }
-    })
-    .catch(err => {
-        Swal.fire('ข้อผิดพลาด', 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้: ' + err, 'error');
-        btn.disabled = false; btn.innerText = 'ยืนยันลงทะเบียน';
+    fetch(GAS_URL, { method: "POST", body: JSON.stringify({ action: "processForm", formObject: obj }) }).then(res => res.json()).then(r => {
+      if(r.status === "SUCCESS") { document.getElementById('regForm').style.display = 'none'; document.getElementById('successMsg').style.display = 'block'; document.getElementById('showOrderId').innerText = r.orderId; }
+      else { Swal.fire('Error', r.message, 'error'); btn.disabled = false; btn.innerText = 'ยืนยันลงทะเบียน'; }
     });
   }
 
   function doSearch() {
-    let p = document.getElementById('schPhone').value;
-    if(!p) return;
-    let resBox = document.getElementById('searchResult');
-    resBox.innerHTML = '<div class="text-center mt-4"><div class="spinner-border text-primary"></div></div>';
-    
-    fetch(GAS_URL + "?action=checkStatus&phone=" + p)
-    .then(res => res.json())
-    .then(res => {
-      if(res.length === 0) { resBox.innerHTML = '<div class="alert alert-warning text-center mt-3 shadow-sm"><i class="fas fa-exclamation-triangle me-2"></i>ไม่พบประวัติการลงทะเบียนของเบอร์นี้</div>'; return; }
-      let h = `<h6 class="text-success mt-3 mb-3 fw-bold"><i class="fas fa-check-circle me-1"></i> พบข้อมูล ${res.length} รายการ</h6>`;
-      res.forEach(r => {
-        h += `<div class="status-card">
-          <div class="d-flex justify-content-between mb-2"><b>${r.orderId}</b><span class="badge ${r.status==='ชำระเงินแล้ว'?'bg-success':'bg-warning text-dark'}">${r.status}</span></div>
-          <h5 class="fw-bold m-0">${r.name}</h5><p class="text-muted small">${r.category}</p>
-          <div class="text-center bg-light border rounded mt-3 py-3 shadow-sm"><span class="text-muted small">หมายเลข BIB</span><br><b class="fs-1 text-primary">${r.bib}</b></div>
-        </div>`;
-      });
-      resBox.innerHTML = h;
-    })
-    .catch(() => resBox.innerHTML = '<div class="text-danger text-center">เกิดข้อผิดพลาดในการค้นหา</div>');
+    let p = document.getElementById('schPhone').value; if(!p) return;
+    document.getElementById('searchResult').innerHTML = 'กำลังค้นหา...';
+    fetch(GAS_URL + "?action=checkStatus&phone=" + p).then(res => res.json()).then(res => {
+      if(res.length === 0) { document.getElementById('searchResult').innerHTML = 'ไม่พบข้อมูล'; return; }
+      let h = ''; res.forEach(r => h += `<div class="status-card p-3 mb-2 border rounded"><b>${r.orderId}</b> [${r.status}]<br>${r.name}<br><div class="fs-4 text-primary">BIB: ${r.bib}</div></div>`);
+      document.getElementById('searchResult').innerHTML = h;
+    });
   }
 </script>
 </body>
