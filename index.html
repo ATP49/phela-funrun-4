@@ -214,11 +214,9 @@
   // ==========================================
   // 🔴 นำ Web App URL ของคุณมาใส่ตรงนี้ 🔴
   // ==========================================
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbwh68q2FlHQE2062tQLuNPMfUfCakFVTtMzk7SeMPZCvAS4iuPD2hQK3bkIyGORW421SQ/exec";
+  const GAS_URL = "วาง_WEB_APP_URL_ของคุณที่นี่";
 
   let shirtImages = { vip: "", general: "" };
-  
-  // สร้างตัวแปรจดจำว่าลงทะเบียนคนที่เท่าไหร่แล้ว
   let runnerSessionCount = parseInt(sessionStorage.getItem('runnerSessionCount')) || 1;
 
   function checkBrowser() {
@@ -261,7 +259,6 @@
     window.scrollTo(0,0);
   }
 
-  // ฟังก์ชันคำนวณราคาแบบจับต่อเนื่อง
   function calculateTotal() {
     let categoryDropdown = document.getElementById('runCategorySelect');
     let receiveDropdown = document.getElementById('receiveTypeSelect');
@@ -275,7 +272,6 @@
     let shippingFee = 0;
     let isShipping = receiveDropdown.value === "จัดส่งทางไปรษณีย์";
     
-    // ถ้าส่งไปรษณีย์: คนแรก 50 บาท, คนต่อไป 10 บาท
     if (isShipping) {
        shippingFee = (runnerSessionCount === 1) ? 50 : 10;
     }
@@ -300,7 +296,6 @@
   window.onload = function() {
     if(!checkBrowser()) return;
 
-    // ตรวจสอบและแสดงแถบแจ้งเตือนถ้าเป็นการลงทะเบียนคนที่ 2 ขึ้นไป
     if(runnerSessionCount > 1) {
         document.getElementById('runnerCountAlert').style.display = 'block';
         document.getElementById('runnerNumberDisplay').innerText = runnerSessionCount;
@@ -371,12 +366,10 @@
     let reader = new FileReader(); reader.onload = e => document.getElementById('base64Inp').value = e.target.result; reader.readAsDataURL(e.target.files[0]);
   });
 
-  // ฟังก์ชันลงทะเบียนคนต่อไป (เพิ่มจำนวนนับ)
   function registerNextPerson() {
-    runnerSessionCount++; // บวกเพิ่ม 1
-    sessionStorage.setItem('runnerSessionCount', runnerSessionCount); // จำใส่เบราว์เซอร์ไว้
+    runnerSessionCount++; 
+    sessionStorage.setItem('runnerSessionCount', runnerSessionCount); 
     
-    // อัปเดตหน้าจอให้รู้ว่านี่คือคนที่ 2+
     document.getElementById('runnerCountAlert').style.display = 'block';
     document.getElementById('runnerNumberDisplay').innerText = runnerSessionCount;
 
