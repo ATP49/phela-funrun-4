@@ -22,7 +22,7 @@
     .required::after { content: " *"; color: #dc3545; }
     .btn-submit { padding: 14px; font-weight: 700; border-radius: 12px; font-size: 1.15rem; letter-spacing: 0.5px; }
     .waiver-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; font-size: 0.85rem; color: #475569; margin-bottom: 15px; line-height: 1.6; text-align: justify; }
-    .status-card { background: #fff; border-left: 5px solid #0d6efd; padding: 20px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .status-card { background: #fff; padding: 20px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
     #loadingScreen { position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     #fbBypassScreen { position: fixed; inset: 0; background: #f1f5f9; z-index: 10000; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; }
     .fb-box { background: white; padding: 30px 20px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 400px; width: 100%; }
@@ -160,12 +160,20 @@
     });
   }
 
+  // แก้ไข: เอาการโชว์เลข BIB ออก ให้โชว์แค่รหัสอ้างอิง สถานะ และชื่อ
   function doSearch() {
     let p = document.getElementById('schPhone').value; if(!p) return;
-    document.getElementById('searchResult').innerHTML = 'กำลังค้นหา...';
+    document.getElementById('searchResult').innerHTML = '<div class="text-center mt-4"><div class="spinner-border text-primary"></div></div>';
     fetch(GAS_URL + "?action=checkStatus&phone=" + p).then(res => res.json()).then(res => {
-      if(res.length === 0) { document.getElementById('searchResult').innerHTML = 'ไม่พบข้อมูล'; return; }
-      let h = ''; res.forEach(r => h += `<div class="status-card p-3 mb-2 border rounded"><b>${r.orderId}</b> [${r.status}]<br>${r.name}<br><div class="fs-4 text-primary">BIB: ${r.bib}</div></div>`);
+      if(res.length === 0) { document.getElementById('searchResult').innerHTML = '<div class="alert alert-warning text-center mt-3 shadow-sm">ไม่พบข้อมูลการลงทะเบียน</div>'; return; }
+      let h = ''; 
+      res.forEach(r => {
+        let statusColor = r.status === 'ชำระเงินแล้ว' ? 'text-success' : 'text-warning';
+        h += `<div class="status-card p-3 mb-3 border rounded shadow-sm">
+                <b class="fs-5">${r.orderId}</b> <span class="fw-bold ${statusColor}">[${r.status}]</span><br>
+                <span class="fs-5 text-dark">${r.name}</span>
+              </div>`;
+      });
       document.getElementById('searchResult').innerHTML = h;
     });
   }
