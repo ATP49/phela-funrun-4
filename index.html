@@ -67,7 +67,29 @@
         <div class="row g-3 mb-4"><div class="col-md-6"><label class="form-label required">เบอร์โทรศัพท์ (10 หลัก)</label><input type="tel" class="form-control" name="phone" pattern="[0-9]{10}" required></div><div class="col-md-6"><label class="form-label required">ผู้ติดต่อฉุกเฉิน (ชื่อ-เบอร์)</label><input type="text" class="form-control" name="emergencyContact" required></div></div>
         <h5 class="section-title">2. การแข่งขันและไซส์เสื้อ</h5>
         <div class="text-center mb-3"><img id="shirtImg" style="width: 100%; max-width: 350px; border-radius: 12px; display: none; margin: 0 auto;"></div>
-        <div class="row g-3 mb-3"><div class="col-md-6"><label class="form-label required">ประเภทการแข่งขัน</label><select class="form-select" name="runCategory" id="runCategorySelect" required onchange="calculateTotal()"><option value="" selected disabled>เลือกประเภท</option></select></div><div class="col-md-6"><label class="form-label required">รุ่นอายุ</label><select class="form-select" name="ageGroup" required><option value="" selected disabled>เลือกรุ่นอายุ</option><option value="อายุไม่เกิน 15 ปี">อายุไม่เกิน 15 ปี</option><option value="อายุ 16 - 29 ปี">อายุ 16 - 29 ปี</option><option value="อายุ 30 - 39 ปี">อายุ 30 - 39 ปี</option><option value="อายุ 40 - 49 ปี">อายุ 40 - 49 ปี</option><option value="อายุ 50 - 59 ปี">อายุ 50 - 59 ปี</option><option value="อายุ 60 ปีขึ้นไป">อายุ 60 ปีขึ้นไป</option></select></div></div>
+        
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label class="form-label required">ประเภทการแข่งขัน</label>
+            <select class="form-select" name="runCategory" id="runCategorySelect" required onchange="calculateTotal()">
+              <option value="" selected disabled>เลือกประเภท</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label required">รุ่นอายุ</label>
+            <select class="form-select" name="ageGroup" required>
+              <option value="" selected disabled>เลือกรุ่นอายุ</option>
+              <option value="อายุไม่เกิน 12 ปี">อายุไม่เกิน 12 ปี</option>
+              <option value="อายุ 13 - 29 ปี">อายุ 13 - 29 ปี</option>
+              <option value="อายุ 30 - 39 ปี">อายุ 30 - 39 ปี</option>
+              <option value="อายุ 40 - 49 ปี">อายุ 40 - 49 ปี</option>
+              <option value="อายุ 50 - 59 ปี">อายุ 50 - 59 ปี</option>
+              <option value="อายุ 60 - 69 ปี">อายุ 60 - 69 ปี</option>
+              <option value="อายุ 70 ปีขึ้นไป">อายุ 70 ปีขึ้นไป</option>
+            </select>
+          </div>
+        </div>
+
         <div class="row g-3 mb-4"><div class="col-md-6"><label class="form-label required">ไซส์เสื้อ (รอบอก)</label><select class="form-select" name="shirtSize" id="shirtSizeSelect" required><option value="" selected disabled>เลือกไซส์เสื้อ</option></select></div><div class="col-md-6"><label class="form-label required">ช่องทางการรับเสื้อ</label><select class="form-select" name="receiveType" id="receiveTypeSelect" required onchange="calculateTotal()"><option value="" selected disabled>เลือกการรับเสื้อ</option><option value="รับด้วยตนเองหน้างาน">รับด้วยตนเองหน้างาน</option><option value="จัดส่งทางไปรษณีย์">จัดส่งทางไปรษณีย์</option></select></div></div>
         <h5 class="section-title">3. การชำระเงิน</h5>
         <div id="paymentCalcArea" class="mb-4" style="display: none;"><div class="alert alert-warning py-3 border-0 shadow-sm" style="background-color: #fffbeb; border: 1px solid #fde68a !important;"><div class="d-flex justify-content-between mb-2 text-secondary"><span>ค่าสมัคร:</span><span id="basePriceDisplay" class="fw-bold">0 บาท</span></div><div class="d-flex justify-content-between mb-2 text-danger" id="shippingFeeRow" style="display: none !important;"><span id="shippingFeeText">ค่าจัดส่ง:</span><span id="shippingFeeAmount" class="fw-bold">+50 บาท</span></div><hr><div class="d-flex justify-content-between align-items-center"><span class="fw-bold text-dark">ยอดที่ต้องโอนรวม:</span><span id="totalPriceDisplay" class="fw-bold fs-4 text-primary">0 บาท</span></div></div></div>
