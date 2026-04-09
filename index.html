@@ -2,77 +2,182 @@
 <html lang="th">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>Phe-la Funrun 4th - ลงทะเบียน</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
-    body { background-color: #f1f5f9; font-family: 'Prompt', sans-serif; color: #334155; margin: 0; }
-    .main-card { border-radius: 20px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.08); overflow: hidden; max-width: 750px; margin: 0 auto; background: white; min-height: 100vh; }
-    @media (min-width: 768px) { .main-card { margin: 30px auto; min-height: auto; } }
-    .header-box { background: linear-gradient(135deg, #0d6efd 0%, #004fb1 100%); color: white; padding: 40px 20px; text-align: center; }
-    .nav-tabs-custom { display: flex; background: #fff; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; }
-    .nav-tab-item { flex: 1; text-align: center; padding: 15px 5px; cursor: pointer; font-weight: 600; color: #64748b; border-bottom: 3px solid transparent; transition: 0.3s; font-size: 0.9rem; }
-    .nav-tab-item.active { color: #0d6efd; border-bottom-color: #0d6efd; background: #f8faff; }
-    .img-fluid-custom { width: 100%; border-radius: 12px; margin-bottom: 20px; display: none; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-    .section-title { font-weight: 700; color: #0d6efd; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 20px; margin-top: 25px; }
-    .form-label { font-weight: 600; font-size: 0.95rem; color: #475569; }
-    .required::after { content: " *"; color: #dc3545; }
-    .btn-submit { padding: 14px; font-weight: 700; border-radius: 12px; font-size: 1.15rem; letter-spacing: 0.5px; }
-    .waiver-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; font-size: 0.85rem; color: #475569; margin-bottom: 15px; line-height: 1.6; text-align: justify; }
-    .status-card { background: #fff; padding: 20px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
-    #loadingScreen { position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    #fbBypassScreen { position: fixed; inset: 0; background: #f1f5f9; z-index: 10000; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; }
-    .fb-box { background: white; padding: 30px 20px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 400px; width: 100%; }
-    .step-box { background: #f8f9fa; border: 2px solid #dee2e6; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px; text-align: left; }
-    .step-number { background: #0d6efd; color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
+    :root {
+      --primary: #1d4ed8;       /* สีน้ำเงินพรีเมียม */
+      --primary-light: #eff6ff; 
+      --bg-main: #f8fafc;
+      --surface: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 20px;
+    }
+    
+    body { background-color: var(--bg-main); font-family: 'Prompt', sans-serif; color: var(--text-main); margin: 0; padding-bottom: 40px; -webkit-font-smoothing: antialiased; }
+    
+    /* Main Layout */
+    .app-container { max-width: 680px; margin: 0 auto; background: var(--surface); min-height: 100vh; box-shadow: 0 20px 40px rgba(0,0,0,0.03); position: relative; }
+    @media (min-width: 768px) { .app-container { margin: 40px auto; min-height: auto; border-radius: 24px; overflow: hidden; } }
+
+    /* Hero Header */
+    .hero-header { position: relative; background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); color: white; text-align: center; }
+    .hero-banner-img { width: 100%; object-fit: cover; display: none; }
+    .hero-content { padding: 40px 20px; position: relative; z-index: 2; }
+    .hero-content h2 { font-weight: 700; letter-spacing: -0.5px; margin-bottom: 5px; font-size: 1.8rem; }
+    .hero-content p { color: rgba(255,255,255,0.8); font-weight: 300; margin: 0; font-size: 0.95rem; }
+
+    /* Modern Tabs */
+    .tab-wrapper { background: var(--surface); padding: 15px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
+    .nav-tabs-custom { display: flex; background: var(--bg-main); border-radius: 100px; padding: 6px; gap: 4px; }
+    .nav-tab-item { flex: 1; text-align: center; padding: 12px 5px; cursor: pointer; font-weight: 600; color: var(--text-muted); font-size: 0.85rem; border-radius: 100px; transition: all 0.3s ease; }
+    .nav-tab-item i { margin-right: 4px; }
+    .nav-tab-item.active { background: var(--surface); color: var(--primary); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+
+    /* Content Area */
+    .content-area { padding: 30px 24px; }
+    
+    /* Images */
+    .img-fluid-custom { width: 100%; border-radius: 16px; margin-bottom: 24px; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+    
+    /* Section Titles */
+    .section-title { font-weight: 700; color: var(--text-main); font-size: 1.2rem; margin: 35px 0 20px 0; display: flex; align-items: center; gap: 10px; }
+    .section-title span { background: var(--primary-light); color: var(--primary); width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+
+    /* Form Controls Minimalist */
+    .form-label { font-weight: 500; font-size: 0.9rem; color: var(--text-main); margin-bottom: 8px; }
+    .required::after { content: " *"; color: #ef4444; }
+    .form-control, .form-select { border: 1.5px solid var(--border); background-color: var(--bg-main); border-radius: 12px; padding: 14px 16px; font-size: 0.95rem; color: var(--text-main); transition: all 0.2s; box-shadow: none !important; }
+    .form-control:focus, .form-select:focus { border-color: var(--primary); background-color: var(--surface); box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.1) !important; }
+    .form-text-custom { font-size: 0.8rem; color: var(--text-muted); margin-top: 6px; display: block; }
+
+    /* Address Box */
+    .address-box { background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; padding: 20px; }
+    
+    /* Checkout / Payment Box */
+    .checkout-box { background: var(--primary-light); border-radius: 16px; padding: 24px; position: relative; overflow: hidden; border: 1px solid rgba(29, 78, 216, 0.1); }
+    .checkout-row { display: flex; justify-content: space-between; margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem; }
+    .checkout-total { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 15px; border-top: 1px dashed rgba(0,0,0,0.1); font-weight: 700; color: var(--primary); font-size: 1.3rem; }
+
+    /* Buttons */
+    .btn-primary { background: var(--primary); border: none; border-radius: 14px; padding: 16px; font-weight: 600; font-size: 1.05rem; transition: all 0.3s; box-shadow: 0 10px 20px -10px var(--primary); }
+    .btn-primary:hover { background: #1e40af; transform: translateY(-2px); }
+    .btn-primary:disabled { background: #94a3b8; box-shadow: none; transform: none; }
+    
+    /* Result Card (No BIB) */
+    .result-card { background: var(--surface); border-radius: 16px; padding: 24px; border: 1.5px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,0.03); transition: all 0.3s; }
+    .result-card:hover { border-color: #cbd5e1; box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+
+    /* Loading Screen */
+    #loadingScreen { position: fixed; inset: 0; background: var(--surface); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .spinner-border { width: 3rem; height: 3rem; color: var(--primary); }
   </style>
 </head>
 <body>
 
-<div id="fbBypassScreen">
-    <div class="fb-box">
-        <i class="fas fa-exclamation-triangle text-warning" style="font-size: 4rem; margin-bottom: 15px;"></i>
-        <h4 class="fw-bold text-danger mb-3">โปรดอ่านก่อนสมัคร</h4>
-        <p class="text-muted mb-4">ระบบของ Apple ไม่อนุญาตให้อัปโหลดสลิปผ่านแอป Facebook กรุณาเปิดผ่านเบราว์เซอร์ปกติครับ</p>
-        <div class="step-box"><div class="step-number">1</div><div>กดที่สัญลักษณ์ <b>จุด 3 จุด (...)</b> หรือรูปลูกศรที่มุมขวาบน/ล่างของหน้าจอ</div></div>
-        <div class="step-box"><div class="step-number">2</div><div>เลือกเมนู <b class="text-primary">"เปิดในเบราว์เซอร์"</b> หรือ <b class="text-primary">"เปิดใน Safari"</b></div></div>
-        <button class="btn btn-success w-100 py-3 mt-3 fw-bold rounded-pill" id="copyBtn" onclick="copyMyLink()"><i class="fas fa-copy me-2"></i> คัดลอกลิงก์ไปเปิดเอง</button>
-    </div>
-</div>
-
 <div id="loadingScreen">
-  <div class="spinner-border text-primary mb-3" style="width: 3.5rem; height: 3.5rem; border-width: 0.35em;"></div>
-  <h5 class="fw-bold text-primary">กำลังโหลดข้อมูล...</h5>
-  <p class="text-muted small">กรุณารอสักครู่</p>
+  <div class="spinner-border mb-4" role="status"></div>
+  <h5 class="fw-bold text-dark mb-1">กำลังเตรียมข้อมูล</h5>
+  <p class="text-muted small">กรุณารอสักครู่...</p>
 </div>
 
-<div class="main-card" id="appMain" style="display:none;">
-  <img id="bannerImg" style="width:100%; display:none; object-fit:cover;">
-  <div class="header-box"><h2 class="fw-bold mb-1" id="displayEventName">Phe-la Funrun 4th</h2><p class="mb-0 opacity-75">ระบบรับสมัครออนไลน์</p></div>
-  <div class="nav-tabs-custom"><div class="nav-tab-item active" onclick="switchTab('info')"><i class="fas fa-info-circle mb-1 d-block"></i> รายละเอียด</div><div class="nav-tab-item" onclick="switchTab('reg')"><i class="fas fa-edit mb-1 d-block"></i> สมัครวิ่ง</div><div class="nav-tab-item" onclick="switchTab('track')"><i class="fas fa-search mb-1 d-block"></i> ตรวจสอบ</div></div>
-  <div class="p-4 p-md-5">
-    <div id="tab-info"><h5 class="section-title"><i class="fas fa-map-marked-alt me-2"></i>รายละเอียดงาน & เส้นทางวิ่ง</h5><img id="detailImg" class="img-fluid-custom"><img id="routeImg" class="img-fluid-custom"><h5 class="section-title mt-4"><i class="fas fa-trophy me-2"></i>รางวัลการแข่งขัน</h5><img id="trophyImg" class="img-fluid-custom"><img id="medalImg" class="img-fluid-custom"><button class="btn btn-primary w-100 py-3 mt-4 fw-bold rounded-pill shadow" onclick="switchTab('reg')">ไปหน้าแบบฟอร์มรับสมัคร <i class="fas fa-arrow-right ms-2"></i></button></div>
-    <div id="tab-reg" style="display:none;">
+<div class="app-container" id="appMain" style="display:none;">
+  
+  <div class="hero-header">
+    <img id="bannerImg" class="hero-banner-img">
+    <div class="hero-content">
+      <h2 id="displayEventName">Phe-la Funrun 4th</h2>
+      <p><i class="fas fa-running me-2"></i>ระบบรับสมัครออนไลน์</p>
+    </div>
+  </div>
+
+  <div class="tab-wrapper">
+    <div class="nav-tabs-custom">
+      <div class="nav-tab-item active" onclick="switchTab('info')"><i class="fas fa-info-circle"></i> รายละเอียด</div>
+      <div class="nav-tab-item" onclick="switchTab('reg')"><i class="fas fa-edit"></i> สมัครวิ่ง</div>
+      <div class="nav-tab-item" onclick="switchTab('track')"><i class="fas fa-search"></i> ตรวจสอบ</div>
+    </div>
+  </div>
+
+  <div class="content-area">
+    <div id="tab-info" class="fade-in">
+      <h5 class="section-title"><span><i class="fas fa-map"></i></span> ข้อมูลกิจกรรม</h5>
+      <img id="detailImg" class="img-fluid-custom">
+      <img id="routeImg" class="img-fluid-custom">
+      <h5 class="section-title mt-5"><span><i class="fas fa-trophy"></i></span> รางวัลและของที่ระลึก</h5>
+      <img id="trophyImg" class="img-fluid-custom">
+      <img id="medalImg" class="img-fluid-custom">
+      <button class="btn btn-primary w-100 mt-4" onclick="switchTab('reg')">สมัครเข้าร่วมกิจกรรม <i class="fas fa-arrow-right ms-2"></i></button>
+    </div>
+
+    <div id="tab-reg" style="display:none;" class="fade-in">
       <form id="regForm" onsubmit="handleFormSubmit(event)">
-        <div id="runnerCountAlert" class="alert alert-info text-center fw-bold shadow-sm mb-4" style="display:none;"><i class="fas fa-user-plus me-2"></i> คุณกำลังลงทะเบียนคนที่ <span id="runnerNumberDisplay" class="fs-5 text-primary">1</span></div>
-        <h5 class="section-title">1. ข้อมูลส่วนตัวผู้สมัคร</h5>
-        <div class="mb-3"><label class="form-label required">ชื่อ-นามสกุล</label><input type="text" class="form-control" name="fullName" required></div>
-        <div class="row g-3 mb-3"><div class="col-md-6"><label class="form-label required">เพศ</label><select class="form-select" name="gender" required><option value="" selected disabled>เลือกเพศ</option><option value="ชาย">ชาย</option><option value="หญิง">หญิง</option></select></div><div class="col-md-6"><label class="form-label required">กรุ๊ปเลือด</label><select class="form-select" name="bloodGroup" required><option value="" selected disabled>เลือก</option><option value="A">A</option><option value="B">B</option><option value="O">O</option><option value="AB">AB</option></select></div></div>
-        <div class="mb-3"><label class="form-label required">วัน/เดือน/ปีเกิด (พ.ศ.)</label><div class="row g-2"><div class="col-4"><select class="form-select" id="dobDay" required><option value="" disabled selected>วัน</option></select></div><div class="col-4"><select class="form-select" id="dobMonth" required><option value="" disabled selected>เดือน</option><option value="ม.ค.">ม.ค.</option><option value="ก.พ.">ก.พ.</option><option value="มี.ค.">มี.ค.</option><option value="เม.ย.">เม.ย.</option><option value="พ.ค.">พ.ค.</option><option value="มิ.ย.">มิ.ย.</option><option value="ก.ค.">ก.ค.</option><option value="ส.ค.">ส.ค.</option><option value="ก.ย.">ก.ย.</option><option value="ต.ค.">ต.ค.</option><option value="พ.ย.">พ.ย.</option><option value="ธ.ค.">ธ.ค.</option></select></div><div class="col-4"><select class="form-select" id="dobYear" required><option value="" disabled selected>พ.ศ.</option></select></div></div><input type="hidden" name="dob" id="fullDob"></div>
-        <div class="mb-3"><label class="form-label required">โรคประจำตัว (ไม่มีให้ขีด -)</label><input type="text" class="form-control" name="disease" required></div>
-        <div class="p-3 bg-light border rounded-3 mb-3"><label class="form-label required text-primary">ที่อยู่ปัจจุบัน / จัดส่งไปรษณีย์</label><input type="text" id="a1" class="form-control mb-2" placeholder="เลขที่, หมู่, ซอย, ถนน" required><div class="row g-2"><div class="col-6"><input type="text" id="a2" class="form-control" placeholder="ตำบล" required></div><div class="col-6"><input type="text" id="a3" class="form-control" placeholder="อำเภอ" required></div><div class="col-6"><input type="text" id="a4" class="form-control" placeholder="จังหวัด" required></div><div class="col-6"><input type="text" id="a5" class="form-control" placeholder="รหัสไปรษณีย์" required></div></div><input type="hidden" name="address" id="fullAddr"></div>
-        <div class="row g-3 mb-4"><div class="col-md-6"><label class="form-label required">เบอร์โทรศัพท์ (10 หลัก)</label><input type="tel" class="form-control" name="phone" pattern="[0-9]{10}" required></div><div class="col-md-6"><label class="form-label required">ผู้ติดต่อฉุกเฉิน (ชื่อ-เบอร์)</label><input type="text" class="form-control" name="emergencyContact" required></div></div>
-        <h5 class="section-title">2. การแข่งขันและไซส์เสื้อ</h5>
-        <div class="text-center mb-3"><img id="shirtImg" style="width: 100%; max-width: 350px; border-radius: 12px; display: none; margin: 0 auto;"></div>
         
-        <div class="row g-3 mb-3">
+        <div id="runnerCountAlert" class="alert alert-primary border-0 bg-primary bg-opacity-10 text-primary fw-bold rounded-4 mb-4" style="display:none; padding: 16px;">
+          <i class="fas fa-user-plus me-2"></i> กำลังลงทะเบียนคนที่ <span id="runnerNumberDisplay" class="fs-5">1</span>
+        </div>
+
+        <h5 class="section-title"><span>1</span> ข้อมูลส่วนตัวผู้สมัคร</h5>
+        
+        <div class="mb-4">
+          <label class="form-label required">ชื่อ-นามสกุล</label>
+          <input type="text" class="form-control" name="fullName" placeholder="ไม่ต้องระบุคำนำหน้า" required>
+        </div>
+        
+        <div class="row g-3 mb-4">
+          <div class="col-6"><label class="form-label required">เพศ</label><select class="form-select" name="gender" required><option value="" selected disabled>เลือก</option><option value="ชาย">ชาย</option><option value="หญิง">หญิง</option></select></div>
+          <div class="col-6"><label class="form-label required">กรุ๊ปเลือด</label><select class="form-select" name="bloodGroup" required><option value="" selected disabled>เลือก</option><option value="A">A</option><option value="B">B</option><option value="O">O</option><option value="AB">AB</option></select></div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label required">วัน/เดือน/ปีเกิด (พ.ศ.)</label>
+          <div class="row g-2">
+            <div class="col-4"><select class="form-select px-2" id="dobDay" required><option value="" disabled selected>วัน</option></select></div>
+            <div class="col-4"><select class="form-select px-2" id="dobMonth" required><option value="" disabled selected>เดือน</option><option value="ม.ค.">ม.ค.</option><option value="ก.พ.">ก.พ.</option><option value="มี.ค.">มี.ค.</option><option value="เม.ย.">เม.ย.</option><option value="พ.ค.">พ.ค.</option><option value="มิ.ย.">มิ.ย.</option><option value="ก.ค.">ก.ค.</option><option value="ส.ค.">ส.ค.</option><option value="ก.ย.">ก.ย.</option><option value="ต.ค.">ต.ค.</option><option value="พ.ย.">พ.ย.</option><option value="ธ.ค.">ธ.ค.</option></select></div>
+            <div class="col-4"><select class="form-select px-2" id="dobYear" required><option value="" disabled selected>พ.ศ.</option></select></div>
+          </div>
+          <input type="hidden" name="dob" id="fullDob">
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label required">โรคประจำตัว (ไม่มีให้ขีด -)</label>
+          <input type="text" class="form-control" name="disease" placeholder="ระบุโรคประจำตัว" required>
+        </div>
+
+        <div class="address-box mb-4">
+          <label class="form-label required text-primary">ที่อยู่ปัจจุบัน / สำหรับจัดส่ง</label>
+          <input type="text" id="a1" class="form-control mb-3" placeholder="เลขที่, หมู่, ซอย, ถนน" required>
+          <div class="row g-3">
+            <div class="col-6"><input type="text" id="a2" class="form-control" placeholder="ตำบล" required></div>
+            <div class="col-6"><input type="text" id="a3" class="form-control" placeholder="อำเภอ" required></div>
+            <div class="col-6"><input type="text" id="a4" class="form-control" placeholder="จังหวัด" required></div>
+            <div class="col-6"><input type="text" id="a5" class="form-control" placeholder="รหัสไปรษณีย์" required></div>
+          </div>
+          <input type="hidden" name="address" id="fullAddr">
+        </div>
+
+        <div class="row g-3 mb-5">
+          <div class="col-md-6"><label class="form-label required">เบอร์โทรศัพท์ (10 หลัก)</label><input type="tel" class="form-control" name="phone" pattern="[0-9]{10}" placeholder="08xxxxxxxx" required></div>
+          <div class="col-md-6"><label class="form-label required">ผู้ติดต่อฉุกเฉิน (ชื่อและเบอร์)</label><input type="text" class="form-control" name="emergencyContact" placeholder="ระบุชื่อและเบอร์โทร" required></div>
+        </div>
+
+        <h5 class="section-title"><span>2</span> การแข่งขันและของที่ระลึก</h5>
+        
+        <div class="text-center mb-4">
+          <img id="shirtImg" style="width: 100%; max-width: 320px; border-radius: 16px; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.05); margin: 0 auto;">
+        </div>
+        
+        <div class="row g-3 mb-4">
           <div class="col-md-6">
             <label class="form-label required">ประเภทการแข่งขัน</label>
             <select class="form-select" name="runCategory" id="runCategorySelect" required onchange="calculateTotal()">
-              <option value="" selected disabled>เลือกประเภท</option>
+              <option value="" selected disabled>เลือกประเภทวิ่ง</option>
             </select>
           </div>
           <div class="col-md-6">
@@ -90,17 +195,89 @@
           </div>
         </div>
 
-        <div class="row g-3 mb-4"><div class="col-md-6"><label class="form-label required">ไซส์เสื้อ (รอบอก)</label><select class="form-select" name="shirtSize" id="shirtSizeSelect" required><option value="" selected disabled>เลือกไซส์เสื้อ</option></select></div><div class="col-md-6"><label class="form-label required">ช่องทางการรับเสื้อ</label><select class="form-select" name="receiveType" id="receiveTypeSelect" required onchange="calculateTotal()"><option value="" selected disabled>เลือกการรับเสื้อ</option><option value="รับด้วยตนเองหน้างาน">รับด้วยตนเองหน้างาน</option><option value="จัดส่งทางไปรษณีย์">จัดส่งทางไปรษณีย์</option></select></div></div>
-        <h5 class="section-title">3. การชำระเงิน</h5>
-        <div id="paymentCalcArea" class="mb-4" style="display: none;"><div class="alert alert-warning py-3 border-0 shadow-sm" style="background-color: #fffbeb; border: 1px solid #fde68a !important;"><div class="d-flex justify-content-between mb-2 text-secondary"><span>ค่าสมัคร:</span><span id="basePriceDisplay" class="fw-bold">0 บาท</span></div><div class="d-flex justify-content-between mb-2 text-danger" id="shippingFeeRow" style="display: none !important;"><span id="shippingFeeText">ค่าจัดส่ง:</span><span id="shippingFeeAmount" class="fw-bold">+50 บาท</span></div><hr><div class="d-flex justify-content-between align-items-center"><span class="fw-bold text-dark">ยอดที่ต้องโอนรวม:</span><span id="totalPriceDisplay" class="fw-bold fs-4 text-primary">0 บาท</span></div></div></div>
+        <div class="row g-3 mb-5">
+          <div class="col-md-6">
+            <label class="form-label required">ไซส์เสื้อ (รอบอก)</label>
+            <select class="form-select" name="shirtSize" id="shirtSizeSelect" required><option value="" selected disabled>เลือกไซส์เสื้อ</option></select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label required">ช่องทางการรับเสื้อ</label>
+            <select class="form-select" name="receiveType" id="receiveTypeSelect" required onchange="calculateTotal()">
+              <option value="" selected disabled>เลือกการรับของ</option>
+              <option value="รับด้วยตนเองหน้างาน">รับด้วยตนเองหน้างาน</option>
+              <option value="จัดส่งทางไปรษณีย์">จัดส่งทางไปรษณีย์</option>
+            </select>
+          </div>
+        </div>
+
+        <h5 class="section-title"><span>3</span> สรุปยอดและชำระเงิน</h5>
+        
+        <div id="paymentCalcArea" class="checkout-box mb-4" style="display: none;">
+          <div class="checkout-row">
+            <span>ค่าสมัครการแข่งขัน</span>
+            <span id="basePriceDisplay" class="fw-bold text-dark">0 บาท</span>
+          </div>
+          <div class="checkout-row" id="shippingFeeRow" style="display: none !important;">
+            <span id="shippingFeeText">ค่าจัดส่ง</span>
+            <span id="shippingFeeAmount" class="fw-bold text-dark">+0 บาท</span>
+          </div>
+          <div class="checkout-total">
+            <span>ยอดรวมทั้งสิ้น</span>
+            <span id="totalPriceDisplay">0 บาท</span>
+          </div>
+        </div>
+
         <div id="bankInfoArea" class="mb-4"></div>
-        <div class="mb-4"><label class="form-label required text-danger">แนบไฟล์สลิป (รูปภาพ)</label><input type="file" class="form-control" id="fileInp" accept="image/*" required><input type="hidden" name="slipFile" id="base64Inp"></div>
-        <div class="form-check mb-4"><input class="form-check-input" type="checkbox" id="checkAgree" required><label class="form-check-label fw-bold" for="checkAgree">ข้าพเจ้าได้อ่านและยอมรับเงื่อนไข</label></div>
-        <button type="submit" class="btn btn-primary w-100 btn-submit shadow" id="btnSub">ยืนยันลงทะเบียน</button>
+        
+        <div class="mb-5">
+          <label class="form-label required text-primary">แนบหลักฐานการโอนเงิน (สลิป)</label>
+          <input type="file" class="form-control" id="fileInp" accept="image/*" required style="padding: 10px;">
+          <input type="hidden" name="slipFile" id="base64Inp">
+          <span class="form-text-custom"><i class="fas fa-info-circle me-1"></i> รองรับไฟล์รูปภาพ (JPG, PNG)</span>
+        </div>
+
+        <div class="form-check mb-4 d-flex align-items-center">
+          <input class="form-check-input mt-0 me-3" type="checkbox" id="checkAgree" required style="width: 20px; height: 20px;">
+          <label class="form-check-label text-muted" style="font-size: 0.9rem;" for="checkAgree">
+            ข้าพเจ้าขอรับรองว่าข้อมูลถูกต้อง และยอมรับกติกาการแข่งขันทุกประการ
+          </label>
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-100" id="btnSub">ยืนยันการลงทะเบียน</button>
       </form>
-      <div id="successMsg" class="text-center" style="display:none; padding:40px 10px;"><i class="fas fa-check-circle text-success mb-3" style="font-size:5rem;"></i><h3 class="fw-bold text-success">ลงทะเบียนสำเร็จ!</h3><p>รหัสอ้างอิงของคุณคือ</p><h2 class="fw-bold text-primary mb-4" id="showOrderId"></h2><button class="btn btn-outline-primary w-100 py-3 mb-3" onclick="switchTab('track')">ตรวจสอบสถานะ</button><button class="btn btn-light border w-100 py-3" onclick="registerNextPerson()">ลงทะเบียนคนต่อไป</button></div>
+
+      <div id="successMsg" class="text-center py-5" style="display:none;">
+        <div style="width: 80px; height: 80px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+          <i class="fas fa-check text-success" style="font-size: 2.5rem;"></i>
+        </div>
+        <h3 class="fw-bold mb-2">ลงทะเบียนเรียบร้อย</h3>
+        <p class="text-muted mb-4">ระบบได้รับข้อมูลและสลิปการโอนเงินของคุณแล้ว</p>
+        
+        <div class="p-4 bg-light rounded-4 mb-4 border">
+          <span class="text-muted small d-block mb-1">รหัสอ้างอิงของคุณ</span>
+          <h2 class="fw-bold text-primary mb-0" id="showOrderId" style="letter-spacing: 1px;"></h2>
+        </div>
+
+        <button class="btn btn-outline-primary w-100 mb-3 fw-bold rounded-4 py-3" onclick="switchTab('track')">ตรวจสอบสถานะ</button>
+        <button class="btn btn-light border w-100 fw-bold rounded-4 py-3 text-muted" onclick="registerNextPerson()"><i class="fas fa-user-plus me-2"></i>ลงทะเบียนให้คนต่อไป</button>
+      </div>
     </div>
-    <div id="tab-track" style="display:none;"><div class="text-center mb-4"><h5 class="fw-bold text-primary">ตรวจสอบสถานะ</h5></div><div class="input-group mb-4"><input type="tel" id="schPhone" class="form-control py-3" placeholder="เบอร์โทรศัพท์ 10 หลัก"><button class="btn btn-primary px-4 fw-bold" onclick="doSearch()">ค้นหา</button></div><div id="searchResult"></div></div>
+
+    <div id="tab-track" style="display:none;" class="fade-in">
+      <div class="text-center mb-5 mt-3">
+        <h3 class="fw-bold text-dark mb-2">ตรวจสอบสถานะ</h3>
+        <p class="text-muted">กรอกเบอร์โทรศัพท์ที่ใช้ลงทะเบียน</p>
+      </div>
+      
+      <div class="input-group mb-5 shadow-sm rounded-4 overflow-hidden border">
+        <span class="input-group-text bg-white border-0 ps-4 text-muted"><i class="fas fa-phone"></i></span>
+        <input type="tel" id="schPhone" class="form-control border-0 py-3 ps-2" placeholder="08xxxxxxxx" maxlength="10">
+        <button class="btn btn-primary px-4 border-0 rounded-0" onclick="doSearch()">ค้นหา</button>
+      </div>
+      
+      <div id="searchResult"></div>
+    </div>
+
   </div>
 </div>
 
@@ -109,33 +286,64 @@
   let shirtImages = { vip: "", general: "" };
   let runnerSessionCount = parseInt(sessionStorage.getItem('runnerSessionCount')) || 1;
 
-  function checkBrowser() { const ua = navigator.userAgent; const isFB = ua.indexOf("FBAN") > -1 || ua.indexOf("FBAV") > -1; if (isFB) { document.getElementById('loadingScreen').style.display = 'none'; document.getElementById('fbBypassScreen').style.display = 'flex'; return false; } return true; }
-  function copyMyLink() { const temp = document.createElement("input"); temp.value = window.location.href; document.body.appendChild(temp); temp.select(); document.execCommand("copy"); document.body.removeChild(temp); alert("คัดลอกแล้ว นำไปวางใน Safari หรือ Chrome นะครับ"); }
-  function switchTab(tab) { ['info','reg','track'].forEach(t => document.getElementById('tab-'+t).style.display = 'none'); document.getElementById('tab-'+tab).style.display = 'block'; document.querySelectorAll('.nav-tab-item').forEach(el => el.classList.remove('active')); event.currentTarget.classList.add('active'); window.scrollTo(0,0); }
+  function switchTab(tab) { 
+    ['info','reg','track'].forEach(t => document.getElementById('tab-'+t).style.display = 'none'); 
+    document.getElementById('tab-'+tab).style.display = 'block'; 
+    document.querySelectorAll('.nav-tab-item').forEach(el => el.classList.remove('active')); 
+    event.currentTarget.classList.add('active'); 
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+  }
 
   function calculateTotal() {
     let cat = document.getElementById('runCategorySelect'); let recv = document.getElementById('receiveTypeSelect'); if (!cat.value) return;
     let match = cat.options[cat.selectedIndex].text.match(/(\d+)\s*บาท/); let base = match ? parseInt(match[1], 10) : 0;
     let ship = recv.value === "จัดส่งทางไปรษณีย์" ? (runnerSessionCount === 1 ? 50 : 10) : 0;
-    document.getElementById('paymentCalcArea').style.display = 'block'; document.getElementById('basePriceDisplay').innerText = base + " บาท";
-    let sRow = document.getElementById('shippingFeeRow'); if(ship > 0) { sRow.style.setProperty('display', 'flex', 'important'); document.getElementById('shippingFeeAmount').innerText = "+"+ship+" บาท"; } else sRow.style.setProperty('display', 'none', 'important');
+    
+    document.getElementById('paymentCalcArea').style.display = 'block'; 
+    document.getElementById('basePriceDisplay').innerText = base + " บาท";
+    
+    let sRow = document.getElementById('shippingFeeRow'); 
+    if(ship > 0) { 
+      sRow.style.setProperty('display', 'flex', 'important'); 
+      document.getElementById('shippingFeeAmount').innerText = "+"+ship+" บาท"; 
+    } else {
+      sRow.style.setProperty('display', 'none', 'important');
+    }
     document.getElementById('totalPriceDisplay').innerText = (base + ship) + " บาท";
   }
 
   window.onload = function() {
-    if(!checkBrowser()) return; if(runnerSessionCount > 1) { document.getElementById('runnerCountAlert').style.display = 'block'; document.getElementById('runnerNumberDisplay').innerText = runnerSessionCount; }
+    if(runnerSessionCount > 1) { 
+      document.getElementById('runnerCountAlert').style.display = 'block'; 
+      document.getElementById('runnerNumberDisplay').innerText = runnerSessionCount; 
+    }
+    
     let dy = document.getElementById('dobDay'); for(let i=1;i<=31;i++) dy.innerHTML+=`<option value="${i}">${i}</option>`;
     let yr = document.getElementById('dobYear'); let curr = new Date().getFullYear()+543; for(let i=curr;i>=2450;i--) yr.innerHTML+=`<option value="${i}">${i}</option>`;
+    
     fetch(GAS_URL + "?action=getSettings").then(res => res.json()).then(s => {
-      document.getElementById('loadingScreen').style.display = 'none'; document.getElementById('appMain').style.display = 'block';
+      document.getElementById('loadingScreen').style.display = 'none'; 
+      document.getElementById('appMain').style.display = 'block';
+      
       if(s['ชื่องาน']) document.getElementById('displayEventName').innerText = s['ชื่องาน'];
       const getThumb = (url) => { if(!url || !url.includes('id=')) return url; let m = url.match(/id=([-\w]{25,})/); return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w800' : url; };
-      const setI = (id, key) => { let u = getThumb(s[key]); if(u) { document.getElementById(id).src = u; document.getElementById(id).style.display = 'block'; } };
+      const setI = (id, key) => { let u = getThumb(s[key]); if(u) { let el = document.getElementById(id); el.src = u; el.style.display = 'block'; } };
+      
       setI('bannerImg','รูป_Banner'); setI('detailImg','รูป_รายละเอียดงาน'); setI('routeImg','รูป_เส้นทางวิ่ง'); setI('trophyImg','รูป_โล่รางวัล'); setI('medalImg','รูปเหรียญรางวัล');
+      
       shirtImages.vip = getThumb(s['รูป_เสื้อ_VIP']); shirtImages.general = getThumb(s['รูป_เสื้อ_ทั่วไป']);
+      
       s['ประเภทการแข่งขัน'].split(',').forEach(c => document.getElementById('runCategorySelect').innerHTML += `<option value="${c.trim()}">${c.trim()}</option>`);
       s['ไซส์เสื้อ'].split(',').forEach(sz => document.getElementById('shirtSizeSelect').innerHTML += `<option value="${sz.trim()}">${sz.trim()}</option>`);
-      document.getElementById('bankInfoArea').innerHTML = `<div class="p-3 bg-light border rounded"><div class="fw-bold">ธนาคาร: ${s['ธนาคาร']||'-'}</div><div>ชื่อบัญชี: ${s['ชื่อบัญชี']||'-'}</div><div class="fs-4 text-primary fw-bold">เลขบัญชี: ${s['เลขบัญชี']||'-'}</div></div>`;
+      
+      document.getElementById('bankInfoArea').innerHTML = `
+        <div class="p-4 bg-white border rounded-4 shadow-sm text-center">
+          <div class="text-muted small mb-1">ธนาคาร${s['ธนาคาร']||'-'}</div>
+          <h4 class="fw-bold text-primary mb-1 tracking-wide">${s['เลขบัญชี']||'-'}</h4>
+          <div class="fw-medium text-dark">${s['ชื่อบัญชี']||'-'}</div>
+        </div>`;
+    }).catch(e => {
+       document.getElementById('loadingScreen').innerHTML = `<h5 class="text-danger">เกิดข้อผิดพลาด</h5><p>กรุณารีเฟรชหน้าเว็บใหม่อีกครั้ง</p>`;
     });
   };
 
@@ -145,36 +353,80 @@
     if(src) { img.src = src; img.style.display = 'block'; } calculateTotal();
   };
 
-  document.getElementById('fileInp').onchange = function(e) { let rd = new FileReader(); rd.onload = e => document.getElementById('base64Inp').value = e.target.result; rd.readAsDataURL(e.target.files[0]); };
+  document.getElementById('fileInp').onchange = function(e) { 
+    let rd = new FileReader(); rd.onload = e => document.getElementById('base64Inp').value = e.target.result; 
+    if(e.target.files[0]) rd.readAsDataURL(e.target.files[0]); 
+  };
 
   function registerNextPerson() { runnerSessionCount++; sessionStorage.setItem('runnerSessionCount', runnerSessionCount); location.reload(); }
 
   function handleFormSubmit(e) {
-    e.preventDefault(); document.getElementById('fullDob').value = `${document.getElementById('dobDay').value} ${document.getElementById('dobMonth').value} ${document.getElementById('dobYear').value}`;
+    e.preventDefault(); 
+    document.getElementById('fullDob').value = `${document.getElementById('dobDay').value} ${document.getElementById('dobMonth').value} ${document.getElementById('dobYear').value}`;
     document.getElementById('fullAddr').value = `${document.getElementById('a1').value} ต.${document.getElementById('a2').value} อ.${document.getElementById('a3').value} จ.${document.getElementById('a4').value} ${document.getElementById('a5').value}`;
-    let btn = document.getElementById('btnSub'); btn.disabled = true; btn.innerHTML = 'กำลังบันทึก...';
+    
+    let btn = document.getElementById('btnSub'); btn.disabled = true; btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> กำลังบันทึกข้อมูล...';
     let fd = new FormData(e.target); let obj = {}; fd.forEach((v, k) => obj[k] = v);
-    fetch(GAS_URL, { method: "POST", body: JSON.stringify({ action: "processForm", formObject: obj }) }).then(res => res.json()).then(r => {
-      if(r.status === "SUCCESS") { document.getElementById('regForm').style.display = 'none'; document.getElementById('successMsg').style.display = 'block'; document.getElementById('showOrderId').innerText = r.orderId; }
-      else { Swal.fire('Error', r.message, 'error'); btn.disabled = false; btn.innerText = 'ยืนยันลงทะเบียน'; }
+    
+    fetch(GAS_URL, { method: "POST", body: JSON.stringify({ action: "processForm", formObject: obj }) })
+    .then(res => res.json())
+    .then(r => {
+      if(r.status === "SUCCESS") { 
+        document.getElementById('regForm').style.display = 'none'; 
+        document.getElementById('successMsg').style.display = 'block'; 
+        document.getElementById('showOrderId').innerText = r.orderId; 
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else { 
+        Swal.fire('ข้อผิดพลาด', r.message, 'error'); btn.disabled = false; btn.innerText = 'ยืนยันการลงทะเบียน'; 
+      }
     });
   }
 
-  // แก้ไข: เอาการโชว์เลข BIB ออก ให้โชว์แค่รหัสอ้างอิง สถานะ และชื่อ
+  // 🚨 ตัด BIB ทิ้งอย่างสมบูรณ์ และจัด UI ผลลัพธ์ให้ดูแพง
   function doSearch() {
     let p = document.getElementById('schPhone').value; if(!p) return;
-    document.getElementById('searchResult').innerHTML = '<div class="text-center mt-4"><div class="spinner-border text-primary"></div></div>';
+    let resBox = document.getElementById('searchResult');
+    resBox.innerHTML = '<div class="text-center py-4"><div class="spinner-border text-primary"></div></div>';
+    
     fetch(GAS_URL + "?action=checkStatus&phone=" + p).then(res => res.json()).then(res => {
-      if(res.length === 0) { document.getElementById('searchResult').innerHTML = '<div class="alert alert-warning text-center mt-3 shadow-sm">ไม่พบข้อมูลการลงทะเบียน</div>'; return; }
-      let h = ''; 
+      if(res.length === 0) { 
+        resBox.innerHTML = `
+          <div class="text-center py-5 bg-white rounded-4 border">
+            <i class="fas fa-search mb-3 text-muted" style="font-size: 2.5rem; opacity: 0.5;"></i>
+            <h5 class="fw-bold text-dark">ไม่พบประวัติการลงทะเบียน</h5>
+            <p class="text-muted small">กรุณาตรวจสอบเบอร์โทรศัพท์อีกครั้ง</p>
+          </div>`; 
+        return; 
+      }
+      
+      let h = `<div class="mb-3 text-muted small fw-bold"><i class="fas fa-check-circle text-success me-1"></i> พบข้อมูลทั้งหมด ${res.length} รายการ</div>`; 
+      
       res.forEach(r => {
-        let statusColor = r.status === 'ชำระเงินแล้ว' ? 'text-success' : 'text-warning';
-        h += `<div class="status-card p-3 mb-3 border rounded shadow-sm">
-                <b class="fs-5">${r.orderId}</b> <span class="fw-bold ${statusColor}">[${r.status}]</span><br>
-                <span class="fs-5 text-dark">${r.name}</span>
-              </div>`;
+        // จัดการสีป้ายสถานะ
+        let bgClass = r.status === 'ชำระเงินแล้ว' ? 'bg-success bg-opacity-10 text-success' : 'bg-warning bg-opacity-10 text-warning';
+        
+        // ❌ ไม่มีคำว่า BIB ในโค้ดส่วนนี้เด็ดขาด
+        h += `
+          <div class="result-card mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="text-muted small">รหัสอ้างอิง</span>
+              <span class="badge ${bgClass} px-3 py-2 rounded-pill border-0" style="font-size: 0.85rem;">${r.status}</span>
+            </div>
+            <h4 class="fw-bold text-primary mb-3" style="letter-spacing: 0.5px;">${r.orderId}</h4>
+            <div class="border-top pt-3 mt-1 d-flex align-items-center">
+              <div style="width: 40px; height: 40px; background: #f1f5f9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                <i class="fas fa-user text-muted"></i>
+              </div>
+              <div>
+                <div class="fw-bold text-dark">${r.name}</div>
+                <div class="text-muted small">${r.category}</div>
+              </div>
+            </div>
+          </div>`;
       });
-      document.getElementById('searchResult').innerHTML = h;
+      resBox.innerHTML = h;
+    }).catch(err => {
+      resBox.innerHTML = '<div class="text-center text-danger py-4">เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์</div>';
     });
   }
 </script>
