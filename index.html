@@ -10,7 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     :root {
-      --primary: #1d4ed8;       /* สีน้ำเงินพรีเมียม */
+      --primary: #1d4ed8;       
       --primary-light: #eff6ff; 
       --bg-main: #f8fafc;
       --surface: #ffffff;
@@ -70,6 +70,10 @@
     .btn-primary:hover { background: #1e40af; transform: translateY(-2px); }
     .btn-primary:disabled { background: #94a3b8; box-shadow: none; transform: none; }
     
+    /* Copy Button */
+    .btn-copy { background: #f1f5f9; border: none; border-radius: 8px; padding: 6px 12px; color: var(--primary); font-size: 0.85rem; font-weight: 600; transition: 0.2s; display: inline-flex; align-items: center; gap: 5px; }
+    .btn-copy:hover { background: #e2e8f0; }
+
     /* Result Card (No BIB) */
     .result-card { background: var(--surface); border-radius: 16px; padding: 24px; border: 1.5px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,0.03); transition: all 0.3s; }
     .result-card:hover { border-color: #cbd5e1; box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
@@ -312,6 +316,27 @@
     document.getElementById('totalPriceDisplay').innerText = (base + ship) + " บาท";
   }
 
+  // ฟังก์ชันคัดลอกเลขบัญชี
+  function copyAccount() {
+    let accText = document.getElementById('bankAccNumber').innerText.replace(/-/g, '').trim();
+    navigator.clipboard.writeText(accText).then(() => {
+      let btn = document.getElementById('copyBtn');
+      let icon = document.getElementById('copyIcon');
+      
+      btn.classList.add('bg-success', 'text-white');
+      icon.className = 'fas fa-check text-white';
+      
+      Swal.fire({ title: 'คัดลอกสำเร็จ', text: 'คัดลอกเลขบัญชีเรียบร้อยแล้ว', icon: 'success', toast: true, position: 'top', timer: 1500, showConfirmButton: false });
+      
+      setTimeout(() => {
+        btn.classList.remove('bg-success', 'text-white');
+        icon.className = 'fas fa-copy text-primary';
+      }, 2000);
+    }).catch(err => {
+      Swal.fire('ข้อผิดพลาด', 'ไม่สามารถคัดลอกได้ กรุณาคัดลอกด้วยตนเอง', 'error');
+    });
+  }
+
   window.onload = function() {
     if(runnerSessionCount > 1) { 
       document.getElementById('runnerCountAlert').style.display = 'block'; 
@@ -336,11 +361,17 @@
       s['ประเภทการแข่งขัน'].split(',').forEach(c => document.getElementById('runCategorySelect').innerHTML += `<option value="${c.trim()}">${c.trim()}</option>`);
       s['ไซส์เสื้อ'].split(',').forEach(sz => document.getElementById('shirtSizeSelect').innerHTML += `<option value="${sz.trim()}">${sz.trim()}</option>`);
       
+      // อัปเดตส่วนแสดงเลขบัญชีให้มีปุ่ม "คัดลอก"
       document.getElementById('bankInfoArea').innerHTML = `
         <div class="p-4 bg-white border rounded-4 shadow-sm text-center">
-          <div class="text-muted small mb-1">ธนาคาร${s['ธนาคาร']||'-'}</div>
-          <h4 class="fw-bold text-primary mb-1 tracking-wide">${s['เลขบัญชี']||'-'}</h4>
-          <div class="fw-medium text-dark">${s['ชื่อบัญชี']||'-'}</div>
+          <div class="text-muted small mb-2">${s['ธนาคาร']||'-'}</div>
+          <div class="d-flex flex-column align-items-center justify-content-center mb-2">
+            <h3 class="fw-bold text-primary mb-2 tracking-wide" id="bankAccNumber" style="letter-spacing: 1px;">${s['เลขบัญชี']||'-'}</h3>
+            <button type="button" id="copyBtn" class="btn-copy" onclick="copyAccount()">
+              <i class="fas fa-copy text-primary" id="copyIcon"></i> คัดลอกเลขบัญชี
+            </button>
+          </div>
+          <div class="fw-medium text-dark mt-3">${s['ชื่อบัญชี']||'-'}</div>
         </div>`;
     }).catch(e => {
        document.getElementById('loadingScreen').innerHTML = `<h5 class="text-danger">เกิดข้อผิดพลาด</h5><p>กรุณารีเฟรชหน้าเว็บใหม่อีกครั้ง</p>`;
@@ -382,7 +413,6 @@
     });
   }
 
-  // 🚨 ตัด BIB ทิ้งอย่างสมบูรณ์ และจัด UI ผลลัพธ์ให้ดูแพง
   function doSearch() {
     let p = document.getElementById('schPhone').value; if(!p) return;
     let resBox = document.getElementById('searchResult');
@@ -402,10 +432,8 @@
       let h = `<div class="mb-3 text-muted small fw-bold"><i class="fas fa-check-circle text-success me-1"></i> พบข้อมูลทั้งหมด ${res.length} รายการ</div>`; 
       
       res.forEach(r => {
-        // จัดการสีป้ายสถานะ
         let bgClass = r.status === 'ชำระเงินแล้ว' ? 'bg-success bg-opacity-10 text-success' : 'bg-warning bg-opacity-10 text-warning';
         
-        // ❌ ไม่มีคำว่า BIB ในโค้ดส่วนนี้เด็ดขาด
         h += `
           <div class="result-card mb-3">
             <div class="d-flex justify-content-between align-items-center mb-3">
