@@ -71,15 +71,15 @@
     .btn-primary:disabled { background: #94a3b8; box-shadow: none; transform: none; }
     
     /* Copy Button */
-    .btn-copy { background: #f1f5f9; border: none; border-radius: 8px; padding: 6px 12px; color: var(--primary); font-size: 0.85rem; font-weight: 600; transition: 0.2s; display: inline-flex; align-items: center; gap: 5px; }
+    .btn-copy { background: #f1f5f9; border: none; border-radius: 8px; padding: 6px 12px; color: var(--primary); font-size: 0.85rem; font-weight: 600; transition: 0.2s; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
     .btn-copy:hover { background: #e2e8f0; }
 
-    /* Result Card (No BIB) */
+    /* Result Card */
     .result-card { background: var(--surface); border-radius: 16px; padding: 24px; border: 1.5px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,0.03); transition: all 0.3s; }
     .result-card:hover { border-color: #cbd5e1; box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
 
     /* Loading Screen */
-    #loadingScreen { position: fixed; inset: 0; background: var(--surface); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    #loadingScreen { position: fixed; inset: 0; background: var(--surface); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.3s; }
     .spinner-border { width: 3rem; height: 3rem; color: var(--primary); }
   </style>
 </head>
@@ -91,10 +91,21 @@
   <p class="text-muted small">กรุณารอสักครู่...</p>
 </div>
 
+<div id="fbBypassScreen" style="position: fixed; inset: 0; background: #f1f5f9; z-index: 10000; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center;">
+    <div style="background: white; padding: 30px 20px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 400px; width: 100%;">
+        <i class="fas fa-exclamation-triangle text-warning" style="font-size: 4rem; margin-bottom: 15px;"></i>
+        <h4 class="fw-bold text-danger mb-3">โปรดอ่านก่อนสมัคร</h4>
+        <p class="text-muted mb-4">ระบบของ Apple ไม่อนุญาตให้อัปโหลดสลิปผ่านแอป Facebook กรุณาเปิดผ่านเบราว์เซอร์ปกติครับ</p>
+        <div style="background: #f8f9fa; border: 2px solid #dee2e6; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px; text-align: left;"><div style="background: #0d6efd; color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">1</div><div>กดที่สัญลักษณ์ <b>จุด 3 จุด (...)</b> หรือรูปลูกศรที่มุมขวาบน/ล่างของหน้าจอ</div></div>
+        <div style="background: #f8f9fa; border: 2px solid #dee2e6; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px; text-align: left;"><div style="background: #0d6efd; color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">2</div><div>เลือกเมนู <b class="text-primary">"เปิดในเบราว์เซอร์"</b> หรือ <b class="text-primary">"เปิดใน Safari"</b></div></div>
+        <button class="btn btn-success w-100 py-3 mt-3 fw-bold rounded-pill" onclick="copyMyLink()"><i class="fas fa-copy me-2"></i> คัดลอกลิงก์ไปเปิดเอง</button>
+    </div>
+</div>
+
 <div class="app-container" id="appMain" style="display:none;">
   
   <div class="hero-header">
-    <img id="bannerImg" class="hero-banner-img">
+    <img id="bannerImg" class="hero-banner-img" loading="lazy">
     <div class="hero-content">
       <h2 id="displayEventName">Phe-la Funrun 4th</h2>
       <p><i class="fas fa-running me-2"></i>ระบบรับสมัครออนไลน์</p>
@@ -112,11 +123,11 @@
   <div class="content-area">
     <div id="tab-info" class="fade-in">
       <h5 class="section-title"><span><i class="fas fa-map"></i></span> ข้อมูลกิจกรรม</h5>
-      <img id="detailImg" class="img-fluid-custom">
-      <img id="routeImg" class="img-fluid-custom">
+      <img id="detailImg" class="img-fluid-custom" loading="lazy">
+      <img id="routeImg" class="img-fluid-custom" loading="lazy">
       <h5 class="section-title mt-5"><span><i class="fas fa-trophy"></i></span> รางวัลและของที่ระลึก</h5>
-      <img id="trophyImg" class="img-fluid-custom">
-      <img id="medalImg" class="img-fluid-custom">
+      <img id="trophyImg" class="img-fluid-custom" loading="lazy">
+      <img id="medalImg" class="img-fluid-custom" loading="lazy">
       <button class="btn btn-primary w-100 mt-4" onclick="switchTab('reg')">สมัครเข้าร่วมกิจกรรม <i class="fas fa-arrow-right ms-2"></i></button>
     </div>
 
@@ -174,7 +185,7 @@
         <h5 class="section-title"><span>2</span> การแข่งขันและของที่ระลึก</h5>
         
         <div class="text-center mb-4">
-          <img id="shirtImg" style="width: 100%; max-width: 320px; border-radius: 16px; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.05); margin: 0 auto;">
+          <img id="shirtImg" style="width: 100%; max-width: 320px; border-radius: 16px; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.05); margin: 0 auto;" loading="lazy">
         </div>
         
         <div class="row g-3 mb-4">
@@ -188,13 +199,6 @@
             <label class="form-label required">รุ่นอายุ</label>
             <select class="form-select" name="ageGroup" required>
               <option value="" selected disabled>เลือกรุ่นอายุ</option>
-              <option value="อายุไม่เกิน 12 ปี">อายุไม่เกิน 12 ปี</option>
-              <option value="อายุ 13 - 29 ปี">อายุ 13 - 29 ปี</option>
-              <option value="อายุ 30 - 39 ปี">อายุ 30 - 39 ปี</option>
-              <option value="อายุ 40 - 49 ปี">อายุ 40 - 49 ปี</option>
-              <option value="อายุ 50 - 59 ปี">อายุ 50 - 59 ปี</option>
-              <option value="อายุ 60 - 69 ปี">อายุ 60 - 69 ปี</option>
-              <option value="อายุ 70 ปีขึ้นไป">อายุ 70 ปีขึ้นไป</option>
             </select>
           </div>
         </div>
@@ -316,28 +320,65 @@
     document.getElementById('totalPriceDisplay').innerText = (base + ship) + " บาท";
   }
 
-  // ฟังก์ชันคัดลอกเลขบัญชี
   function copyAccount() {
     let accText = document.getElementById('bankAccNumber').innerText.replace(/-/g, '').trim();
     navigator.clipboard.writeText(accText).then(() => {
-      let btn = document.getElementById('copyBtn');
-      let icon = document.getElementById('copyIcon');
-      
-      btn.classList.add('bg-success', 'text-white');
-      icon.className = 'fas fa-check text-white';
-      
+      let btn = document.getElementById('copyBtn'); let icon = document.getElementById('copyIcon');
+      btn.classList.add('bg-success', 'text-white'); icon.className = 'fas fa-check text-white';
       Swal.fire({ title: 'คัดลอกสำเร็จ', text: 'คัดลอกเลขบัญชีเรียบร้อยแล้ว', icon: 'success', toast: true, position: 'top', timer: 1500, showConfirmButton: false });
-      
-      setTimeout(() => {
-        btn.classList.remove('bg-success', 'text-white');
-        icon.className = 'fas fa-copy text-primary';
-      }, 2000);
-    }).catch(err => {
-      Swal.fire('ข้อผิดพลาด', 'ไม่สามารถคัดลอกได้ กรุณาคัดลอกด้วยตนเอง', 'error');
+      setTimeout(() => { btn.classList.remove('bg-success', 'text-white'); icon.className = 'fas fa-copy text-primary'; }, 2000);
     });
   }
 
+  function copyMyLink() {
+    let temp = document.createElement("input"); temp.value = window.location.href; document.body.appendChild(temp); temp.select(); document.execCommand("copy"); document.body.removeChild(temp);
+    alert("คัดลอกแล้ว นำไปวางใน Safari หรือ Chrome นะครับ");
+  }
+
+  // ฟังก์ชันจัดเรียงและแสดงผลข้อมูล (ถูกแยกออกมาเพื่อให้ใช้กับ Cache ได้)
+  function renderSettingsData(s) {
+    if(s['ชื่องาน']) document.getElementById('displayEventName').innerText = s['ชื่องาน'];
+    const getThumb = (url) => { if(!url || !url.includes('id=')) return url; let m = url.match(/id=([-\w]{25,})/); return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w800' : url; };
+    const setI = (id, key) => { let u = getThumb(s[key]); if(u) { let el = document.getElementById(id); el.src = u; el.style.display = 'block'; } };
+    
+    setI('bannerImg','รูป_Banner'); setI('detailImg','รูป_รายละเอียดงาน'); setI('routeImg','รูป_เส้นทางวิ่ง'); setI('trophyImg','รูป_โล่รางวัล'); setI('medalImg','รูปเหรียญรางวัล');
+    shirtImages.vip = getThumb(s['รูป_เสื้อ_VIP']); shirtImages.general = getThumb(s['รูป_เสื้อ_ทั่วไป']);
+    
+    let catSelect = document.getElementById('runCategorySelect');
+    catSelect.innerHTML = '<option value="" selected disabled>เลือกประเภทวิ่ง</option>';
+    if(s['ประเภทการแข่งขัน']) s['ประเภทการแข่งขัน'].split(',').forEach(c => catSelect.innerHTML += `<option value="${c.trim()}">${c.trim()}</option>`);
+    
+    let sizeSelect = document.getElementById('shirtSizeSelect');
+    sizeSelect.innerHTML = '<option value="" selected disabled>เลือกไซส์เสื้อ</option>';
+    if(s['ไซส์เสื้อ']) s['ไซส์เสื้อ'].split(',').forEach(sz => sizeSelect.innerHTML += `<option value="${sz.trim()}">${sz.trim()}</option>`);
+
+    // ใส่รุ่นอายุ 7 รุ่นลงไป
+    const ages = ["อายุไม่เกิน 12 ปี", "อายุ 13 - 29 ปี", "อายุ 30 - 39 ปี", "อายุ 40 - 49 ปี", "อายุ 50 - 59 ปี", "อายุ 60 - 69 ปี", "อายุ 70 ปีขึ้นไป"];
+    let ageSelect = document.querySelector('select[name="ageGroup"]');
+    ageSelect.innerHTML = '<option value="" selected disabled>เลือกรุ่นอายุ</option>';
+    ages.forEach(a => ageSelect.innerHTML += `<option value="${a}">${a}</option>`);
+    
+    document.getElementById('bankInfoArea').innerHTML = `
+      <div class="p-4 bg-white border rounded-4 shadow-sm text-center">
+        <div class="text-muted small mb-2">${s['ธนาคาร']||'-'}</div>
+        <div class="d-flex flex-column align-items-center justify-content-center mb-2">
+          <h3 class="fw-bold text-primary mb-2 tracking-wide" id="bankAccNumber" style="letter-spacing: 1px;">${s['เลขบัญชี']||'-'}</h3>
+          <button type="button" id="copyBtn" class="btn-copy" onclick="copyAccount()">
+            <i class="fas fa-copy text-primary" id="copyIcon"></i> คัดลอกเลขบัญชี
+          </button>
+        </div>
+        <div class="fw-medium text-dark mt-3">${s['ชื่อบัญชี']||'-'}</div>
+      </div>`;
+  }
+
   window.onload = function() {
+    let ua = navigator.userAgent; 
+    if (ua.indexOf("FBAN") > -1 || ua.indexOf("FBAV") > -1 || ua.indexOf("Line") > -1) { 
+      document.getElementById('loadingScreen').style.display = 'none'; 
+      document.getElementById('fbBypassScreen').style.display = 'flex'; 
+      return; 
+    }
+
     if(runnerSessionCount > 1) { 
       document.getElementById('runnerCountAlert').style.display = 'block'; 
       document.getElementById('runnerNumberDisplay').innerText = runnerSessionCount; 
@@ -346,35 +387,26 @@
     let dy = document.getElementById('dobDay'); for(let i=1;i<=31;i++) dy.innerHTML+=`<option value="${i}">${i}</option>`;
     let yr = document.getElementById('dobYear'); let curr = new Date().getFullYear()+543; for(let i=curr;i>=2450;i--) yr.innerHTML+=`<option value="${i}">${i}</option>`;
     
+    // 🚀 ระบบดึง Cache ทำให้โหลดไวขึ้นแบบติดจรวด!
+    let cachedData = localStorage.getItem('phelaAppCacheData');
+    if (cachedData) {
+      try {
+        renderSettingsData(JSON.parse(cachedData));
+        document.getElementById('loadingScreen').style.opacity = '0';
+        setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; document.getElementById('appMain').style.display = 'block'; }, 300);
+      } catch(e) { console.log("Cache error"); }
+    }
+
+    // ดึงข้อมูลใหม่จาก Server เพื่ออัปเดตเบื้องหลัง
     fetch(GAS_URL + "?action=getSettings").then(res => res.json()).then(s => {
-      document.getElementById('loadingScreen').style.display = 'none'; 
-      document.getElementById('appMain').style.display = 'block';
-      
-      if(s['ชื่องาน']) document.getElementById('displayEventName').innerText = s['ชื่องาน'];
-      const getThumb = (url) => { if(!url || !url.includes('id=')) return url; let m = url.match(/id=([-\w]{25,})/); return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w800' : url; };
-      const setI = (id, key) => { let u = getThumb(s[key]); if(u) { let el = document.getElementById(id); el.src = u; el.style.display = 'block'; } };
-      
-      setI('bannerImg','รูป_Banner'); setI('detailImg','รูป_รายละเอียดงาน'); setI('routeImg','รูป_เส้นทางวิ่ง'); setI('trophyImg','รูป_โล่รางวัล'); setI('medalImg','รูปเหรียญรางวัล');
-      
-      shirtImages.vip = getThumb(s['รูป_เสื้อ_VIP']); shirtImages.general = getThumb(s['รูป_เสื้อ_ทั่วไป']);
-      
-      s['ประเภทการแข่งขัน'].split(',').forEach(c => document.getElementById('runCategorySelect').innerHTML += `<option value="${c.trim()}">${c.trim()}</option>`);
-      s['ไซส์เสื้อ'].split(',').forEach(sz => document.getElementById('shirtSizeSelect').innerHTML += `<option value="${sz.trim()}">${sz.trim()}</option>`);
-      
-      // อัปเดตส่วนแสดงเลขบัญชีให้มีปุ่ม "คัดลอก"
-      document.getElementById('bankInfoArea').innerHTML = `
-        <div class="p-4 bg-white border rounded-4 shadow-sm text-center">
-          <div class="text-muted small mb-2">${s['ธนาคาร']||'-'}</div>
-          <div class="d-flex flex-column align-items-center justify-content-center mb-2">
-            <h3 class="fw-bold text-primary mb-2 tracking-wide" id="bankAccNumber" style="letter-spacing: 1px;">${s['เลขบัญชี']||'-'}</h3>
-            <button type="button" id="copyBtn" class="btn-copy" onclick="copyAccount()">
-              <i class="fas fa-copy text-primary" id="copyIcon"></i> คัดลอกเลขบัญชี
-            </button>
-          </div>
-          <div class="fw-medium text-dark mt-3">${s['ชื่อบัญชี']||'-'}</div>
-        </div>`;
+      localStorage.setItem('phelaAppCacheData', JSON.stringify(s));
+      if (!cachedData) { // ถ้าไม่มี Cache ค่อยแสดงหลังดึงข้อมูลเสร็จ
+        renderSettingsData(s);
+        document.getElementById('loadingScreen').style.opacity = '0';
+        setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; document.getElementById('appMain').style.display = 'block'; }, 300);
+      }
     }).catch(e => {
-       document.getElementById('loadingScreen').innerHTML = `<h5 class="text-danger">เกิดข้อผิดพลาด</h5><p>กรุณารีเฟรชหน้าเว็บใหม่อีกครั้ง</p>`;
+       if(!cachedData) document.getElementById('loadingScreen').innerHTML = `<h5 class="text-danger">เกิดข้อผิดพลาด</h5><p>กรุณารีเฟรชหน้าเว็บใหม่อีกครั้ง</p>`;
     });
   };
 
