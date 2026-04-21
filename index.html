@@ -212,7 +212,7 @@
             <label class="form-label required">ช่องทางการรับเสื้อ</label>
             <select class="form-select" name="receiveType" id="receiveTypeSelect" required onchange="calculateTotal()">
               <option value="" selected disabled>เลือกการรับของ</option>
-              <option value="รับด้วยตนเองหน้างาน">รับด้วยตนเองหน้างาน</option>
+              <option value="รับเสื้อวันที่ 26 มิถุนายน 2569 เวลา 09.00-17.00 น. ณ อบต.เพหลา">รับเสื้อวันที่ 26 มิถุนายน 2569 เวลา 09.00-17.00 น. ณ อบต.เพหลา</option>
               <option value="จัดส่งทางไปรษณีย์">จัดส่งทางไปรษณีย์</option>
             </select>
           </div>
@@ -335,7 +335,6 @@
     alert("คัดลอกแล้ว นำไปวางใน Safari หรือ Chrome นะครับ");
   }
 
-  // ฟังก์ชันจัดเรียงและแสดงผลข้อมูล (ถูกแยกออกมาเพื่อให้ใช้กับ Cache ได้)
   function renderSettingsData(s) {
     if(s['ชื่องาน']) document.getElementById('displayEventName').innerText = s['ชื่องาน'];
     const getThumb = (url) => { if(!url || !url.includes('id=')) return url; let m = url.match(/id=([-\w]{25,})/); return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w800' : url; };
@@ -352,7 +351,6 @@
     sizeSelect.innerHTML = '<option value="" selected disabled>เลือกไซส์เสื้อ</option>';
     if(s['ไซส์เสื้อ']) s['ไซส์เสื้อ'].split(',').forEach(sz => sizeSelect.innerHTML += `<option value="${sz.trim()}">${sz.trim()}</option>`);
 
-    // ใส่รุ่นอายุ 7 รุ่นลงไป
     const ages = ["อายุไม่เกิน 12 ปี", "อายุ 13 - 29 ปี", "อายุ 30 - 39 ปี", "อายุ 40 - 49 ปี", "อายุ 50 - 59 ปี", "อายุ 60 - 69 ปี", "อายุ 70 ปีขึ้นไป"];
     let ageSelect = document.querySelector('select[name="ageGroup"]');
     ageSelect.innerHTML = '<option value="" selected disabled>เลือกรุ่นอายุ</option>';
@@ -387,7 +385,6 @@
     let dy = document.getElementById('dobDay'); for(let i=1;i<=31;i++) dy.innerHTML+=`<option value="${i}">${i}</option>`;
     let yr = document.getElementById('dobYear'); let curr = new Date().getFullYear()+543; for(let i=curr;i>=2450;i--) yr.innerHTML+=`<option value="${i}">${i}</option>`;
     
-    // 🚀 ระบบดึง Cache ทำให้โหลดไวขึ้นแบบติดจรวด!
     let cachedData = localStorage.getItem('phelaAppCacheData');
     if (cachedData) {
       try {
@@ -397,10 +394,9 @@
       } catch(e) { console.log("Cache error"); }
     }
 
-    // ดึงข้อมูลใหม่จาก Server เพื่ออัปเดตเบื้องหลัง
     fetch(GAS_URL + "?action=getSettings").then(res => res.json()).then(s => {
       localStorage.setItem('phelaAppCacheData', JSON.stringify(s));
-      if (!cachedData) { // ถ้าไม่มี Cache ค่อยแสดงหลังดึงข้อมูลเสร็จ
+      if (!cachedData) { 
         renderSettingsData(s);
         document.getElementById('loadingScreen').style.opacity = '0';
         setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; document.getElementById('appMain').style.display = 'block'; }, 300);
