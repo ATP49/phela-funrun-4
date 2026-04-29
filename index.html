@@ -74,7 +74,7 @@
     .btn-copy { background: #f1f5f9; border: none; border-radius: 8px; padding: 6px 12px; color: var(--primary); font-size: 0.85rem; font-weight: 600; transition: 0.2s; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
     .btn-copy:hover { background: #e2e8f0; }
 
-    /* Result Card */
+    /* Result Card (No BIB) */
     .result-card { background: var(--surface); border-radius: 16px; padding: 24px; border: 1.5px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,0.03); transition: all 0.3s; }
     .result-card:hover { border-color: #cbd5e1; box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
 
@@ -130,8 +130,11 @@
       <img id="trophyImg" class="img-fluid-custom" loading="lazy">
       <img id="medalImg" class="img-fluid-custom" loading="lazy">
 
-      <h5 class="section-title mt-5"><span><i class="fas fa-images"></i></span> ภาพกิจกรรมเพิ่มเติม</h5>
+      <h5 class="section-title mt-5"><span><i class="fas fa-images"></i></span> ภาพบรรยากาศกิจกรรม</h5>
       <img id="activityImg1" class="img-fluid-custom" loading="lazy">
+      <img id="activityImg2" class="img-fluid-custom" loading="lazy">
+      <img id="activityImg3" class="img-fluid-custom" loading="lazy">
+      <img id="activityImg4" class="img-fluid-custom" loading="lazy">
       
       <button class="btn btn-primary w-100 mt-4" onclick="switchTab('reg')">สมัครเข้าร่วมกิจกรรม <i class="fas fa-arrow-right ms-2"></i></button>
     </div>
@@ -325,6 +328,7 @@
     document.getElementById('totalPriceDisplay').innerText = (base + ship) + " บาท";
   }
 
+  // ระบบคัดลอกบัญชี
   function copyAccount() {
     let accText = document.getElementById('bankAccNumber').innerText.replace(/-/g, '').trim();
     navigator.clipboard.writeText(accText).then(() => {
@@ -332,6 +336,8 @@
       btn.classList.add('bg-success', 'text-white'); icon.className = 'fas fa-check text-white';
       Swal.fire({ title: 'คัดลอกสำเร็จ', text: 'คัดลอกเลขบัญชีเรียบร้อยแล้ว', icon: 'success', toast: true, position: 'top', timer: 1500, showConfirmButton: false });
       setTimeout(() => { btn.classList.remove('bg-success', 'text-white'); icon.className = 'fas fa-copy text-primary'; }, 2000);
+    }).catch(err => {
+      Swal.fire('ข้อผิดพลาด', 'ไม่สามารถคัดลอกได้', 'error');
     });
   }
 
@@ -340,6 +346,7 @@
     alert("คัดลอกแล้ว นำไปวางใน Safari หรือ Chrome นะครับ");
   }
 
+  // ระบบดึงข้อมูลและใส่รูป (รวม 4 รูปกิจกรรม)
   function renderSettingsData(s) {
     if(s['ชื่องาน']) document.getElementById('displayEventName').innerText = s['ชื่องาน'];
     const getThumb = (url) => { if(!url || !url.includes('id=')) return url; let m = url.match(/id=([-\w]{25,})/); return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w800' : url; };
@@ -348,8 +355,11 @@
     setI('bannerImg','รูป_Banner'); setI('detailImg','รูป_รายละเอียดงาน'); setI('routeImg','รูป_เส้นทางวิ่ง'); 
     setI('trophyImg','รูป_โล่รางวัล'); setI('medalImg','รูปเหรียญรางวัล');
     
-    // 🌟 ดึงข้อมูลรูปกิจกรรมมาใส่ Element
+    // ดึงรูปกิจกรรม 1-4 มาแสดง
     setI('activityImg1','รูป_กิจกรรม_1');
+    setI('activityImg2','รูป_กิจกรรม_2');
+    setI('activityImg3','รูป_กิจกรรม_3');
+    setI('activityImg4','รูป_กิจกรรม_4');
     
     shirtImages.vip = getThumb(s['รูป_เสื้อ_VIP']); shirtImages.general = getThumb(s['รูป_เสื้อ_ทั่วไป']);
     
@@ -361,6 +371,7 @@
     sizeSelect.innerHTML = '<option value="" selected disabled>เลือกไซส์เสื้อ</option>';
     if(s['ไซส์เสื้อ']) s['ไซส์เสื้อ'].split(',').forEach(sz => sizeSelect.innerHTML += `<option value="${sz.trim()}">${sz.trim()}</option>`);
 
+    // ดึงรุ่นอายุ 7 รุ่น
     const ages = ["อายุไม่เกิน 12 ปี", "อายุ 13 - 29 ปี", "อายุ 30 - 39 ปี", "อายุ 40 - 49 ปี", "อายุ 50 - 59 ปี", "อายุ 60 - 69 ปี", "อายุ 70 ปีขึ้นไป"];
     let ageSelect = document.querySelector('select[name="ageGroup"]');
     ageSelect.innerHTML = '<option value="" selected disabled>เลือกรุ่นอายุ</option>';
@@ -379,6 +390,7 @@
       </div>`;
   }
 
+  // ระบบตรวจสอบเบราว์เซอร์และแคชข้อมูลเพื่อโหลดไว
   window.onload = function() {
     let ua = navigator.userAgent; 
     if (ua.indexOf("FBAN") > -1 || ua.indexOf("FBAV") > -1 || ua.indexOf("Line") > -1) { 
@@ -429,6 +441,7 @@
 
   function registerNextPerson() { runnerSessionCount++; sessionStorage.setItem('runnerSessionCount', runnerSessionCount); location.reload(); }
 
+  // ส่งข้อมูลฟอร์ม
   function handleFormSubmit(e) {
     e.preventDefault(); 
     document.getElementById('fullDob').value = `${document.getElementById('dobDay').value} ${document.getElementById('dobMonth').value} ${document.getElementById('dobYear').value}`;
@@ -451,6 +464,7 @@
     });
   }
 
+  // ค้นหาสถานะ (ซ่อนหมายเลข BIB ตามที่เคยตกลงกันไว้)
   function doSearch() {
     let p = document.getElementById('schPhone').value; if(!p) return;
     let resBox = document.getElementById('searchResult');
