@@ -125,9 +125,14 @@
       <h5 class="section-title"><span><i class="fas fa-map"></i></span> ข้อมูลกิจกรรม</h5>
       <img id="detailImg" class="img-fluid-custom" loading="lazy">
       <img id="routeImg" class="img-fluid-custom" loading="lazy">
+      
       <h5 class="section-title mt-5"><span><i class="fas fa-trophy"></i></span> รางวัลและของที่ระลึก</h5>
       <img id="trophyImg" class="img-fluid-custom" loading="lazy">
       <img id="medalImg" class="img-fluid-custom" loading="lazy">
+
+      <h5 class="section-title mt-5"><span><i class="fas fa-images"></i></span> ภาพกิจกรรมเพิ่มเติม</h5>
+      <img id="activityImg1" class="img-fluid-custom" loading="lazy">
+      
       <button class="btn btn-primary w-100 mt-4" onclick="switchTab('reg')">สมัครเข้าร่วมกิจกรรม <i class="fas fa-arrow-right ms-2"></i></button>
     </div>
 
@@ -340,7 +345,12 @@
     const getThumb = (url) => { if(!url || !url.includes('id=')) return url; let m = url.match(/id=([-\w]{25,})/); return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w800' : url; };
     const setI = (id, key) => { let u = getThumb(s[key]); if(u) { let el = document.getElementById(id); el.src = u; el.style.display = 'block'; } };
     
-    setI('bannerImg','รูป_Banner'); setI('detailImg','รูป_รายละเอียดงาน'); setI('routeImg','รูป_เส้นทางวิ่ง'); setI('trophyImg','รูป_โล่รางวัล'); setI('medalImg','รูปเหรียญรางวัล');
+    setI('bannerImg','รูป_Banner'); setI('detailImg','รูป_รายละเอียดงาน'); setI('routeImg','รูป_เส้นทางวิ่ง'); 
+    setI('trophyImg','รูป_โล่รางวัล'); setI('medalImg','รูปเหรียญรางวัล');
+    
+    // 🌟 ดึงข้อมูลรูปกิจกรรมมาใส่ Element
+    setI('activityImg1','รูป_กิจกรรม_1');
+    
     shirtImages.vip = getThumb(s['รูป_เสื้อ_VIP']); shirtImages.general = getThumb(s['รูป_เสื้อ_ทั่วไป']);
     
     let catSelect = document.getElementById('runCategorySelect');
