@@ -9,76 +9,39 @@
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
-    :root {
-      --primary: #1d4ed8;       
-      --primary-light: #eff6ff; 
-      --bg-main: #f8fafc;
-      --surface: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --radius: 20px;
-    }
-    
+    :root { --primary: #1d4ed8; --primary-light: #eff6ff; --bg-main: #f8fafc; --surface: #ffffff; --text-main: #0f172a; --text-muted: #64748b; --border: #e2e8f0; --radius: 20px; }
     body { background-color: var(--bg-main); font-family: 'Prompt', sans-serif; color: var(--text-main); margin: 0; padding-bottom: 40px; -webkit-font-smoothing: antialiased; }
-    
-    /* Main Layout */
     .app-container { max-width: 680px; margin: 0 auto; background: var(--surface); min-height: 100vh; box-shadow: 0 20px 40px rgba(0,0,0,0.03); position: relative; }
     @media (min-width: 768px) { .app-container { margin: 40px auto; min-height: auto; border-radius: 24px; overflow: hidden; } }
-
-    /* Hero Header */
     .hero-header { position: relative; background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); color: white; text-align: center; }
     .hero-banner-img { width: 100%; object-fit: cover; display: none; }
     .hero-content { padding: 40px 20px; position: relative; z-index: 2; }
     .hero-content h2 { font-weight: 700; letter-spacing: -0.5px; margin-bottom: 5px; font-size: 1.8rem; }
     .hero-content p { color: rgba(255,255,255,0.8); font-weight: 300; margin: 0; font-size: 0.95rem; }
-
-    /* Modern Tabs */
     .tab-wrapper { background: var(--surface); padding: 15px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
     .nav-tabs-custom { display: flex; background: var(--bg-main); border-radius: 100px; padding: 6px; gap: 4px; }
     .nav-tab-item { flex: 1; text-align: center; padding: 12px 5px; cursor: pointer; font-weight: 600; color: var(--text-muted); font-size: 0.85rem; border-radius: 100px; transition: all 0.3s ease; }
-    .nav-tab-item i { margin-right: 4px; }
     .nav-tab-item.active { background: var(--surface); color: var(--primary); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-
-    /* Content Area */
     .content-area { padding: 30px 24px; }
-    
-    /* Images */
     .img-fluid-custom { width: 100%; border-radius: 16px; margin-bottom: 24px; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid var(--border); }
-    
-    /* Section Titles */
     .section-title { font-weight: 700; color: var(--text-main); font-size: 1.2rem; margin: 35px 0 20px 0; display: flex; align-items: center; gap: 10px; }
     .section-title span { background: var(--primary-light); color: var(--primary); width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
-
-    /* Form Controls Minimalist */
     .form-label { font-weight: 500; font-size: 0.9rem; color: var(--text-main); margin-bottom: 8px; }
     .required::after { content: " *"; color: #ef4444; }
     .form-control, .form-select { border: 1.5px solid var(--border); background-color: var(--bg-main); border-radius: 12px; padding: 14px 16px; font-size: 0.95rem; color: var(--text-main); transition: all 0.2s; box-shadow: none !important; }
     .form-control:focus, .form-select:focus { border-color: var(--primary); background-color: var(--surface); box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.1) !important; }
     .form-text-custom { font-size: 0.8rem; color: var(--text-muted); margin-top: 6px; display: block; }
-
-    /* Address Box */
     .address-box { background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; padding: 20px; }
-    
-    /* Checkout / Payment Box */
     .checkout-box { background: var(--primary-light); border-radius: 16px; padding: 24px; position: relative; overflow: hidden; border: 1px solid rgba(29, 78, 216, 0.1); }
     .checkout-row { display: flex; justify-content: space-between; margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem; }
     .checkout-total { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 15px; border-top: 1px dashed rgba(0,0,0,0.1); font-weight: 700; color: var(--primary); font-size: 1.3rem; }
-
-    /* Buttons */
     .btn-primary { background: var(--primary); border: none; border-radius: 14px; padding: 16px; font-weight: 600; font-size: 1.05rem; transition: all 0.3s; box-shadow: 0 10px 20px -10px var(--primary); }
     .btn-primary:hover { background: #1e40af; transform: translateY(-2px); }
     .btn-primary:disabled { background: #94a3b8; box-shadow: none; transform: none; }
-    
-    /* Copy Button */
     .btn-copy { background: #f1f5f9; border: none; border-radius: 8px; padding: 6px 12px; color: var(--primary); font-size: 0.85rem; font-weight: 600; transition: 0.2s; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
     .btn-copy:hover { background: #e2e8f0; }
-
-    /* Result Card (No BIB) */
     .result-card { background: var(--surface); border-radius: 16px; padding: 24px; border: 1.5px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,0.03); transition: all 0.3s; }
     .result-card:hover { border-color: #cbd5e1; box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
-
-    /* Loading Screen */
     #loadingScreen { position: fixed; inset: 0; background: var(--surface); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.3s; }
     .spinner-border { width: 3rem; height: 3rem; color: var(--primary); }
   </style>
@@ -103,7 +66,6 @@
 </div>
 
 <div class="app-container" id="appMain" style="display:none;">
-  
   <div class="hero-header">
     <img id="bannerImg" class="hero-banner-img" loading="lazy">
     <div class="hero-content">
@@ -247,7 +209,7 @@
         
         <div class="mb-5">
           <label class="form-label required text-primary">แนบหลักฐานการโอนเงิน (สลิป)</label>
-          <input type="file" class="form-control" id="fileInp" accept="image/*" required style="padding: 10px;">
+          <input type="file" class="form-control" id="fileInp" accept="image/jpeg, image/png, image/jpg" required style="padding: 10px;">
           <input type="hidden" name="slipFile" id="base64Inp">
           <span class="form-text-custom"><i class="fas fa-info-circle me-1"></i> รองรับไฟล์รูปภาพ (ระบบจะย่อขนาดให้อัตโนมัติเพื่อความรวดเร็ว)</span>
         </div>
@@ -438,34 +400,48 @@
     if(src) { img.src = src; img.style.display = 'block'; } calculateTotal();
   };
 
-  // 🔥 ระบบบีบอัดรูปสลิปให้เล็กลงอัตโนมัติ แก้ปัญหาโหลดค้าง / หมุนนาน
+  // 🔥 ระบบย่อขนาดและบีบอัดรูปภาพก่อนส่ง (แก้ปัญหาโหลดค้าง 100%)
   document.getElementById('fileInp').onchange = function(e) {
     const file = e.target.files[0];
     if (!file) return;
+
+    // เคลียร์ค่าเก่าทิ้ง ป้องกันบั๊กรูปซ้อน
+    document.getElementById('base64Inp').value = "";
 
     const reader = new FileReader();
     reader.onload = function(event) {
       const img = new Image();
       img.onload = function() {
-        const MAX_WIDTH = 800; // บีบอัดความกว้างสูงสุด 800px ก็อ่านตัวเลขออกสบายๆ
-        let width = img.width;
-        let height = img.height;
+        try {
+          const MAX_WIDTH = 800; // บีบอัดความกว้างเหลือ 800px
+          let width = img.width;
+          let height = img.height;
 
-        if (width > MAX_WIDTH) {
-          height = Math.round((height * MAX_WIDTH) / width);
-          width = MAX_WIDTH;
+          if (width > MAX_WIDTH) {
+            height = Math.round((height * MAX_WIDTH) / width);
+            width = MAX_WIDTH;
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // บีบอัดเป็น JPEG คุณภาพ 70% 
+          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+          document.getElementById('base64Inp').value = compressedBase64;
+        } catch (err) {
+          // หาก Canvas พัง (เช่นติดเรื่องหน่วยความจำ) ให้ดึงรูปต้นฉบับส่งไปแทน
+          document.getElementById('base64Inp').value = event.target.result;
         }
-
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, width, height);
-
-        // บีบอัดคุณภาพรูปเหลือ 70%
-        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
-        document.getElementById('base64Inp').value = compressedBase64;
       };
+      
+      img.onerror = function() {
+        // หากไฟล์รูปแปลกๆ (เช่น HEIC ที่แปลงไม่สมบูรณ์) ให้ส่งรูปต้นฉบับไปเลย
+        document.getElementById('base64Inp').value = event.target.result;
+      };
+      
       img.src = event.target.result;
     };
     reader.readAsDataURL(file);
@@ -473,17 +449,30 @@
 
   function registerNextPerson() { runnerSessionCount++; sessionStorage.setItem('runnerSessionCount', runnerSessionCount); location.reload(); }
 
-  // ฟังก์ชันส่งข้อมูล
+  // 🚀 ระบบส่งข้อมูลที่เพิ่มตัวดักจับปัญหา (Catch Error)
   function handleFormSubmit(e) {
     e.preventDefault(); 
+
+    // เช็คว่ากดส่งก่อนรูปบีบอัดเสร็จหรือไม่
+    if (document.getElementById('fileInp').files.length > 0 && document.getElementById('base64Inp').value === "") {
+       Swal.fire('กรุณารอสักครู่', 'ระบบกำลังจัดเตรียมรูปภาพสลิปของคุณ...', 'warning');
+       return;
+    }
+
     document.getElementById('fullDob').value = `${document.getElementById('dobDay').value} ${document.getElementById('dobMonth').value} ${document.getElementById('dobYear').value}`;
     document.getElementById('fullAddr').value = `${document.getElementById('a1').value} ต.${document.getElementById('a2').value} อ.${document.getElementById('a3').value} จ.${document.getElementById('a4').value} ${document.getElementById('a5').value}`;
     
-    let btn = document.getElementById('btnSub'); btn.disabled = true; btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> กำลังบันทึกข้อมูล...';
+    let btn = document.getElementById('btnSub'); 
+    btn.disabled = true; 
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> กำลังส่งข้อมูล...';
+    
     let fd = new FormData(e.target); let obj = {}; fd.forEach((v, k) => obj[k] = v);
     
     fetch(GAS_URL, { method: "POST", body: JSON.stringify({ action: "processForm", formObject: obj }) })
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) throw new Error("การเชื่อมต่อกับเซิร์ฟเวอร์ล้มเหลว");
+      return res.json();
+    })
     .then(r => {
       if(r.status === "SUCCESS") { 
         document.getElementById('regForm').style.display = 'none'; 
@@ -491,8 +480,17 @@
         document.getElementById('showOrderId').innerText = r.orderId; 
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else { 
-        Swal.fire('ข้อผิดพลาด', r.message, 'error'); btn.disabled = false; btn.innerText = 'ยืนยันการลงทะเบียน'; 
+        Swal.fire('ข้อผิดพลาดจากระบบ', r.message, 'error'); 
+        btn.disabled = false; 
+        btn.innerText = 'ยืนยันการลงทะเบียน'; 
       }
+    })
+    .catch(err => {
+      // 🛑 ดักจับกรณีเน็ตหลุด หรือฝั่ง Google ค้าง
+      console.error(err);
+      Swal.fire('การเชื่อมต่อขัดข้อง', 'เน็ตหลุดหรือเซิร์ฟเวอร์โหลดนานเกินไป กรุณากดส่งใหม่อีกครั้งครับ', 'error');
+      btn.disabled = false; 
+      btn.innerText = 'ยืนยันการลงทะเบียน';
     });
   }
 
