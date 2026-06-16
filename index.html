@@ -101,19 +101,21 @@
 </head>
 <body>
 
+<!-- Loading Screen -->
 <div id="loadingScreen">
   <div class="spinner-border mb-4" role="status"></div>
   <h4 class="fw-bold text-dark mb-1">เตรียมพร้อมเข้าสู่ระบบ</h4>
   <p class="text-muted">กรุณารอสักครู่...</p>
 </div>
 
+<!-- ระบบป้องกัน Facebook/LINE in-app browser -->
 <div id="fbBypassScreen" style="position: fixed; inset: 0; background: #f1f5f9; z-index: 10000; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center;">
     <div style="background: white; padding: 35px 25px; border-radius: var(--radius-lg); box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-width: 420px; width: 100%;">
         <div style="width: 80px; height: 80px; background: #fef3c7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
           <i class="fas fa-exclamation-triangle text-warning" style="font-size: 2.5rem;"></i>
         </div>
-        <h4 class="fw-bold text-dark mb-3">โปรดอ่านก่อนสมัคร</h4>
-        <p class="text-muted mb-4" style="line-height: 1.6;">ระบบของสมาร์ทโฟนบางรุ่นไม่อนุญาตให้อัปโหลดรูปภาพสลิปผ่านแอปพลิเคชัน Social Media โดยตรง กรุณาเปิดผ่านเบราว์เซอร์ปกติครับ</p>
+        <h4 class="fw-bold text-dark mb-3">โปรดอ่านก่อนใช้งาน</h4>
+        <p class="text-muted mb-4" style="line-height: 1.6;">ระบบของสมาร์ทโฟนบางรุ่นอาจมีปัญหาเมื่อเปิดผ่านแอปพลิเคชัน Social Media โดยตรง กรุณาเปิดผ่านเบราว์เซอร์ปกติครับ</p>
         
         <div class="text-start mb-4">
           <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 14px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px;">
@@ -150,6 +152,7 @@
 
   <div class="content-area">
     
+    <!-- ================= แท็บ 1: รายละเอียด ================= -->
     <div id="tab-info" class="fade-in">
       <h5 class="section-title"><span><i class="fas fa-map-marked-alt"></i></span> ข้อมูลการจัดกิจกรรม</h5>
       <img id="detailImg" class="img-fluid-custom" loading="lazy">
@@ -159,6 +162,7 @@
       <img id="trophyImg" class="img-fluid-custom" loading="lazy">
       <img id="medalImg" class="img-fluid-custom" loading="lazy">
 
+      <!-- ภาพกิจกรรมเพิ่มเติม 4 รูป -->
       <h5 class="section-title mt-5"><span><i class="fas fa-camera-retro"></i></span> ภาพบรรยากาศกิจกรรม</h5>
       <img id="activityImg1" class="img-fluid-custom" loading="lazy">
       <img id="activityImg2" class="img-fluid-custom" loading="lazy">
@@ -168,8 +172,27 @@
       <button class="btn btn-primary w-100 mt-4" onclick="switchTab('reg')">ดำเนินการสมัครวิ่ง <i class="fas fa-arrow-right ms-2"></i></button>
     </div>
 
+    <!-- ================= แท็บ 2: สมัครวิ่ง (ปิดรับสมัครแล้ว) ================= -->
     <div id="tab-reg" style="display:none;" class="fade-in">
-      <form id="regForm" onsubmit="handleFormSubmit(event)">
+      
+      <!-- แจ้งเตือนปิดรับสมัคร -->
+      <div id="closedMsg" class="text-center py-5">
+        <div style="width: 95px; height: 95px; background: #fee2e2; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 10px 25px rgba(239, 68, 68, 0.2);">
+          <i class="fas fa-times-circle text-danger" style="font-size: 4rem;"></i>
+        </div>
+        <h3 class="fw-bold mb-2 text-dark">ปิดรับลงทะเบียน</h3>
+        <p class="text-muted mb-4" style="line-height: 1.6;">คณะกรรมการจัดงานขอขอบพระคุณทุกท่าน<br>ที่ให้ความสนใจเข้าร่วมกิจกรรมอย่างล้นหลาม<br>ขณะนี้ระบบได้ทำการ <b>"ปิดรับสมัคร"</b> เรียบร้อยแล้วครับ</p>
+        
+        <div class="p-4 bg-white rounded-4 mb-4 border shadow-sm">
+          <span class="text-muted small d-block mb-3 fw-bold">สำหรับผู้ที่ลงทะเบียนเรียบร้อยแล้ว</span>
+          <button class="btn btn-primary w-100 fw-bold rounded-pill py-3 shadow-sm" onclick="switchTab('track')">
+            <i class="fas fa-search me-2"></i> ตรวจสอบสถานะและข้อมูล
+          </button>
+        </div>
+      </div>
+
+      <!-- ฟอร์มถูกซ่อนไว้ (ไม่ให้กรอก) -->
+      <form id="regForm" onsubmit="handleFormSubmit(event)" style="display: none;">
         
         <div id="runnerCountAlert" class="alert alert-primary border-0 bg-primary bg-opacity-10 text-primary fw-bold rounded-4 mb-4" style="display:none; padding: 18px;">
           <div class="d-flex align-items-center">
@@ -318,6 +341,7 @@
         <button type="submit" class="btn btn-primary w-100" id="btnSub">ยืนยันการลงทะเบียน</button>
       </form>
 
+      <!-- หน้าจอสำเร็จ (ซ่อนไว้ก่อน) -->
       <div id="successMsg" class="text-center py-5" style="display:none;">
         <div style="width: 90px; height: 90px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);">
           <i class="fas fa-check text-success" style="font-size: 3rem;"></i>
@@ -336,6 +360,7 @@
       </div>
     </div>
 
+    <!-- ================= แท็บ 3: ตรวจสอบสถานะ ================= -->
     <div id="tab-track" style="display:none;" class="fade-in">
       <div class="text-center mb-5 mt-4">
         <div style="width: 70px; height: 70px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
@@ -373,7 +398,7 @@
     window.scrollTo({ top: 0, behavior: 'smooth' }); 
   }
 
-  // ฟังก์ชันคำนวณยอดเงินรวม (รวมค่าจัดส่ง ปณ.)
+  // ฟังก์ชันคำนวณยอดเงินรวม
   function calculateTotal() {
     let cat = document.getElementById('runCategorySelect'); let recv = document.getElementById('receiveTypeSelect'); if (!cat.value) return;
     let match = cat.options[cat.selectedIndex].text.match(/(\d+)\s*บาท/); let base = match ? parseInt(match[1], 10) : 0;
@@ -420,7 +445,6 @@
     setI('bannerImg','รูป_Banner'); setI('detailImg','รูป_รายละเอียดงาน'); setI('routeImg','รูป_เส้นทางวิ่ง'); 
     setI('trophyImg','รูป_โล่รางวัล'); setI('medalImg','รูปเหรียญรางวัล');
     
-    // รูปกิจกรรม 1-4
     setI('activityImg1','รูป_กิจกรรม_1'); setI('activityImg2','รูป_กิจกรรม_2');
     setI('activityImg3','รูป_กิจกรรม_3'); setI('activityImg4','รูป_กิจกรรม_4');
     
@@ -434,13 +458,11 @@
     sizeSelect.innerHTML = '<option value="" selected disabled>เลือกไซส์เสื้อ</option>';
     if(s['ไซส์เสื้อ']) s['ไซส์เสื้อ'].split(',').forEach(sz => sizeSelect.innerHTML += `<option value="${sz.trim()}">${sz.trim()}</option>`);
 
-    // ดึงรุ่นอายุ 7 รุ่น
     const ages = ["อายุไม่เกิน 12 ปี", "อายุ 13 - 29 ปี", "อายุ 30 - 39 ปี", "อายุ 40 - 49 ปี", "อายุ 50 - 59 ปี", "อายุ 60 - 69 ปี", "อายุ 70 ปีขึ้นไป"];
     let ageSelect = document.querySelector('select[name="ageGroup"]');
     ageSelect.innerHTML = '<option value="" selected disabled>เลือกรุ่นอายุ</option>';
     ages.forEach(a => ageSelect.innerHTML += `<option value="${a}">${a}</option>`);
     
-    // Render Bank Card UI
     document.getElementById('bankInfoArea').innerHTML = `
       <div class="bank-card">
         <div class="text-muted small fw-bold mb-1"><i class="fas fa-building me-2"></i>ธนาคาร${s['ธนาคาร']||'-'}</div>
@@ -532,7 +554,6 @@
 
           document.getElementById('base64Inp').value = canvas.toDataURL('image/jpeg', 0.7);
           
-          // เปลี่ยนหน้าตา UI เมื่อสำเร็จ
           mainText.innerText = 'เลือกไฟล์เรียบร้อยแล้ว';
           subText.innerText = file.name;
           icon.className = 'fas fa-check-circle text-success mb-2';
@@ -552,43 +573,14 @@
 
   function registerNextPerson() { runnerSessionCount++; sessionStorage.setItem('runnerSessionCount', runnerSessionCount); location.reload(); }
 
-  // 🚀 ระบบส่งข้อมูลดักจับ Error
+  // ส่งข้อมูลที่ถูกปิดไว้ (แอบไว้เผื่อเปิดระบบ)
   function handleFormSubmit(e) {
     e.preventDefault(); 
-
-    if (document.getElementById('fileInp').files.length > 0 && document.getElementById('base64Inp').value === "") {
-       Swal.fire('กรุณารอสักครู่', 'ระบบกำลังจัดเตรียมรูปภาพสลิปของคุณ...', 'warning'); return;
-    }
-
-    document.getElementById('fullDob').value = `${document.getElementById('dobDay').value} ${document.getElementById('dobMonth').value} ${document.getElementById('dobYear').value}`;
-    document.getElementById('fullAddr').value = `${document.getElementById('a1').value} ต.${document.getElementById('a2').value} อ.${document.getElementById('a3').value} จ.${document.getElementById('a4').value} ${document.getElementById('a5').value}`;
-    
-    let btn = document.getElementById('btnSub'); 
-    btn.disabled = true; 
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" style="width:1.2rem;height:1.2rem;border-width:0.15em;"></span> กำลังดำเนินการบันทึกข้อมูล...';
-    
-    let fd = new FormData(e.target); let obj = {}; fd.forEach((v, k) => obj[k] = v);
-    
-    fetch(GAS_URL, { method: "POST", body: JSON.stringify({ action: "processForm", formObject: obj }) })
-    .then(res => { if (!res.ok) throw new Error("Connection Failed"); return res.json(); })
-    .then(r => {
-      if(r.status === "SUCCESS") { 
-        document.getElementById('regForm').style.display = 'none'; 
-        document.getElementById('successMsg').style.display = 'block'; 
-        document.getElementById('showOrderId').innerText = r.orderId; 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else { 
-        Swal.fire('ข้อผิดพลาดจากระบบ', r.message, 'error'); 
-        btn.disabled = false; btn.innerText = 'ยืนยันการลงทะเบียน'; 
-      }
-    })
-    .catch(err => {
-      Swal.fire('การเชื่อมต่อขัดข้อง', 'อินเทอร์เน็ตอาจไม่เสถียรหรือเซิร์ฟเวอร์ตอบสนองช้า กรุณากดส่งใหม่อีกครั้งครับ', 'error');
-      btn.disabled = false; btn.innerText = 'ยืนยันการลงทะเบียน';
-    });
+    // ฟอร์มถูกปิดการแสดงผลแล้ว ถ้ามีการพยายามส่ง จะเด้งข้อความนี้
+    Swal.fire('ขออภัย', 'ระบบได้ทำการปิดรับสมัครเรียบร้อยแล้วครับ', 'error');
   }
 
-  // ค้นหาสถานะ (Ticket UI + ซ่อน BIB)
+  // ค้นหาสถานะ 
   function doSearch() {
     let p = document.getElementById('schPhone').value; if(!p) return;
     let resBox = document.getElementById('searchResult');
@@ -614,7 +606,6 @@
         let bgClass = isPaid ? 'bg-success text-white' : 'bg-warning text-dark';
         let iconClass = isPaid ? 'fa-check-circle' : 'fa-clock';
         
-        // 🎫 ดีไซน์ใหม่คล้ายตั๋ว ไม่มีคำว่า BIB เด็ดขาด
         h += `
           <div class="result-card">
             <div class="d-flex justify-content-between align-items-start mb-3">
