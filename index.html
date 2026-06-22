@@ -10,124 +10,76 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     :root {
-      --primary: #2563eb;       
-      --primary-hover: #1d4ed8;
-      --primary-light: #eff6ff; 
-      --bg-main: #f1f5f9;
-      --surface: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --radius-lg: 24px;
-      --radius-md: 16px;
+      --primary: #2563eb; --primary-hover: #1d4ed8; --primary-light: #eff6ff; 
+      --bg-main: #f1f5f9; --surface: #ffffff;
+      --text-main: #0f172a; --text-muted: #64748b; --border: #e2e8f0;
+      --radius-lg: 24px; --radius-md: 16px;
     }
-    
     body { background-color: var(--bg-main); font-family: 'Prompt', sans-serif; color: var(--text-main); margin: 0; padding-bottom: 40px; -webkit-font-smoothing: antialiased; }
     
-    /* App Container Layout */
     .app-container { max-width: 600px; margin: 0 auto; background: var(--surface); min-height: 100vh; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.05); position: relative; }
     @media (min-width: 768px) { .app-container { margin: 40px auto; min-height: auto; border-radius: var(--radius-lg); overflow: hidden; } }
 
-    /* Hero Header */
     .hero-header { position: relative; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; text-align: center; }
     .hero-banner-img { width: 100%; object-fit: cover; display: none; }
     .hero-content { padding: 45px 20px; position: relative; z-index: 2; }
-    .hero-content h2 { font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; font-size: 1.8rem; }
-    .hero-content p { color: rgba(255,255,255,0.85); font-weight: 400; margin: 0; font-size: 0.95rem; }
+    .hero-content h2 { font-weight: 700; margin-bottom: 8px; font-size: 1.8rem; }
+    .hero-content p { color: rgba(255,255,255,0.85); margin: 0; font-size: 0.95rem; }
 
-    /* Modern iOS-Style Segmented Control */
     .tab-wrapper { background: var(--surface); padding: 15px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(0,0,0,0.05); }
     .nav-tabs-custom { display: flex; background: #f1f5f9; border-radius: 100px; padding: 5px; gap: 4px; }
-    .nav-tab-item { flex: 1; text-align: center; padding: 12px 5px; cursor: pointer; font-weight: 600; color: var(--text-muted); font-size: 0.85rem; border-radius: 100px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .nav-tab-item i { margin-right: 6px; font-size: 1.1em; }
+    .nav-tab-item { flex: 1; text-align: center; padding: 12px 5px; cursor: pointer; font-weight: 600; color: var(--text-muted); font-size: 0.85rem; border-radius: 100px; transition: 0.3s; }
     .nav-tab-item.active { background: var(--surface); color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.08); transform: scale(1.02); }
 
-    /* Content Area */
     .content-area { padding: 30px 24px; }
     .fade-in { animation: fadeIn 0.4s ease-in-out; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     
-    /* Media & Images */
-    .img-fluid-custom { width: 100%; border-radius: var(--radius-md); margin-bottom: 24px; display: none; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.03); transition: transform 0.3s; }
-    
-    /* Section Titles */
+    .img-fluid-custom { width: 100%; border-radius: var(--radius-md); margin-bottom: 24px; display: none; border: 1px solid rgba(0,0,0,0.03); }
     .section-title { font-weight: 700; color: var(--text-main); font-size: 1.25rem; margin: 40px 0 20px 0; display: flex; align-items: center; gap: 12px; }
     .section-title span { background: var(--primary-light); color: var(--primary); width: 34px; height: 34px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; }
 
-    /* Modern Smart Inputs */
     .form-label { font-weight: 600; font-size: 0.9rem; color: #334155; margin-bottom: 8px; margin-left: 4px; }
     .required::after { content: " *"; color: #ef4444; }
-    .form-control, .form-select { border: 2px solid transparent; background-color: #f8fafc; border-radius: 14px; padding: 15px 18px; font-size: 0.95rem; color: var(--text-main); font-weight: 400; transition: all 0.25s; box-shadow: none !important; }
+    .form-control, .form-select { border: 2px solid transparent; background-color: #f8fafc; border-radius: 14px; padding: 15px 18px; font-size: 0.95rem; color: var(--text-main); box-shadow: none !important; }
     .form-control:focus, .form-select:focus { border-color: var(--primary); background-color: var(--surface); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1) !important; }
-    .form-control::placeholder { color: #94a3b8; }
 
-    /* Grouped Box (Address) */
     .address-box { background: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 24px; }
     .address-box .form-control { background-color: var(--surface); border: 1px solid var(--border); }
-    .address-box .form-control:focus { border-color: var(--primary); }
     
-    /* Checkout & Payment */
     .checkout-box { background: var(--primary-light); border-radius: var(--radius-md); padding: 24px; border: 1px dashed rgba(37, 99, 235, 0.2); }
     .checkout-row { display: flex; justify-content: space-between; margin-bottom: 12px; color: #475569; font-size: 0.95rem; }
     .checkout-total { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(37, 99, 235, 0.15); font-weight: 700; color: var(--primary); font-size: 1.4rem; }
 
-    /* Bank Card UI */
-    .bank-card { background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border-radius: var(--radius-md); padding: 25px; border: 1px solid var(--border); box-shadow: 0 10px 20px -10px rgba(0,0,0,0.05); text-align: center; margin-bottom: 30px; position: relative; overflow: hidden; }
+    .bank-card { background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border-radius: var(--radius-md); padding: 25px; border: 1px solid var(--border); text-align: center; margin-bottom: 30px; position: relative; overflow: hidden; }
     .bank-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--primary); }
     .acc-number { font-size: 1.8rem; font-weight: 700; color: var(--text-main); letter-spacing: 2px; margin: 15px 0; font-family: monospace; }
 
-    /* File Upload Area */
     .upload-area { border: 2px dashed #cbd5e1; background: #f8fafc; border-radius: 14px; padding: 20px; text-align: center; transition: 0.3s; position: relative; cursor: pointer; }
     .upload-area.success { border-color: #10b981; background: #dcfce7; }
     .upload-area input[type="file"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10; }
     
-    /* Buttons */
-    .btn-primary { background: var(--primary); border: none; border-radius: 14px; padding: 18px; font-weight: 700; font-size: 1.1rem; transition: all 0.3s; box-shadow: 0 10px 20px -10px var(--primary); color: white; }
-    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 15px 25px -10px var(--primary); }
-    .btn-primary:disabled { background: #94a3b8; box-shadow: none; transform: none; }
-    
-    .btn-copy { background: #e2e8f0; border: none; border-radius: 10px; padding: 8px 16px; color: #475569; font-size: 0.9rem; font-weight: 600; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; }
-    .btn-copy:hover { background: #cbd5e1; color: var(--text-main); }
+    .btn-primary { background: var(--primary); border: none; border-radius: 14px; padding: 18px; font-weight: 700; font-size: 1.1rem; color: white; transition: 0.3s; width: 100%; }
+    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+    .btn-copy { background: #e2e8f0; border: none; border-radius: 10px; padding: 8px 16px; color: #475569; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+    .result-card { background: var(--surface); border-radius: var(--radius-md); padding: 24px; border: 1px solid var(--border); margin-bottom: 20px; }
 
-    /* Result Card (Ticket Style) */
-    .result-card { background: var(--surface); border-radius: var(--radius-md); padding: 24px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.04); transition: all 0.3s; position: relative; overflow: hidden; margin-bottom: 20px; }
-    .result-card::before { content: ''; position: absolute; left: -10px; top: 50%; width: 20px; height: 20px; background: var(--bg-main); border-radius: 50%; transform: translateY(-50%); border-right: 1px solid var(--border); }
-    .result-card::after { content: ''; position: absolute; right: -10px; top: 50%; width: 20px; height: 20px; background: var(--bg-main); border-radius: 50%; transform: translateY(-50%); border-left: 1px solid var(--border); }
-
-    /* Loading Screen */
-    #loadingScreen { position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.4s; backdrop-filter: blur(5px); }
-    .spinner-border { width: 3.5rem; height: 3.5rem; color: var(--primary); border-width: 0.25em; }
+    #loadingScreen { position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.4s; }
   </style>
 </head>
 <body>
 
-<!-- Loading Screen -->
 <div id="loadingScreen">
-  <div class="spinner-border mb-4" role="status"></div>
+  <div class="spinner-border text-primary mb-4" style="width:3.5rem; height:3.5rem; border-width:0.25em;"></div>
   <h4 class="fw-bold text-dark mb-1">เตรียมพร้อมเข้าสู่ระบบ</h4>
-  <p class="text-muted">กรุณารอสักครู่...</p>
+  <p class="text-muted small">กำลังตรวจสอบสถานะการเปิดรับสมัคร...</p>
 </div>
 
-<!-- ระบบป้องกัน Facebook/LINE in-app browser -->
 <div id="fbBypassScreen" style="position: fixed; inset: 0; background: #f1f5f9; z-index: 10000; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center;">
     <div style="background: white; padding: 35px 25px; border-radius: var(--radius-lg); box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-width: 420px; width: 100%;">
-        <div style="width: 80px; height: 80px; background: #fef3c7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-          <i class="fas fa-exclamation-triangle text-warning" style="font-size: 2.5rem;"></i>
-        </div>
+        <i class="fas fa-exclamation-triangle text-warning mb-3" style="font-size: 3rem;"></i>
         <h4 class="fw-bold text-dark mb-3">โปรดอ่านก่อนใช้งาน</h4>
-        <p class="text-muted mb-4" style="line-height: 1.6;">ระบบของสมาร์ทโฟนบางรุ่นอาจมีปัญหาเมื่อเปิดผ่านแอปพลิเคชัน Social Media โดยตรง กรุณาเปิดผ่านเบราว์เซอร์ปกติครับ</p>
-        
-        <div class="text-start mb-4">
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 14px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px;">
-            <div style="background: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">1</div>
-            <div class="small fw-medium">กดที่สัญลักษณ์ <b>จุด 3 จุด (...)</b> มุมขวาบน หรือ <b>ไอคอนแชร์</b> มุมล่างขวา</div>
-          </div>
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 14px; display: flex; align-items: center; gap: 15px;">
-            <div style="background: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">2</div>
-            <div class="small fw-medium">เลือกเมนู <b class="text-primary">"เปิดในเบราว์เซอร์เริ่มต้น"</b> หรือ <b class="text-primary">"เปิดใน Safari"</b></div>
-          </div>
-        </div>
-
+        <p class="text-muted mb-4 small">ระบบของสมาร์ทโฟนบางรุ่นอาจมีปัญหาเมื่อเปิดผ่านแอปพลิเคชัน Social Media โดยตรง กรุณาเปิดผ่านเบราว์เซอร์ปกติครับ</p>
         <button class="btn btn-primary w-100 py-3 fw-bold rounded-pill" onclick="copyMyLink()"><i class="fas fa-link me-2"></i> คัดลอกลิงก์เพื่อไปเปิดเอง</button>
     </div>
 </div>
@@ -152,79 +104,40 @@
 
   <div class="content-area">
     
-    <!-- ================= แท็บ 1: รายละเอียด ================= -->
     <div id="tab-info" class="fade-in">
       <h5 class="section-title"><span><i class="fas fa-map-marked-alt"></i></span> ข้อมูลการจัดกิจกรรม</h5>
       <img id="detailImg" class="img-fluid-custom" loading="lazy">
       <img id="routeImg" class="img-fluid-custom" loading="lazy">
-      
       <h5 class="section-title mt-5"><span><i class="fas fa-award"></i></span> รางวัลและของที่ระลึก</h5>
-      <img id="trophyImg" class="img-fluid-custom" loading="lazy">
-      <img id="medalImg" class="img-fluid-custom" loading="lazy">
-
-      <!-- ภาพกิจกรรมเพิ่มเติม 4 รูป -->
+      <img id="trophyImg" class="img-fluid-custom" loading="lazy"><img id="medalImg" class="img-fluid-custom" loading="lazy">
       <h5 class="section-title mt-5"><span><i class="fas fa-camera-retro"></i></span> ภาพบรรยากาศกิจกรรม</h5>
-      <img id="activityImg1" class="img-fluid-custom" loading="lazy">
-      <img id="activityImg2" class="img-fluid-custom" loading="lazy">
-      <img id="activityImg3" class="img-fluid-custom" loading="lazy">
-      <img id="activityImg4" class="img-fluid-custom" loading="lazy">
-      
+      <img id="activityImg1" class="img-fluid-custom" loading="lazy"><img id="activityImg2" class="img-fluid-custom" loading="lazy">
+      <img id="activityImg3" class="img-fluid-custom" loading="lazy"><img id="activityImg4" class="img-fluid-custom" loading="lazy">
       <button class="btn btn-primary w-100 mt-4" onclick="switchTab('reg')">ดำเนินการสมัครวิ่ง <i class="fas fa-arrow-right ms-2"></i></button>
     </div>
 
-    <!-- ================= แท็บ 2: สมัครวิ่ง (ปิดรับสมัครแล้ว) ================= -->
     <div id="tab-reg" style="display:none;" class="fade-in">
       
-      <!-- แจ้งเตือนปิดรับสมัคร -->
-      <div id="closedMsg" class="text-center py-5">
-        <div style="width: 95px; height: 95px; background: #fee2e2; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 10px 25px rgba(239, 68, 68, 0.2);">
+      <div id="closedMsgArea" class="text-center py-5" style="display: none;">
+        <div style="width: 95px; height: 95px; background: #fee2e2; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;">
           <i class="fas fa-times-circle text-danger" style="font-size: 4rem;"></i>
         </div>
         <h3 class="fw-bold mb-2 text-dark">ปิดรับลงทะเบียน</h3>
-        <p class="text-muted mb-4" style="line-height: 1.6;">คณะกรรมการจัดงานขอขอบพระคุณทุกท่าน<br>ที่ให้ความสนใจเข้าร่วมกิจกรรมอย่างล้นหลาม<br>ขณะนี้ระบบได้ทำการ <b>"ปิดรับสมัคร"</b> เรียบร้อยแล้วครับ</p>
-        
-        <div class="p-4 bg-white rounded-4 mb-4 border shadow-sm">
-          <span class="text-muted small d-block mb-3 fw-bold">สำหรับผู้ที่ลงทะเบียนเรียบร้อยแล้ว</span>
-          <button class="btn btn-primary w-100 fw-bold rounded-pill py-3 shadow-sm" onclick="switchTab('track')">
-            <i class="fas fa-search me-2"></i> ตรวจสอบสถานะและข้อมูล
-          </button>
-        </div>
+        <p class="text-muted mb-4" style="line-height: 1.6;">ขณะนี้ระบบได้ทำการ <b>"ปิดรับสมัคร"</b> เรียบร้อยแล้ว<br>ขอขอบพระคุณทุกท่านที่ให้ความสนใจเข้าร่วมกิจกรรมครับ</p>
+        <button class="btn btn-primary w-100 fw-bold rounded-pill py-3 shadow-sm" onclick="switchTab('track')"><i class="fas fa-search me-2"></i> ตรวจสอบสถานะและข้อมูล</button>
       </div>
 
-      <!-- ฟอร์มถูกซ่อนไว้ (ไม่ให้กรอก) -->
-      <form id="regForm" onsubmit="handleFormSubmit(event)" style="display: none;">
-        
+      <form id="regFormArea" onsubmit="handleFormSubmit(event)" style="display: none;">
         <div id="runnerCountAlert" class="alert alert-primary border-0 bg-primary bg-opacity-10 text-primary fw-bold rounded-4 mb-4" style="display:none; padding: 18px;">
-          <div class="d-flex align-items-center">
-            <i class="fas fa-user-plus fs-4 me-3"></i> 
-            <div>กำลังลงทะเบียนคนที่ <span id="runnerNumberDisplay" class="fs-4">1</span></div>
-          </div>
+          <div class="d-flex align-items-center"><i class="fas fa-user-plus fs-4 me-3"></i><div>กำลังลงทะเบียนคนที่ <span id="runnerNumberDisplay" class="fs-4">1</span></div></div>
         </div>
 
         <h5 class="section-title"><span>1</span> ข้อมูลส่วนตัวผู้สมัคร</h5>
-        
-        <div class="mb-4">
-          <label class="form-label required">ชื่อ-นามสกุล</label>
-          <input type="text" class="form-control" name="fullName" placeholder="กรอกเฉพาะชื่อและนามสกุล (ไม่ต้องระบุคำนำหน้า)" required>
-        </div>
+        <div class="mb-4"><label class="form-label required">ชื่อ-นามสกุล</label><input type="text" class="form-control" name="fullName" placeholder="ไม่ต้องระบุคำนำหน้า" required></div>
         
         <div class="row g-3 mb-4">
-          <div class="col-6">
-            <label class="form-label required">เพศ</label>
-            <select class="form-select" name="gender" required>
-              <option value="" selected disabled>เลือกเพศ</option>
-              <option value="ชาย">ชาย</option>
-              <option value="หญิง">หญิง</option>
-            </select>
-          </div>
-          <div class="col-6">
-            <label class="form-label required">กรุ๊ปเลือด</label>
-            <select class="form-select" name="bloodGroup" required>
-              <option value="" selected disabled>เลือกกรุ๊ปเลือด</option>
-              <option value="A">A</option><option value="B">B</option>
-              <option value="O">O</option><option value="AB">AB</option>
-            </select>
-          </div>
+          <div class="col-6"><label class="form-label required">เพศ</label><select class="form-select" name="gender" required><option value="" selected disabled>เลือก</option><option value="ชาย">ชาย</option><option value="หญิง">หญิง</option></select></div>
+          <div class="col-6"><label class="form-label required">กรุ๊ปเลือด</label><select class="form-select" name="bloodGroup" required><option value="" selected disabled>เลือก</option><option value="A">A</option><option value="B">B</option><option value="O">O</option><option value="AB">AB</option></select></div>
         </div>
 
         <div class="mb-4">
@@ -237,145 +150,52 @@
           <input type="hidden" name="dob" id="fullDob">
         </div>
 
-        <div class="mb-4">
-          <label class="form-label required">โรคประจำตัว</label>
-          <input type="text" class="form-control" name="disease" placeholder="หากไม่มีให้ระบุเครื่องหมายขีด (-)" required>
-        </div>
+        <div class="mb-4"><label class="form-label required">โรคประจำตัว</label><input type="text" class="form-control" name="disease" placeholder="หากไม่มีให้ระบุ (-)" required></div>
 
         <div class="address-box mb-4">
-          <label class="form-label required text-primary mb-3"><i class="fas fa-home me-2"></i>ที่อยู่ปัจจุบัน / สำหรับจัดส่งเสื้อ</label>
+          <label class="form-label required text-primary mb-3"><i class="fas fa-home me-2"></i>ที่อยู่สำหรับจัดส่งเสื้อ</label>
           <input type="text" id="a1" class="form-control mb-3" placeholder="บ้านเลขที่, หมู่, ซอย, ถนน" required>
-          <div class="row g-3">
-            <div class="col-6"><input type="text" id="a2" class="form-control" placeholder="ตำบล/แขวง" required></div>
-            <div class="col-6"><input type="text" id="a3" class="form-control" placeholder="อำเภอ/เขต" required></div>
-            <div class="col-6"><input type="text" id="a4" class="form-control" placeholder="จังหวัด" required></div>
-            <div class="col-6"><input type="text" id="a5" class="form-control" placeholder="รหัสไปรษณีย์" required></div>
-          </div>
+          <div class="row g-3"><div class="col-6"><input type="text" id="a2" class="form-control" placeholder="ตำบล/แขวง" required></div><div class="col-6"><input type="text" id="a3" class="form-control" placeholder="อำเภอ/เขต" required></div><div class="col-6"><input type="text" id="a4" class="form-control" placeholder="จังหวัด" required></div><div class="col-6"><input type="text" id="a5" class="form-control" placeholder="รหัสไปรษณีย์" required></div></div>
           <input type="hidden" name="address" id="fullAddr">
         </div>
 
         <div class="row g-3 mb-5">
-          <div class="col-md-6">
-            <label class="form-label required">เบอร์โทรศัพท์มือถือ</label>
-            <input type="tel" class="form-control" name="phone" pattern="[0-9]{10}" placeholder="ระบุตัวเลข 10 หลัก (08xxxxxxxx)" required>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label required">ผู้ติดต่อฉุกเฉิน</label>
-            <input type="text" class="form-control" name="emergencyContact" placeholder="ระบุชื่อและเบอร์โทรศัพท์" required>
-          </div>
+          <div class="col-md-6"><label class="form-label required">เบอร์โทรศัพท์มือถือ</label><input type="tel" class="form-control" name="phone" pattern="[0-9]{10}" placeholder="08xxxxxxxx" required></div>
+          <div class="col-md-6"><label class="form-label required">ผู้ติดต่อฉุกเฉิน</label><input type="text" class="form-control" name="emergencyContact" placeholder="ชื่อและเบอร์โทรศัพท์" required></div>
         </div>
 
         <h5 class="section-title"><span>2</span> ประเภทและของที่ระลึก</h5>
-        
-        <div class="text-center mb-4">
-          <img id="shirtImg" style="width: 100%; max-width: 320px; border-radius: 16px; display: none; box-shadow: 0 15px 30px -5px rgba(0,0,0,0.1); margin: 0 auto;" loading="lazy">
-        </div>
+        <div class="text-center mb-4"><img id="shirtImg" style="width: 100%; max-width: 320px; border-radius: 16px; display: none; margin: 0 auto;" loading="lazy"></div>
         
         <div class="row g-3 mb-4">
-          <div class="col-md-6">
-            <label class="form-label required">ประเภทการแข่งขัน</label>
-            <select class="form-select fw-bold text-primary" name="runCategory" id="runCategorySelect" required onchange="calculateTotal()">
-              <option value="" selected disabled>เลือกประเภทวิ่ง</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label required">รุ่นอายุการแข่งขัน</label>
-            <select class="form-select fw-bold text-primary" name="ageGroup" required>
-              <option value="" selected disabled>เลือกรุ่นอายุ</option>
-            </select>
-          </div>
+          <div class="col-md-6"><label class="form-label required">ประเภทการแข่งขัน</label><select class="form-select fw-bold text-primary" name="runCategory" id="runCategorySelect" required onchange="calculateTotal()"><option value="" selected disabled>เลือก</option></select></div>
+          <div class="col-md-6"><label class="form-label required">รุ่นอายุการแข่งขัน</label><select class="form-select fw-bold text-primary" name="ageGroup" required><option value="" selected disabled>เลือก</option></select></div>
         </div>
 
         <div class="row g-3 mb-5">
-          <div class="col-md-6">
-            <label class="form-label required">ไซส์เสื้อ (รอบอก)</label>
-            <select class="form-select fw-bold text-primary" name="shirtSize" id="shirtSizeSelect" required><option value="" selected disabled>เลือกไซส์เสื้อ</option></select>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label required">ช่องทางการรับเสื้อ</label>
-            <select class="form-select fw-bold text-primary" name="receiveType" id="receiveTypeSelect" required onchange="calculateTotal()">
-              <option value="" selected disabled>เลือกวิธีรับเสื้อ</option>
-              <option value="รับเสื้อวันที่ 26 มิถุนายน 2569 เวลา 09.00-17.00 น. ณ อบต.เพหลา">รับเสื้อวันที่ 26 มิ.ย. 69 (09.00-17.00 น.) ณ อบต.เพหลา</option>
-              <option value="จัดส่งทางไปรษณีย์">จัดส่งทางไปรษณีย์ถึงบ้าน</option>
-            </select>
-          </div>
+          <div class="col-md-6"><label class="form-label required">ไซส์เสื้อ (รอบอก)</label><select class="form-select fw-bold text-primary" name="shirtSize" id="shirtSizeSelect" required><option value="" selected disabled>เลือก</option></select></div>
+          <div class="col-md-6"><label class="form-label required">ช่องทางการรับเสื้อ</label><select class="form-select fw-bold text-primary" name="receiveType" id="receiveTypeSelect" required onchange="calculateTotal()"><option value="" selected disabled>เลือก</option><option value="รับเสื้อวันที่ 26 มิถุนายน 2569 เวลา 09.00-17.00 น. ณ อบต.เพหลา">รับเสื้อ 26 มิ.ย. 69 ณ อบต.เพหลา</option><option value="จัดส่งทางไปรษณีย์">จัดส่งทางไปรษณีย์ถึงบ้าน</option></select></div>
         </div>
 
         <h5 class="section-title"><span>3</span> สรุปยอดและชำระเงิน</h5>
-        
-        <div id="paymentCalcArea" class="checkout-box mb-4" style="display: none;">
-          <div class="checkout-row">
-            <span>ค่าสมัครประเภทที่เลือก</span>
-            <span id="basePriceDisplay" class="fw-bold text-dark">0 บาท</span>
-          </div>
-          <div class="checkout-row" id="shippingFeeRow" style="display: none !important;">
-            <span id="shippingFeeText">ค่าบริการจัดส่งพัสดุ</span>
-            <span id="shippingFeeAmount" class="fw-bold text-dark">+0 บาท</span>
-          </div>
-          <div class="checkout-total">
-            <span>ยอดโอนชำระสุทธิ</span>
-            <span id="totalPriceDisplay">0 บาท</span>
-          </div>
-        </div>
-
+        <div id="paymentCalcArea" class="checkout-box mb-4" style="display: none;"><div class="checkout-row"><span>ค่าสมัคร</span><span id="basePriceDisplay" class="fw-bold text-dark">0 บาท</span></div><div class="checkout-row" id="shippingFeeRow" style="display: none !important;"><span>ค่าจัดส่งพัสดุ</span><span id="shippingFeeAmount" class="fw-bold text-dark">+0 บาท</span></div><div class="checkout-total"><span>ยอดโอนสุทธิ</span><span id="totalPriceDisplay">0 บาท</span></div></div>
         <div id="bankInfoArea" class="mb-4"></div>
         
         <div class="mb-5">
-          <label class="form-label required text-primary">แนบหลักฐานการโอนเงิน (สลิป)</label>
-          <div class="upload-area" id="uploadAreaBox">
-            <i class="fas fa-cloud-upload-alt text-primary mb-2" style="font-size: 2rem;" id="uploadIcon"></i>
-            <div class="fw-bold text-dark mb-1" id="uploadTextMain">แตะที่นี่เพื่อเลือกรูปภาพสลิป</div>
-            <div class="small text-muted" id="uploadTextSub">รองรับไฟล์ JPG, PNG (ระบบจะบีบอัดขนาดให้อัตโนมัติ)</div>
-            <input type="file" id="fileInp" accept="image/jpeg, image/png, image/jpg" required>
-            <input type="hidden" name="slipFile" id="base64Inp">
-          </div>
+          <label class="form-label required text-primary">แนบสลิปโอนเงิน</label>
+          <div class="upload-area" id="uploadAreaBox"><i class="fas fa-cloud-upload-alt text-primary mb-2 fs-1" id="uploadIcon"></i><div class="fw-bold text-dark mb-1" id="uploadTextMain">แตะเพื่อเลือกรูปสลิป</div><div class="small text-muted" id="uploadTextSub">รองรับ JPG, PNG</div><input type="file" id="fileInp" accept="image/*" required><input type="hidden" name="slipFile" id="base64Inp"></div>
         </div>
 
-        <div class="form-check mb-5 d-flex align-items-center bg-white p-3 border rounded-3 shadow-sm">
-          <input class="form-check-input mt-0 me-3" type="checkbox" id="checkAgree" required style="width: 22px; height: 22px; cursor: pointer;">
-          <label class="form-check-label text-muted" style="font-size: 0.9rem; cursor: pointer;" for="checkAgree">
-            ข้าพเจ้าขอรับรองว่าข้อมูลการสมัครถูกต้องครบถ้วน และยอมรับเงื่อนไขการจัดการแข่งขันทุกประการ
-          </label>
-        </div>
-        
-        <button type="submit" class="btn btn-primary w-100" id="btnSub">ยืนยันการลงทะเบียน</button>
+        <div class="form-check mb-5 d-flex align-items-center bg-white p-3 border rounded-3 shadow-sm"><input class="form-check-input mt-0 me-3" type="checkbox" id="checkAgree" required style="width: 22px; height: 22px; cursor: pointer;"><label class="form-check-label text-muted small" style="cursor: pointer;" for="checkAgree">รับรองว่าข้อมูลถูกต้องครบถ้วน และยอมรับเงื่อนไขการแข่งขัน</label></div>
+        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold" id="btnSub">ยืนยันการลงทะเบียน</button>
       </form>
 
-      <!-- หน้าจอสำเร็จ (ซ่อนไว้ก่อน) -->
-      <div id="successMsg" class="text-center py-5" style="display:none;">
-        <div style="width: 90px; height: 90px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);">
-          <i class="fas fa-check text-success" style="font-size: 3rem;"></i>
-        </div>
-        <h3 class="fw-bold mb-2 text-dark">ลงทะเบียนสำเร็จ!</h3>
-        <p class="text-muted mb-4">ระบบได้รับข้อมูลและสลิปการโอนเงินของท่านเรียบร้อยแล้ว</p>
-        
-        <div class="p-4 bg-white rounded-4 mb-4 border shadow-sm position-relative overflow-hidden">
-          <div style="position:absolute; top:0; left:0; width:100%; height:4px; background:var(--primary);"></div>
-          <span class="text-muted small d-block mb-1 fw-bold">รหัสอ้างอิงการสมัคร</span>
-          <h1 class="fw-bold text-primary mb-0" id="showOrderId" style="letter-spacing: 2px;"></h1>
-        </div>
-
-        <button class="btn btn-outline-primary w-100 mb-3 fw-bold rounded-4 py-3" onclick="switchTab('track')"><i class="fas fa-search me-2"></i> ตรวจสอบสถานะการอนุมัติ</button>
-        <button class="btn btn-light border w-100 fw-bold rounded-4 py-3 text-muted shadow-sm" onclick="registerNextPerson()"><i class="fas fa-user-plus me-2"></i> ลงทะเบียนเพิ่มให้บุคคลอื่น</button>
-      </div>
+      <div id="successMsg" class="text-center py-5" style="display:none;"><div style="width: 90px; height: 90px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;"><i class="fas fa-check text-success fs-1"></i></div><h3 class="fw-bold mb-2 text-dark">ลงทะเบียนสำเร็จ!</h3><p class="text-muted mb-4 small">ระบบได้รับข้อมูลและสลิปของท่านแล้ว</p><div class="p-4 bg-white rounded-4 mb-4 border"><span class="text-muted small d-block mb-1 fw-bold">รหัสอ้างอิง</span><h1 class="fw-bold text-primary mb-0 font-monospace" id="showOrderId"></h1></div><button class="btn btn-outline-primary w-100 mb-3 fw-bold rounded-4 py-3" onclick="switchTab('track')">ตรวจสอบสถานะ</button><button class="btn btn-light border w-100 fw-bold rounded-4 py-3 text-muted" onclick="registerNextPerson()">ลงทะเบียนเพิ่มให้คนอื่น</button></div>
     </div>
 
-    <!-- ================= แท็บ 3: ตรวจสอบสถานะ ================= -->
     <div id="tab-track" style="display:none;" class="fade-in">
-      <div class="text-center mb-5 mt-4">
-        <div style="width: 70px; height: 70px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-          <i class="fas fa-search text-primary" style="font-size: 2rem;"></i>
-        </div>
-        <h3 class="fw-bold text-dark mb-2">ตรวจสอบสถานะ</h3>
-        <p class="text-muted">กรุณาระบุเบอร์โทรศัพท์มือถือที่ใช้ในการลงทะเบียน</p>
-      </div>
-      
-      <div class="input-group mb-5 shadow-sm rounded-4 overflow-hidden border bg-white p-1">
-        <span class="input-group-text bg-white border-0 ps-3 text-muted"><i class="fas fa-mobile-alt fs-5"></i></span>
-        <input type="tel" id="schPhone" class="form-control border-0 py-3 ps-2 fw-bold text-dark fs-5" placeholder="08xxxxxxxx" maxlength="10" style="background: white !important;">
-        <button class="btn btn-primary px-4 rounded-4 m-1 fw-bold" onclick="doSearch()">ค้นหา</button>
-      </div>
-      
+      <div class="text-center mb-5 mt-4"><h3 class="fw-bold text-dark mb-2">ตรวจสอบสถานะ</h3><p class="text-muted small">ระบุเบอร์โทรศัพท์ที่ใช้ลงทะเบียน</p></div>
+      <div class="input-group mb-5 shadow-sm rounded-4 overflow-hidden border bg-white p-1"><span class="input-group-text bg-white border-0 ps-3 text-muted"><i class="fas fa-mobile-alt fs-5"></i></span><input type="tel" id="schPhone" class="form-control border-0 py-3 ps-2 fw-bold text-dark fs-5" placeholder="08xxxxxxxx" maxlength="10"><button class="btn btn-primary px-4 rounded-4 m-1 fw-bold" onclick="doSearch()">ค้นหา</button></div>
       <div id="searchResult"></div>
     </div>
 
@@ -383,255 +203,76 @@
 </div>
 
 <script>
-  // 🌟 รหัส API เชื่อมต่อกับ Google Apps Script
   const GAS_URL = "https://script.google.com/macros/s/AKfycbwh68q2FlHQE2062tQLuNPMfUfCakFVTtMzk7SeMPZCvAS4iuPD2hQK3bkIyGORW421SQ/exec";
-  
-  let shirtImages = { vip: "", general: "" };
-  let runnerSessionCount = parseInt(sessionStorage.getItem('runnerSessionCount')) || 1;
+  let shirtImages = { vip: "", general: "" }; let runnerSessionCount = parseInt(sessionStorage.getItem('runnerSessionCount')) || 1;
 
-  // ฟังก์ชันสลับหน้าต่าง (Tabs)
-  function switchTab(tab) { 
-    ['info','reg','track'].forEach(t => document.getElementById('tab-'+t).style.display = 'none'); 
-    document.getElementById('tab-'+tab).style.display = 'block'; 
-    document.querySelectorAll('.nav-tab-item').forEach(el => el.classList.remove('active')); 
-    event.currentTarget.classList.add('active'); 
-    window.scrollTo({ top: 0, behavior: 'smooth' }); 
-  }
+  function switchTab(tab) { ['info','reg','track'].forEach(t => document.getElementById('tab-'+t).style.display = 'none'); document.getElementById('tab-'+tab).style.display = 'block'; document.querySelectorAll('.nav-tab-item').forEach(el => el.classList.remove('active')); event.currentTarget.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-  // ฟังก์ชันคำนวณยอดเงินรวม
-  function calculateTotal() {
-    let cat = document.getElementById('runCategorySelect'); let recv = document.getElementById('receiveTypeSelect'); if (!cat.value) return;
-    let match = cat.options[cat.selectedIndex].text.match(/(\d+)\s*บาท/); let base = match ? parseInt(match[1], 10) : 0;
-    let ship = recv.value.includes("ไปรษณีย์") ? (runnerSessionCount === 1 ? 50 : 10) : 0;
-    
-    document.getElementById('paymentCalcArea').style.display = 'block'; 
-    document.getElementById('basePriceDisplay').innerText = base + " บาท";
-    
-    let sRow = document.getElementById('shippingFeeRow'); 
-    if(ship > 0) { 
-      sRow.style.setProperty('display', 'flex', 'important'); 
-      document.getElementById('shippingFeeAmount').innerText = "+"+ship+" บาท"; 
-    } else {
-      sRow.style.setProperty('display', 'none', 'important');
-    }
-    document.getElementById('totalPriceDisplay').innerText = (base + ship) + " บาท";
-  }
+  function calculateTotal() { let cat = document.getElementById('runCategorySelect'); let recv = document.getElementById('receiveTypeSelect'); if (!cat.value) return; let match = cat.options[cat.selectedIndex].text.match(/(\d+)\s*บาท/); let base = match ? parseInt(match[1], 10) : 0; let ship = recv.value.includes("ไปรษณีย์") ? (runnerSessionCount === 1 ? 50 : 10) : 0; document.getElementById('paymentCalcArea').style.display = 'block'; document.getElementById('basePriceDisplay').innerText = base + " บาท"; let sRow = document.getElementById('shippingFeeRow'); if(ship > 0) { sRow.style.setProperty('display', 'flex', 'important'); document.getElementById('shippingFeeAmount').innerText = "+"+ship+" บาท"; } else { sRow.style.setProperty('display', 'none', 'important'); } document.getElementById('totalPriceDisplay').innerText = (base + ship) + " บาท"; }
 
-  // ระบบคัดลอกเลขบัญชีแบบ Premium
-  function copyAccount() {
-    let accText = document.getElementById('bankAccNumber').innerText.replace(/-/g, '').trim();
-    navigator.clipboard.writeText(accText).then(() => {
-      let btn = document.getElementById('copyBtn'); let icon = document.getElementById('copyIcon');
-      btn.innerHTML = `<i class="fas fa-check text-white"></i> คัดลอกสำเร็จ!`;
-      btn.className = 'btn-copy bg-success text-white shadow-sm';
-      setTimeout(() => { 
-        btn.innerHTML = `<i class="fas fa-copy" id="copyIcon"></i> คัดลอกเลขบัญชี`;
-        btn.className = 'btn-copy';
-      }, 2500);
-    });
-  }
+  function copyAccount() { navigator.clipboard.writeText(document.getElementById('bankAccNumber').innerText.replace(/-/g, '').trim()).then(() => { let btn = document.getElementById('copyBtn'); btn.innerHTML = `<i class="fas fa-check text-white"></i> คัดลอกสำเร็จ!`; btn.className = 'btn-copy bg-success text-white shadow-sm'; setTimeout(() => { btn.innerHTML = `<i class="fas fa-copy"></i> คัดลอกเลขบัญชี`; btn.className = 'btn-copy'; }, 2000); }); }
+  function copyMyLink() { let temp = document.createElement("input"); temp.value = window.location.href; document.body.appendChild(temp); temp.select(); document.execCommand("copy"); document.body.removeChild(temp); Swal.fire({ title: 'คัดลอกลิงก์สำเร็จ', text: 'นำไปวางใน Safari หรือ Google Chrome ได้เลยครับ', icon: 'success' }); }
 
-  function copyMyLink() {
-    let temp = document.createElement("input"); temp.value = window.location.href; document.body.appendChild(temp); temp.select(); document.execCommand("copy"); document.body.removeChild(temp);
-    Swal.fire({ title: 'คัดลอกลิงก์สำเร็จ', text: 'นำไปวางใน Safari หรือ Google Chrome ได้เลยครับ', icon: 'success' });
-  }
-
-  // ดึงข้อมูลการตั้งค่าและรูปภาพ (Cache System)
   function renderSettingsData(s) {
     if(s['ชื่องาน']) document.getElementById('displayEventName').innerText = s['ชื่องาน'];
     const getThumb = (url) => { if(!url || !url.includes('id=')) return url; let m = url.match(/id=([-\w]{25,})/); return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w800' : url; };
     const setI = (id, key) => { let u = getThumb(s[key]); if(u) { let el = document.getElementById(id); el.src = u; el.style.display = 'block'; } };
     
-    setI('bannerImg','รูป_Banner'); setI('detailImg','รูป_รายละเอียดงาน'); setI('routeImg','รูป_เส้นทางวิ่ง'); 
-    setI('trophyImg','รูป_โล่รางวัล'); setI('medalImg','รูปเหรียญรางวัล');
-    
-    setI('activityImg1','รูป_กิจกรรม_1'); setI('activityImg2','รูป_กิจกรรม_2');
-    setI('activityImg3','รูป_กิจกรรม_3'); setI('activityImg4','รูป_กิจกรรม_4');
-    
+    setI('bannerImg','รูป_Banner'); setI('detailImg','รูป_รายละเอียดงาน'); setI('routeImg','รูป_เส้นทางวิ่ง'); setI('trophyImg','รูป_โล่รางวัล'); setI('medalImg','รูปเหรียญรางวัล'); setI('activityImg1','รูป_กิจกรรม_1'); setI('activityImg2','รูป_กิจกรรม_2'); setI('activityImg3','รูป_กิจกรรม_3'); setI('activityImg4','รูป_กิจกรรม_4');
     shirtImages.vip = getThumb(s['รูป_เสื้อ_VIP']); shirtImages.general = getThumb(s['รูป_เสื้อ_ทั่วไป']);
     
-    let catSelect = document.getElementById('runCategorySelect');
-    catSelect.innerHTML = '<option value="" selected disabled>เลือกประเภทวิ่ง</option>';
-    if(s['ประเภทการแข่งขัน']) s['ประเภทการแข่งขัน'].split(',').forEach(c => catSelect.innerHTML += `<option value="${c.trim()}">${c.trim()}</option>`);
-    
-    let sizeSelect = document.getElementById('shirtSizeSelect');
-    sizeSelect.innerHTML = '<option value="" selected disabled>เลือกไซส์เสื้อ</option>';
-    if(s['ไซส์เสื้อ']) s['ไซส์เสื้อ'].split(',').forEach(sz => sizeSelect.innerHTML += `<option value="${sz.trim()}">${sz.trim()}</option>`);
+    let catSelect = document.getElementById('runCategorySelect'); catSelect.innerHTML = '<option value="" selected disabled>เลือก</option>'; if(s['ประเภทการแข่งขัน']) s['ประเภทการแข่งขัน'].split(',').forEach(c => catSelect.innerHTML += `<option value="${c.trim()}">${c.trim()}</option>`);
+    let sizeSelect = document.getElementById('shirtSizeSelect'); sizeSelect.innerHTML = '<option value="" selected disabled>เลือก</option>'; if(s['ไซส์เสื้อ']) s['ไซส์เสื้อ'].split(',').forEach(sz => sizeSelect.innerHTML += `<option value="${sz.trim()}">${sz.trim()}</option>`);
 
-    const ages = ["อายุไม่เกิน 12 ปี", "อายุ 13 - 29 ปี", "อายุ 30 - 39 ปี", "อายุ 40 - 49 ปี", "อายุ 50 - 59 ปี", "อายุ 60 - 69 ปี", "อายุ 70 ปีขึ้นไป"];
-    let ageSelect = document.querySelector('select[name="ageGroup"]');
-    ageSelect.innerHTML = '<option value="" selected disabled>เลือกรุ่นอายุ</option>';
-    ages.forEach(a => ageSelect.innerHTML += `<option value="${a}">${a}</option>`);
+    const ages = ["อายุไม่เกิน 12 ปี", "อายุ 13 - 29 ปี", "อายุ 30 - 39 ปี", "อายุ 40 - 49 ปี", "อายุ 50 - 59 ปี", "อายุ 60 - 69 ปี", "อายุ 70 ปีขึ้นไป"]; let ageSelect = document.querySelector('select[name="ageGroup"]'); ageSelect.innerHTML = '<option value="" selected disabled>เลือก</option>'; ages.forEach(a => ageSelect.innerHTML += `<option value="${a}">${a}</option>`);
     
-    document.getElementById('bankInfoArea').innerHTML = `
-      <div class="bank-card">
-        <div class="text-muted small fw-bold mb-1"><i class="fas fa-building me-2"></i>ธนาคาร${s['ธนาคาร']||'-'}</div>
-        <div class="acc-number" id="bankAccNumber">${s['เลขบัญชี']||'-'}</div>
-        <button type="button" id="copyBtn" class="btn-copy mb-3" onclick="copyAccount()">
-          <i class="fas fa-copy" id="copyIcon"></i> คัดลอกเลขบัญชี
-        </button>
-        <div class="fw-bold text-primary mt-2 p-2 bg-primary bg-opacity-10 rounded-3">${s['ชื่อบัญชี']||'-'}</div>
-      </div>`;
+    document.getElementById('bankInfoArea').innerHTML = `<div class="bank-card"><div class="text-muted small fw-bold mb-1">ธนาคาร${s['ธนาคาร']||'-'}</div><div class="acc-number" id="bankAccNumber">${s['เลขบัญชี']||'-'}</div><button type="button" id="copyBtn" class="btn-copy mb-3" onclick="copyAccount()"><i class="fas fa-copy"></i> คัดลอกเลขบัญชี</button><div class="fw-bold text-primary mt-2 p-2 bg-primary bg-opacity-10 rounded-3">${s['ชื่อบัญชี']||'-'}</div></div>`;
+
+    let masterRegStatus = s['สถานะรับสมัคร'] || 'เปิด';
+    if(masterRegStatus.trim() === 'ปิด') {
+      document.getElementById('closedMsgArea').style.display = 'block'; document.getElementById('regFormArea').style.display = 'none';
+    } else {
+      document.getElementById('closedMsgArea').style.display = 'none'; document.getElementById('regFormArea').style.display = 'block';
+    }
   }
 
-  // โหลดหน้าเว็บ (ตรวจสอบเบราว์เซอร์และแคช)
   window.onload = function() {
-    let ua = navigator.userAgent; 
-    if (ua.indexOf("FBAN") > -1 || ua.indexOf("FBAV") > -1 || ua.indexOf("Line") > -1) { 
-      document.getElementById('loadingScreen').style.display = 'none'; 
-      document.getElementById('fbBypassScreen').style.display = 'flex'; 
-      return; 
-    }
-
-    if(runnerSessionCount > 1) { 
-      document.getElementById('runnerCountAlert').style.display = 'block'; 
-      document.getElementById('runnerNumberDisplay').innerText = runnerSessionCount; 
-    }
+    if (navigator.userAgent.indexOf("FBAN") > -1 || navigator.userAgent.indexOf("FBAV") > -1 || navigator.userAgent.indexOf("Line") > -1) { document.getElementById('loadingScreen').style.display = 'none'; document.getElementById('fbBypassScreen').style.display = 'flex'; return; }
+    if(runnerSessionCount > 1) { document.getElementById('runnerCountAlert').style.display = 'block'; document.getElementById('runnerNumberDisplay').innerText = runnerSessionCount; }
     
     let dy = document.getElementById('dobDay'); for(let i=1;i<=31;i++) dy.innerHTML+=`<option value="${i}">${i}</option>`;
     let yr = document.getElementById('dobYear'); let curr = new Date().getFullYear()+543; for(let i=curr;i>=2450;i--) yr.innerHTML+=`<option value="${i}">${i}</option>`;
     
     let cachedData = localStorage.getItem('phelaAppCacheData');
-    if (cachedData) {
-      try {
-        renderSettingsData(JSON.parse(cachedData));
-        document.getElementById('loadingScreen').style.opacity = '0';
-        setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; document.getElementById('appMain').style.display = 'block'; }, 300);
-      } catch(e) { console.log("Cache error"); }
-    }
+    if (cachedData) { try { renderSettingsData(JSON.parse(cachedData)); document.getElementById('loadingScreen').style.opacity = '0'; setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; document.getElementById('appMain').style.display = 'block'; }, 300); } catch(e){} }
 
     fetch(GAS_URL + "?action=getSettings").then(res => res.json()).then(s => {
       localStorage.setItem('phelaAppCacheData', JSON.stringify(s));
-      if (!cachedData) { 
-        renderSettingsData(s);
-        document.getElementById('loadingScreen').style.opacity = '0';
-        setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; document.getElementById('appMain').style.display = 'block'; }, 300);
-      }
-    }).catch(e => {
-       if(!cachedData) document.getElementById('loadingScreen').innerHTML = `<div class="text-center p-4"><i class="fas fa-wifi text-danger fs-1 mb-3"></i><h5 class="text-danger fw-bold">เชื่อมต่อล้มเหลว</h5><p>กรุณาตรวจสอบอินเทอร์เน็ตและรีเฟรชหน้าเว็บ</p></div>`;
-    });
+      renderSettingsData(s);
+      document.getElementById('loadingScreen').style.opacity = '0'; setTimeout(() => { document.getElementById('loadingScreen').style.none'; document.getElementById('appMain').style.display = 'block'; }, 300);
+    }).catch(e => { if(!cachedData) document.getElementById('loadingScreen').innerHTML = `<div class="text-center p-4"><h5 class="text-danger fw-bold">เชื่อมต่อล้มเหลว</h5><p>กรุณาตรวจสอบอินเทอร์เน็ต</p></div>`; });
   };
 
-  document.getElementById('runCategorySelect').onchange = function(e) { 
-    let c = e.target.value; let img = document.getElementById('shirtImg'); 
-    let src = (c.includes("VIP")||c.includes("พิเศษ")) ? shirtImages.vip : shirtImages.general;
-    if(src) { img.src = src; img.style.display = 'block'; } calculateTotal();
-  };
+  document.getElementById('runCategorySelect').onchange = function(e) { let c = e.target.value; let img = document.getElementById('shirtImg'); let src = (c.includes("VIP")||c.includes("พิเศษ")) ? shirtImages.vip : shirtImages.general; if(src) { img.src = src; img.style.display = 'block'; } calculateTotal(); };
 
-  // 🔥 Interactive Upload & Image Compression
-  document.getElementById('fileInp').onchange = function(e) {
-    const file = e.target.files[0];
-    const box = document.getElementById('uploadAreaBox');
-    const mainText = document.getElementById('uploadTextMain');
-    const subText = document.getElementById('uploadTextSub');
-    const icon = document.getElementById('uploadIcon');
-
-    if (!file) {
-      box.className = 'upload-area'; mainText.innerText = 'แตะที่นี่เพื่อเลือกรูปภาพสลิป'; subText.innerText = 'รองรับไฟล์ JPG, PNG'; icon.className = 'fas fa-cloud-upload-alt text-primary mb-2'; icon.style.color = 'var(--primary)';
-      document.getElementById('base64Inp').value = ""; return;
-    }
-
-    box.className = 'upload-area success';
-    mainText.innerText = 'ระบบกำลังเตรียมไฟล์รูป...';
-    mainText.className = 'fw-bold text-success mb-1';
-    icon.className = 'fas fa-spinner fa-spin text-success mb-2';
-    
-    document.getElementById('base64Inp').value = "";
-
-    const reader = new FileReader();
-    reader.onload = function(event) {
-      const img = new Image();
-      img.onload = function() {
-        try {
-          const MAX_WIDTH = 800; 
-          let width = img.width; let height = img.height;
-          if (width > MAX_WIDTH) { height = Math.round((height * MAX_WIDTH) / width); width = MAX_WIDTH; }
-
-          const canvas = document.createElement('canvas');
-          canvas.width = width; canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-
-          document.getElementById('base64Inp').value = canvas.toDataURL('image/jpeg', 0.7);
-          
-          mainText.innerText = 'เลือกไฟล์เรียบร้อยแล้ว';
-          subText.innerText = file.name;
-          icon.className = 'fas fa-check-circle text-success mb-2';
-        } catch (err) {
-          document.getElementById('base64Inp').value = event.target.result;
-          mainText.innerText = 'เลือกไฟล์เรียบร้อยแล้ว'; subText.innerText = file.name; icon.className = 'fas fa-check-circle text-success mb-2';
-        }
-      };
-      img.onerror = function() {
-        document.getElementById('base64Inp').value = event.target.result;
-        mainText.innerText = 'เลือกไฟล์เรียบร้อยแล้ว'; subText.innerText = file.name; icon.className = 'fas fa-check-circle text-success mb-2';
-      };
-      img.src = event.target.result;
-    };
-    reader.readAsDataURL(file);
-  };
+  document.getElementById('fileInp').onchange = function(e) { const file = e.target.files[0]; const box = document.getElementById('uploadAreaBox'); const mainText = document.getElementById('uploadTextMain'); const subText = document.getElementById('uploadTextSub'); const icon = document.getElementById('uploadIcon'); if (!file) { box.className = 'upload-area'; mainText.innerText = 'แตะเพื่อเลือกรูปสลิป'; subText.innerText = 'รองรับ JPG, PNG'; icon.className = 'fas fa-cloud-upload-alt text-primary mb-2 fs-1'; return; } box.className = 'upload-area success'; mainText.innerText = 'กำลังบีบอัดรูป...'; icon.className = 'fas fa-spinner fa-spin text-success mb-2 fs-1'; const reader = new FileReader(); reader.onload = function(event) { const img = new Image(); img.onload = function() { const canvas = document.createElement('canvas'); let w = img.width; let h = img.height; if(w > 800) { h = Math.round((h * 800) / w); w = 800; } canvas.width = w; canvas.height = h; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, w, h); document.getElementById('base64Inp').value = canvas.toDataURL('image/jpeg', 0.7); mainText.innerText = 'เลือกไฟล์แล้ว'; subText.innerText = file.name; icon.className = 'fas fa-check-circle text-success mb-2 fs-1'; }; img.src = event.target.result; }; reader.readAsDataURL(file); };
 
   function registerNextPerson() { runnerSessionCount++; sessionStorage.setItem('runnerSessionCount', runnerSessionCount); location.reload(); }
 
-  // ส่งข้อมูลที่ถูกปิดไว้ (แอบไว้เผื่อเปิดระบบ)
   function handleFormSubmit(e) {
-    e.preventDefault(); 
-    // ฟอร์มถูกปิดการแสดงผลแล้ว ถ้ามีการพยายามส่ง จะเด้งข้อความนี้
-    Swal.fire('ขออภัย', 'ระบบได้ทำการปิดรับสมัครเรียบร้อยแล้วครับ', 'error');
+    e.preventDefault();
+    let cache = JSON.parse(localStorage.getItem('phelaAppCacheData') || "{}");
+    if((cache['สถานะรับสมัคร']||'').trim() === 'ปิด') return Swal.fire('ขออภัย','ระบบปิดรับสมัครแล้ว','error');
+
+    const btn = document.getElementById('btnSub'); btn.disabled = true; btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> กำลังบันทึกข้อมูล...`;
+    let formObj = {}; new FormData(e.target).forEach((v,k) => formObj[k]=v);
+    formObj.dob = document.getElementById('dobDay').value + " " + document.getElementById('dobMonth').value + " " + document.getElementById('dobYear').value;
+    formObj.address = document.getElementById('a1').value + " ต." + document.getElementById('a2').value + " อ." + document.getElementById('a3').value + " จ." + document.getElementById('a4').value + " " + document.getElementById('a5').value;
+    
+    fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ action: "processForm", formObject: formObj }) }).then(r => r.json()).then(r => { if(r.status === 'SUCCESS') { document.getElementById('showOrderId').innerText = r.orderId; document.getElementById('regFormArea').style.display = 'none'; document.getElementById('successMsg').style.display = 'block'; window.scrollTo({ top: 0, behavior: 'smooth' }); } else { Swal.fire('เกิดข้อผิดพลาด', r.message, 'error'); btn.disabled = false; btn.innerText = 'ยืนยันการลงทะเบียน'; } }).catch(() => { Swal.fire('ข้อผิดพลาดเครือข่าย', 'กรุณาลองใหม่อีกครั้ง', 'error'); btn.disabled = false; btn.innerText = 'ยืนยันการลงทะเบียน'; });
   }
 
-  // ค้นหาสถานะ 
-  function doSearch() {
-    let p = document.getElementById('schPhone').value; if(!p) return;
-    let resBox = document.getElementById('searchResult');
-    resBox.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary" style="width: 3rem; height: 3rem;"></div><div class="mt-3 fw-bold text-muted">กำลังค้นหาข้อมูล...</div></div>';
-    
-    fetch(GAS_URL + "?action=checkStatus&phone=" + p).then(res => res.json()).then(res => {
-      if(res.length === 0) { 
-        resBox.innerHTML = `
-          <div class="text-center py-5 bg-white rounded-4 border shadow-sm">
-            <div style="width: 80px; height: 80px; background: #f1f5f9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
-              <i class="fas fa-folder-open text-muted" style="font-size: 2rem; opacity: 0.7;"></i>
-            </div>
-            <h5 class="fw-bold text-dark">ไม่พบประวัติการลงทะเบียน</h5>
-            <p class="text-muted small">กรุณาตรวจสอบเบอร์โทรศัพท์อีกครั้ง</p>
-          </div>`; 
-        return; 
-      }
-      
-      let h = `<div class="mb-3 text-muted small fw-bold"><i class="fas fa-check-circle text-success me-1"></i> พบข้อมูลทั้งหมด ${res.length} รายการ</div>`; 
-      
-      res.forEach(r => {
-        let isPaid = r.status === 'ชำระเงินแล้ว';
-        let bgClass = isPaid ? 'bg-success text-white' : 'bg-warning text-dark';
-        let iconClass = isPaid ? 'fa-check-circle' : 'fa-clock';
-        
-        h += `
-          <div class="result-card">
-            <div class="d-flex justify-content-between align-items-start mb-3">
-              <div>
-                <span class="text-muted small fw-bold text-uppercase tracking-wider">Reference Code</span>
-                <h3 class="fw-bold text-primary mb-0 mt-1" style="letter-spacing: 1px;">${r.orderId}</h3>
-              </div>
-              <span class="badge ${bgClass} px-3 py-2 rounded-pill shadow-sm fs-6"><i class="fas ${iconClass} me-1"></i> ${r.status}</span>
-            </div>
-            
-            <div class="border-top border-dashed pt-3 mt-3 d-flex align-items-center">
-              <div style="width: 45px; height: 45px; background: var(--primary-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
-                <i class="fas fa-running text-primary fs-5"></i>
-              </div>
-              <div>
-                <div class="fw-bold text-dark fs-5">${r.name}</div>
-                <div class="text-muted small fw-medium mt-1"><i class="fas fa-tag me-1"></i> ${r.category}</div>
-              </div>
-            </div>
-          </div>`;
-      });
-      resBox.innerHTML = h;
-    }).catch(err => {
-      resBox.innerHTML = '<div class="text-center text-danger py-5 bg-white rounded-4 border shadow-sm"><i class="fas fa-wifi fs-1 mb-3"></i><h5 class="fw-bold">เกิดข้อผิดพลาดในการเชื่อมต่อ</h5></div>';
-    });
-  }
+  function doSearch() { let p = document.getElementById('schPhone').value; if(!p) return; let resBox = document.getElementById('searchResult'); resBox.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary"></div></div>'; fetch(GAS_URL + "?action=checkStatus&phone=" + p).then(res => res.json()).then(res => { if(res.length === 0) return resBox.innerHTML = `<div class="text-center py-5 bg-white rounded-4 border"><h5 class="fw-bold text-dark">ไม่พบประวัติ</h5></div>`; let h = `<div class="mb-3 text-muted small fw-bold">พบ ${res.length} รายการ</div>`; res.forEach(r => { let isPaid = r.status === 'ชำระเงินแล้ว'; h += `<div class="result-card"><div class="d-flex justify-content-between align-items-start mb-2"><div><span class="text-muted small">Ref Code</span><h4 class="fw-bold text-primary mb-0">${r.orderId}</h4></div><span class="badge ${isPaid?'bg-success text-white':'bg-warning text-dark'} px-3 py-2 rounded-pill">${r.status}</span></div><hr><div class="fw-bold text-dark fs-5">${r.name}</div><div class="text-muted small">${r.category}</div></div>`; }); resBox.innerHTML = h; }); }
 </script>
 </body>
 </html>
