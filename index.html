@@ -72,7 +72,7 @@
 <div id="loadingScreen">
   <div class="spinner-border text-primary mb-4" style="width:3.5rem; height:3.5rem; border-width:0.25em;"></div>
   <h4 class="fw-bold text-dark mb-1">เตรียมพร้อมเข้าสู่ระบบ</h4>
-  <p class="text-muted small">กำลังตรวจสอบข้อมูล...</p>
+  <p class="text-muted small">กำลังตรวจสอบสถานะการเปิดรับสมัคร...</p>
 </div>
 
 <div id="fbBypassScreen" style="position: fixed; inset: 0; background: #f1f5f9; z-index: 10000; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center;">
@@ -123,7 +123,7 @@
         </div>
         <h3 class="fw-bold mb-2 text-dark">ปิดรับลงทะเบียน</h3>
         <p class="text-muted mb-4" style="line-height: 1.6;">ขณะนี้ระบบได้ทำการ <b>"ปิดรับสมัคร"</b> เรียบร้อยแล้ว<br>ขอขอบพระคุณทุกท่านที่ให้ความสนใจเข้าร่วมกิจกรรมครับ</p>
-        <button class="btn btn-primary w-100 fw-bold rounded-pill py-3" onclick="switchTab('track')"><i class="fas fa-search me-2"></i> ตรวจสอบสถานะและข้อมูล</button>
+        <button class="btn btn-primary w-100 fw-bold rounded-pill py-3 shadow-sm" onclick="switchTab('track')"><i class="fas fa-search me-2"></i> ตรวจสอบสถานะและข้อมูล</button>
       </div>
 
       <form id="regFormArea" onsubmit="handleFormSubmit(event)" style="display: none;">
@@ -202,9 +202,7 @@
 </div>
 
 <script>
-  // 🌟 สำคัญ: ลิงก์นี้คือสะพานเชื่อม API (URL ที่ได้จาก Google Apps Script)
   const GAS_URL = "https://script.google.com/macros/s/AKfycbwh68q2FlHQE2062tQLuNPMfUfCakFVTtMzk7SeMPZCvAS4iuPD2hQK3bkIyGORW421SQ/exec";
-  
   let shirtImages = { vip: "", general: "" }; let runnerSessionCount = parseInt(sessionStorage.getItem('runnerSessionCount')) || 1;
 
   function switchTab(tab) { ['info','reg','track'].forEach(t => document.getElementById('tab-'+t).style.display = 'none'); document.getElementById('tab-'+tab).style.display = 'block'; document.querySelectorAll('.nav-tab-item').forEach(el => el.classList.remove('active')); event.currentTarget.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -212,7 +210,7 @@
   function calculateTotal() { let cat = document.getElementById('runCategorySelect'); let recv = document.getElementById('receiveTypeSelect'); if (!cat.value) return; let match = cat.options[cat.selectedIndex].text.match(/(\d+)\s*บาท/); let base = match ? parseInt(match[1], 10) : 0; let ship = recv.value.includes("ไปรษณีย์") ? (runnerSessionCount === 1 ? 50 : 10) : 0; document.getElementById('paymentCalcArea').style.display = 'block'; document.getElementById('basePriceDisplay').innerText = base + " บาท"; let sRow = document.getElementById('shippingFeeRow'); if(ship > 0) { sRow.style.setProperty('display', 'flex', 'important'); document.getElementById('shippingFeeAmount').innerText = "+"+ship+" บาท"; } else { sRow.style.setProperty('display', 'none', 'important'); } document.getElementById('totalPriceDisplay').innerText = (base + ship) + " บาท"; }
 
   function copyAccount() { navigator.clipboard.writeText(document.getElementById('bankAccNumber').innerText.replace(/-/g, '').trim()).then(() => { let btn = document.getElementById('copyBtn'); btn.innerHTML = `<i class="fas fa-check text-white"></i> คัดลอกสำเร็จ!`; btn.className = 'btn-copy bg-success text-white shadow-sm'; setTimeout(() => { btn.innerHTML = `<i class="fas fa-copy"></i> คัดลอกเลขบัญชี`; btn.className = 'btn-copy'; }, 2000); }); }
-  function copyMyLink() { let temp = document.createElement("input"); temp.value = window.location.href; document.body.appendChild(temp); temp.select(); document.execCommand("copy"); document.body.removeChild(temp); Swal.fire({ title: 'คัดลอกลิงก์สำเร็จ', text: 'นำไปเปิดใน Safari หรือ Google Chrome ได้เลยครับ', icon: 'success' }); }
+  function copyMyLink() { let temp = document.createElement("input"); temp.value = window.location.href; document.body.appendChild(temp); temp.select(); document.execCommand("copy"); document.body.removeChild(temp); Swal.fire({ title: 'คัดลอกลิงก์สำเร็จ', text: 'นำไปวางใน Safari หรือ Google Chrome ได้เลยครับ', icon: 'success' }); }
 
   function renderSettingsData(s) {
     if(s['ชื่องาน']) document.getElementById('displayEventName').innerText = s['ชื่องาน'];
@@ -229,7 +227,6 @@
     
     document.getElementById('bankInfoArea').innerHTML = `<div class="bank-card"><div class="text-muted small fw-bold mb-1">ธนาคาร${s['ธนาคาร']||'-'}</div><div class="acc-number" id="bankAccNumber">${s['เลขบัญชี']||'-'}</div><button type="button" id="copyBtn" class="btn-copy mb-3" onclick="copyAccount()"><i class="fas fa-copy"></i> คัดลอกเลขบัญชี</button><div class="fw-bold text-primary mt-2 p-2 bg-primary bg-opacity-10 rounded-3">${s['ชื่อบัญชี']||'-'}</div></div>`;
 
-    // ซ่อนฟอร์มหากแอดมินกดปิดระบบ
     let masterRegStatus = s['สถานะรับสมัคร'] || 'เปิด';
     if(masterRegStatus.trim() === 'ปิด') {
       document.getElementById('closedMsgArea').style.display = 'block'; document.getElementById('regFormArea').style.display = 'none';
@@ -251,22 +248,24 @@
     fetch(GAS_URL + "?action=getSettings").then(res => res.json()).then(s => {
       localStorage.setItem('phelaAppCacheData', JSON.stringify(s));
       renderSettingsData(s);
-      document.getElementById('loadingScreen').style.opacity = '0'; setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; document.getElementById('appMain').style.display = 'block'; }, 300);
+      document.getElementById('loadingScreen').style.opacity = '0'; 
+      setTimeout(() => { 
+        document.getElementById('loadingScreen').style.display = 'none'; 
+        document.getElementById('appMain').style.display = 'block'; 
+      }, 300);
     }).catch(e => { if(!cachedData) document.getElementById('loadingScreen').innerHTML = `<div class="text-center p-4"><h5 class="text-danger fw-bold">เชื่อมต่อล้มเหลว</h5><p>กรุณาตรวจสอบอินเทอร์เน็ต</p></div>`; });
   };
 
   document.getElementById('runCategorySelect').onchange = function(e) { let c = e.target.value; let img = document.getElementById('shirtImg'); let src = (c.includes("VIP")||c.includes("พิเศษ")) ? shirtImages.vip : shirtImages.general; if(src) { img.src = src; img.style.display = 'block'; } calculateTotal(); };
 
-  // บีบอัดสลิปอัตโนมัติ
   document.getElementById('fileInp').onchange = function(e) { const file = e.target.files[0]; const box = document.getElementById('uploadAreaBox'); const mainText = document.getElementById('uploadTextMain'); const subText = document.getElementById('uploadTextSub'); const icon = document.getElementById('uploadIcon'); if (!file) { box.className = 'upload-area'; mainText.innerText = 'แตะเพื่อเลือกรูปสลิป'; subText.innerText = 'ระบบจะบีบอัดอัตโนมัติ'; icon.className = 'fas fa-cloud-upload-alt text-primary mb-2 fs-1'; return; } box.className = 'upload-area success'; mainText.innerText = 'กำลังบีบอัดรูป...'; icon.className = 'fas fa-spinner fa-spin text-success mb-2 fs-1'; const reader = new FileReader(); reader.onload = function(event) { const img = new Image(); img.onload = function() { const canvas = document.createElement('canvas'); let w = img.width; let h = img.height; if(w > 800) { h = Math.round((h * 800) / w); w = 800; } canvas.width = w; canvas.height = h; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, w, h); document.getElementById('base64Inp').value = canvas.toDataURL('image/jpeg', 0.7); mainText.innerText = 'เลือกไฟล์แล้ว'; subText.innerText = file.name; icon.className = 'fas fa-check-circle text-success mb-2 fs-1'; }; img.src = event.target.result; }; reader.readAsDataURL(file); };
 
   function registerNextPerson() { runnerSessionCount++; sessionStorage.setItem('runnerSessionCount', runnerSessionCount); location.reload(); }
 
-  // ส่งข้อมูล
   function handleFormSubmit(e) {
     e.preventDefault();
     let cache = JSON.parse(localStorage.getItem('phelaAppCacheData') || "{}");
-    if((cache['สถานะรับสมัคร']||'').trim() === 'ปิด') return Swal.fire('ขออภัย','ระบบปิดรับสมัครแล้ว','error');
+    if((cache['statusสมัคร']||cache['สถานะรับสมัคร']||'').trim() === 'ปิด') return Swal.fire('ขออภัย','ระบบปิดรับสมัครแล้ว','error');
 
     const btn = document.getElementById('btnSub'); btn.disabled = true; btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> กำลังบันทึกข้อมูล...`;
     let formObj = {}; new FormData(e.target).forEach((v,k) => formObj[k]=v);
@@ -276,7 +275,6 @@
     fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ action: "processForm", formObject: formObj }) }).then(r => r.json()).then(r => { if(r.status === 'SUCCESS') { document.getElementById('showOrderId').innerText = r.orderId; document.getElementById('regFormArea').style.display = 'none'; document.getElementById('successMsg').style.display = 'block'; window.scrollTo({ top: 0, behavior: 'smooth' }); } else { Swal.fire('เกิดข้อผิดพลาด', r.message, 'error'); btn.disabled = false; btn.innerText = 'ยืนยันการลงทะเบียน'; } }).catch(() => { Swal.fire('ข้อผิดพลาดเครือข่าย', 'กรุณาลองใหม่อีกครั้ง', 'error'); btn.disabled = false; btn.innerText = 'ยืนยันการลงทะเบียน'; });
   }
 
-  // ค้นหาสถานะ
   function doSearch() { let p = document.getElementById('schPhone').value; if(!p) return; let resBox = document.getElementById('searchResult'); resBox.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary"></div></div>'; fetch(GAS_URL + "?action=checkStatus&phone=" + p).then(res => res.json()).then(res => { if(res.length === 0) return resBox.innerHTML = `<div class="text-center py-5 bg-white rounded-4 border"><h5 class="fw-bold text-dark">ไม่พบประวัติ</h5></div>`; let h = `<div class="mb-3 text-muted small fw-bold">พบ ${res.length} รายการ</div>`; res.forEach(r => { let isPaid = r.status === 'ชำระเงินแล้ว'; h += `<div class="result-card"><div class="d-flex justify-content-between align-items-start mb-2"><div><span class="text-muted small">Ref Code</span><h4 class="fw-bold text-primary mb-0">${r.orderId}</h4></div><span class="badge ${isPaid?'bg-success text-white':'bg-warning text-dark'} px-3 py-2 rounded-pill">${r.status}</span></div><hr><div class="fw-bold text-dark fs-5">${r.name}</div><div class="text-muted small">${r.category}</div></div>`; }); resBox.innerHTML = h; }); }
 </script>
 </body>
