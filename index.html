@@ -72,14 +72,14 @@
 <div id="loadingScreen">
   <div class="spinner-border text-primary mb-4" style="width:3.5rem; height:3.5rem; border-width:0.25em;"></div>
   <h4 class="fw-bold text-dark mb-1">เตรียมพร้อมเข้าสู่ระบบ</h4>
-  <p class="text-muted small">กำลังตรวจสอบสถานะการเปิดรับสมัคร...</p>
+  <p class="text-muted small">กำลังตรวจสอบข้อมูล...</p>
 </div>
 
 <div id="fbBypassScreen" style="position: fixed; inset: 0; background: #f1f5f9; z-index: 10000; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center;">
     <div style="background: white; padding: 35px 25px; border-radius: var(--radius-lg); box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-width: 420px; width: 100%;">
         <i class="fas fa-exclamation-triangle text-warning mb-3" style="font-size: 3rem;"></i>
         <h4 class="fw-bold text-dark mb-3">โปรดอ่านก่อนใช้งาน</h4>
-        <p class="text-muted mb-4 small">ระบบของสมาร์ทโฟนบางรุ่นอาจมีปัญหาเมื่อเปิดผ่านแอปพลิเคชัน Social Media โดยตรง กรุณาเปิดผ่านเบราว์เซอร์ปกติครับ</p>
+        <p class="text-muted mb-4 small">แอปพลิเคชันที่คุณใช้อยู่ อาจไม่รองรับการแนบสลิปโอนเงิน กรุณากดปุ่มด้านล่างเพื่อคัดลอกลิงก์ไปเปิดใน <b>Safari</b> หรือ <b>Chrome</b> นะครับ</p>
         <button class="btn btn-primary w-100 py-3 fw-bold rounded-pill" onclick="copyMyLink()"><i class="fas fa-link me-2"></i> คัดลอกลิงก์เพื่อไปเปิดเอง</button>
     </div>
 </div>
@@ -106,8 +106,7 @@
     
     <div id="tab-info" class="fade-in">
       <h5 class="section-title"><span><i class="fas fa-map-marked-alt"></i></span> ข้อมูลการจัดกิจกรรม</h5>
-      <img id="detailImg" class="img-fluid-custom" loading="lazy">
-      <img id="routeImg" class="img-fluid-custom" loading="lazy">
+      <img id="detailImg" class="img-fluid-custom" loading="lazy"><img id="routeImg" class="img-fluid-custom" loading="lazy">
       <h5 class="section-title mt-5"><span><i class="fas fa-award"></i></span> รางวัลและของที่ระลึก</h5>
       <img id="trophyImg" class="img-fluid-custom" loading="lazy"><img id="medalImg" class="img-fluid-custom" loading="lazy">
       <h5 class="section-title mt-5"><span><i class="fas fa-camera-retro"></i></span> ภาพบรรยากาศกิจกรรม</h5>
@@ -124,7 +123,7 @@
         </div>
         <h3 class="fw-bold mb-2 text-dark">ปิดรับลงทะเบียน</h3>
         <p class="text-muted mb-4" style="line-height: 1.6;">ขณะนี้ระบบได้ทำการ <b>"ปิดรับสมัคร"</b> เรียบร้อยแล้ว<br>ขอขอบพระคุณทุกท่านที่ให้ความสนใจเข้าร่วมกิจกรรมครับ</p>
-        <button class="btn btn-primary w-100 fw-bold rounded-pill py-3 shadow-sm" onclick="switchTab('track')"><i class="fas fa-search me-2"></i> ตรวจสอบสถานะและข้อมูล</button>
+        <button class="btn btn-primary w-100 fw-bold rounded-pill py-3" onclick="switchTab('track')"><i class="fas fa-search me-2"></i> ตรวจสอบสถานะและข้อมูล</button>
       </div>
 
       <form id="regFormArea" onsubmit="handleFormSubmit(event)" style="display: none;">
@@ -145,7 +144,7 @@
           <div class="row g-2">
             <div class="col-4"><select class="form-select text-center px-1" id="dobDay" required><option value="" disabled selected>วัน</option></select></div>
             <div class="col-4"><select class="form-select text-center px-1" id="dobMonth" required><option value="" disabled selected>เดือน</option><option value="ม.ค.">ม.ค.</option><option value="ก.พ.">ก.พ.</option><option value="มี.ค.">มี.ค.</option><option value="เม.ย.">เม.ย.</option><option value="พ.ค.">พ.ค.</option><option value="มิ.ย.">มิ.ย.</option><option value="ก.ค.">ก.ค.</option><option value="ส.ค.">ส.ค.</option><option value="ก.ย.">ก.ย.</option><option value="ต.ค.">ต.ค.</option><option value="พ.ย.">พ.ย.</option><option value="ธ.ค.">ธ.ค.</option></select></div>
-            <div class="col-4"><select class="form-select text-center px-1" id="dobYear" required><option value="" disabled selected>ปี พ.ศ.</option></select></div>
+            <div class="col-4"><select class="form-select text-center px-1" id="dobYear" required><option value="" disabled selected>ปี</option></select></div>
           </div>
           <input type="hidden" name="dob" id="fullDob">
         </div>
@@ -153,41 +152,41 @@
         <div class="mb-4"><label class="form-label required">โรคประจำตัว</label><input type="text" class="form-control" name="disease" placeholder="หากไม่มีให้ระบุ (-)" required></div>
 
         <div class="address-box mb-4">
-          <label class="form-label required text-primary mb-3"><i class="fas fa-home me-2"></i>ที่อยู่สำหรับจัดส่งเสื้อ</label>
+          <label class="form-label required text-primary mb-3"><i class="fas fa-home me-2"></i>ที่อยู่สำหรับจัดส่ง</label>
           <input type="text" id="a1" class="form-control mb-3" placeholder="บ้านเลขที่, หมู่, ซอย, ถนน" required>
           <div class="row g-3"><div class="col-6"><input type="text" id="a2" class="form-control" placeholder="ตำบล/แขวง" required></div><div class="col-6"><input type="text" id="a3" class="form-control" placeholder="อำเภอ/เขต" required></div><div class="col-6"><input type="text" id="a4" class="form-control" placeholder="จังหวัด" required></div><div class="col-6"><input type="text" id="a5" class="form-control" placeholder="รหัสไปรษณีย์" required></div></div>
           <input type="hidden" name="address" id="fullAddr">
         </div>
 
         <div class="row g-3 mb-5">
-          <div class="col-md-6"><label class="form-label required">เบอร์โทรศัพท์มือถือ</label><input type="tel" class="form-control" name="phone" pattern="[0-9]{10}" placeholder="08xxxxxxxx" required></div>
+          <div class="col-md-6"><label class="form-label required">เบอร์โทรศัพท์</label><input type="tel" class="form-control" name="phone" pattern="[0-9]{10}" placeholder="08xxxxxxxx" required></div>
           <div class="col-md-6"><label class="form-label required">ผู้ติดต่อฉุกเฉิน</label><input type="text" class="form-control" name="emergencyContact" placeholder="ชื่อและเบอร์โทรศัพท์" required></div>
         </div>
 
-        <h5 class="section-title"><span>2</span> ประเภทและของที่ระลึก</h5>
+        <h5 class="section-title"><span>2</span> ประเภทการแข่งขัน</h5>
         <div class="text-center mb-4"><img id="shirtImg" style="width: 100%; max-width: 320px; border-radius: 16px; display: none; margin: 0 auto;" loading="lazy"></div>
         
         <div class="row g-3 mb-4">
-          <div class="col-md-6"><label class="form-label required">ประเภทการแข่งขัน</label><select class="form-select fw-bold text-primary" name="runCategory" id="runCategorySelect" required onchange="calculateTotal()"><option value="" selected disabled>เลือก</option></select></div>
-          <div class="col-md-6"><label class="form-label required">รุ่นอายุการแข่งขัน</label><select class="form-select fw-bold text-primary" name="ageGroup" required><option value="" selected disabled>เลือก</option></select></div>
+          <div class="col-md-6"><label class="form-label required">ประเภท</label><select class="form-select fw-bold text-primary" name="runCategory" id="runCategorySelect" required onchange="calculateTotal()"><option value="" selected disabled>เลือก</option></select></div>
+          <div class="col-md-6"><label class="form-label required">รุ่นอายุ</label><select class="form-select fw-bold text-primary" name="ageGroup" required><option value="" selected disabled>เลือก</option></select></div>
         </div>
 
         <div class="row g-3 mb-5">
           <div class="col-md-6"><label class="form-label required">ไซส์เสื้อ (รอบอก)</label><select class="form-select fw-bold text-primary" name="shirtSize" id="shirtSizeSelect" required><option value="" selected disabled>เลือก</option></select></div>
-          <div class="col-md-6"><label class="form-label required">ช่องทางการรับเสื้อ</label><select class="form-select fw-bold text-primary" name="receiveType" id="receiveTypeSelect" required onchange="calculateTotal()"><option value="" selected disabled>เลือก</option><option value="รับเสื้อวันที่ 26 มิถุนายน 2569 เวลา 09.00-17.00 น. ณ อบต.เพหลา">รับเสื้อ 26 มิ.ย. 69 ณ อบต.เพหลา</option><option value="จัดส่งทางไปรษณีย์">จัดส่งทางไปรษณีย์ถึงบ้าน</option></select></div>
+          <div class="col-md-6"><label class="form-label required">ช่องทางการรับเสื้อ</label><select class="form-select fw-bold text-primary" name="receiveType" id="receiveTypeSelect" required onchange="calculateTotal()"><option value="" selected disabled>เลือก</option><option value="รับเสื้อวันที่ 26 มิถุนายน 2569 เวลา 09.00-17.00 น. ณ อบต.เพหลา">รับเสื้อ 26 มิ.ย. 69 ณ อบต.เพหลา</option><option value="จัดส่งทางไปรษณีย์">จัดส่งทางไปรษณีย์</option></select></div>
         </div>
 
-        <h5 class="section-title"><span>3</span> สรุปยอดและชำระเงิน</h5>
-        <div id="paymentCalcArea" class="checkout-box mb-4" style="display: none;"><div class="checkout-row"><span>ค่าสมัคร</span><span id="basePriceDisplay" class="fw-bold text-dark">0 บาท</span></div><div class="checkout-row" id="shippingFeeRow" style="display: none !important;"><span>ค่าจัดส่งพัสดุ</span><span id="shippingFeeAmount" class="fw-bold text-dark">+0 บาท</span></div><div class="checkout-total"><span>ยอดโอนสุทธิ</span><span id="totalPriceDisplay">0 บาท</span></div></div>
+        <h5 class="section-title"><span>3</span> การชำระเงิน</h5>
+        <div id="paymentCalcArea" class="checkout-box mb-4" style="display: none;"><div class="checkout-row"><span>ค่าสมัคร</span><span id="basePriceDisplay" class="fw-bold text-dark">0 บาท</span></div><div class="checkout-row" id="shippingFeeRow" style="display: none !important;"><span>ค่าจัดส่ง</span><span id="shippingFeeAmount" class="fw-bold text-dark">+0 บาท</span></div><div class="checkout-total"><span>ยอดโอนสุทธิ</span><span id="totalPriceDisplay">0 บาท</span></div></div>
         <div id="bankInfoArea" class="mb-4"></div>
         
         <div class="mb-5">
           <label class="form-label required text-primary">แนบสลิปโอนเงิน</label>
-          <div class="upload-area" id="uploadAreaBox"><i class="fas fa-cloud-upload-alt text-primary mb-2 fs-1" id="uploadIcon"></i><div class="fw-bold text-dark mb-1" id="uploadTextMain">แตะเพื่อเลือกรูปสลิป</div><div class="small text-muted" id="uploadTextSub">รองรับ JPG, PNG</div><input type="file" id="fileInp" accept="image/*" required><input type="hidden" name="slipFile" id="base64Inp"></div>
+          <div class="upload-area" id="uploadAreaBox"><i class="fas fa-cloud-upload-alt text-primary mb-2 fs-1" id="uploadIcon"></i><div class="fw-bold text-dark mb-1" id="uploadTextMain">แตะเพื่อเลือกรูปสลิป</div><div class="small text-muted" id="uploadTextSub">ระบบจะบีบอัดอัตโนมัติ</div><input type="file" id="fileInp" accept="image/*" required><input type="hidden" name="slipFile" id="base64Inp"></div>
         </div>
 
         <div class="form-check mb-5 d-flex align-items-center bg-white p-3 border rounded-3 shadow-sm"><input class="form-check-input mt-0 me-3" type="checkbox" id="checkAgree" required style="width: 22px; height: 22px; cursor: pointer;"><label class="form-check-label text-muted small" style="cursor: pointer;" for="checkAgree">รับรองว่าข้อมูลถูกต้องครบถ้วน และยอมรับเงื่อนไขการแข่งขัน</label></div>
-        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold" id="btnSub">ยืนยันการลงทะเบียน</button>
+        <button type="submit" class="btn btn-primary py-3 fw-bold" id="btnSub">ยืนยันการลงทะเบียน</button>
       </form>
 
       <div id="successMsg" class="text-center py-5" style="display:none;"><div style="width: 90px; height: 90px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;"><i class="fas fa-check text-success fs-1"></i></div><h3 class="fw-bold mb-2 text-dark">ลงทะเบียนสำเร็จ!</h3><p class="text-muted mb-4 small">ระบบได้รับข้อมูลและสลิปของท่านแล้ว</p><div class="p-4 bg-white rounded-4 mb-4 border"><span class="text-muted small d-block mb-1 fw-bold">รหัสอ้างอิง</span><h1 class="fw-bold text-primary mb-0 font-monospace" id="showOrderId"></h1></div><button class="btn btn-outline-primary w-100 mb-3 fw-bold rounded-4 py-3" onclick="switchTab('track')">ตรวจสอบสถานะ</button><button class="btn btn-light border w-100 fw-bold rounded-4 py-3 text-muted" onclick="registerNextPerson()">ลงทะเบียนเพิ่มให้คนอื่น</button></div>
@@ -203,7 +202,9 @@
 </div>
 
 <script>
+  // 🌟 สำคัญ: ลิงก์นี้คือสะพานเชื่อม API (URL ที่ได้จาก Google Apps Script)
   const GAS_URL = "https://script.google.com/macros/s/AKfycbwh68q2FlHQE2062tQLuNPMfUfCakFVTtMzk7SeMPZCvAS4iuPD2hQK3bkIyGORW421SQ/exec";
+  
   let shirtImages = { vip: "", general: "" }; let runnerSessionCount = parseInt(sessionStorage.getItem('runnerSessionCount')) || 1;
 
   function switchTab(tab) { ['info','reg','track'].forEach(t => document.getElementById('tab-'+t).style.display = 'none'); document.getElementById('tab-'+tab).style.display = 'block'; document.querySelectorAll('.nav-tab-item').forEach(el => el.classList.remove('active')); event.currentTarget.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -211,7 +212,7 @@
   function calculateTotal() { let cat = document.getElementById('runCategorySelect'); let recv = document.getElementById('receiveTypeSelect'); if (!cat.value) return; let match = cat.options[cat.selectedIndex].text.match(/(\d+)\s*บาท/); let base = match ? parseInt(match[1], 10) : 0; let ship = recv.value.includes("ไปรษณีย์") ? (runnerSessionCount === 1 ? 50 : 10) : 0; document.getElementById('paymentCalcArea').style.display = 'block'; document.getElementById('basePriceDisplay').innerText = base + " บาท"; let sRow = document.getElementById('shippingFeeRow'); if(ship > 0) { sRow.style.setProperty('display', 'flex', 'important'); document.getElementById('shippingFeeAmount').innerText = "+"+ship+" บาท"; } else { sRow.style.setProperty('display', 'none', 'important'); } document.getElementById('totalPriceDisplay').innerText = (base + ship) + " บาท"; }
 
   function copyAccount() { navigator.clipboard.writeText(document.getElementById('bankAccNumber').innerText.replace(/-/g, '').trim()).then(() => { let btn = document.getElementById('copyBtn'); btn.innerHTML = `<i class="fas fa-check text-white"></i> คัดลอกสำเร็จ!`; btn.className = 'btn-copy bg-success text-white shadow-sm'; setTimeout(() => { btn.innerHTML = `<i class="fas fa-copy"></i> คัดลอกเลขบัญชี`; btn.className = 'btn-copy'; }, 2000); }); }
-  function copyMyLink() { let temp = document.createElement("input"); temp.value = window.location.href; document.body.appendChild(temp); temp.select(); document.execCommand("copy"); document.body.removeChild(temp); Swal.fire({ title: 'คัดลอกลิงก์สำเร็จ', text: 'นำไปวางใน Safari หรือ Google Chrome ได้เลยครับ', icon: 'success' }); }
+  function copyMyLink() { let temp = document.createElement("input"); temp.value = window.location.href; document.body.appendChild(temp); temp.select(); document.execCommand("copy"); document.body.removeChild(temp); Swal.fire({ title: 'คัดลอกลิงก์สำเร็จ', text: 'นำไปเปิดใน Safari หรือ Google Chrome ได้เลยครับ', icon: 'success' }); }
 
   function renderSettingsData(s) {
     if(s['ชื่องาน']) document.getElementById('displayEventName').innerText = s['ชื่องาน'];
@@ -228,6 +229,7 @@
     
     document.getElementById('bankInfoArea').innerHTML = `<div class="bank-card"><div class="text-muted small fw-bold mb-1">ธนาคาร${s['ธนาคาร']||'-'}</div><div class="acc-number" id="bankAccNumber">${s['เลขบัญชี']||'-'}</div><button type="button" id="copyBtn" class="btn-copy mb-3" onclick="copyAccount()"><i class="fas fa-copy"></i> คัดลอกเลขบัญชี</button><div class="fw-bold text-primary mt-2 p-2 bg-primary bg-opacity-10 rounded-3">${s['ชื่อบัญชี']||'-'}</div></div>`;
 
+    // ซ่อนฟอร์มหากแอดมินกดปิดระบบ
     let masterRegStatus = s['สถานะรับสมัคร'] || 'เปิด';
     if(masterRegStatus.trim() === 'ปิด') {
       document.getElementById('closedMsgArea').style.display = 'block'; document.getElementById('regFormArea').style.display = 'none';
@@ -249,16 +251,18 @@
     fetch(GAS_URL + "?action=getSettings").then(res => res.json()).then(s => {
       localStorage.setItem('phelaAppCacheData', JSON.stringify(s));
       renderSettingsData(s);
-      document.getElementById('loadingScreen').style.opacity = '0'; setTimeout(() => { document.getElementById('loadingScreen').style.none'; document.getElementById('appMain').style.display = 'block'; }, 300);
+      document.getElementById('loadingScreen').style.opacity = '0'; setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; document.getElementById('appMain').style.display = 'block'; }, 300);
     }).catch(e => { if(!cachedData) document.getElementById('loadingScreen').innerHTML = `<div class="text-center p-4"><h5 class="text-danger fw-bold">เชื่อมต่อล้มเหลว</h5><p>กรุณาตรวจสอบอินเทอร์เน็ต</p></div>`; });
   };
 
   document.getElementById('runCategorySelect').onchange = function(e) { let c = e.target.value; let img = document.getElementById('shirtImg'); let src = (c.includes("VIP")||c.includes("พิเศษ")) ? shirtImages.vip : shirtImages.general; if(src) { img.src = src; img.style.display = 'block'; } calculateTotal(); };
 
-  document.getElementById('fileInp').onchange = function(e) { const file = e.target.files[0]; const box = document.getElementById('uploadAreaBox'); const mainText = document.getElementById('uploadTextMain'); const subText = document.getElementById('uploadTextSub'); const icon = document.getElementById('uploadIcon'); if (!file) { box.className = 'upload-area'; mainText.innerText = 'แตะเพื่อเลือกรูปสลิป'; subText.innerText = 'รองรับ JPG, PNG'; icon.className = 'fas fa-cloud-upload-alt text-primary mb-2 fs-1'; return; } box.className = 'upload-area success'; mainText.innerText = 'กำลังบีบอัดรูป...'; icon.className = 'fas fa-spinner fa-spin text-success mb-2 fs-1'; const reader = new FileReader(); reader.onload = function(event) { const img = new Image(); img.onload = function() { const canvas = document.createElement('canvas'); let w = img.width; let h = img.height; if(w > 800) { h = Math.round((h * 800) / w); w = 800; } canvas.width = w; canvas.height = h; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, w, h); document.getElementById('base64Inp').value = canvas.toDataURL('image/jpeg', 0.7); mainText.innerText = 'เลือกไฟล์แล้ว'; subText.innerText = file.name; icon.className = 'fas fa-check-circle text-success mb-2 fs-1'; }; img.src = event.target.result; }; reader.readAsDataURL(file); };
+  // บีบอัดสลิปอัตโนมัติ
+  document.getElementById('fileInp').onchange = function(e) { const file = e.target.files[0]; const box = document.getElementById('uploadAreaBox'); const mainText = document.getElementById('uploadTextMain'); const subText = document.getElementById('uploadTextSub'); const icon = document.getElementById('uploadIcon'); if (!file) { box.className = 'upload-area'; mainText.innerText = 'แตะเพื่อเลือกรูปสลิป'; subText.innerText = 'ระบบจะบีบอัดอัตโนมัติ'; icon.className = 'fas fa-cloud-upload-alt text-primary mb-2 fs-1'; return; } box.className = 'upload-area success'; mainText.innerText = 'กำลังบีบอัดรูป...'; icon.className = 'fas fa-spinner fa-spin text-success mb-2 fs-1'; const reader = new FileReader(); reader.onload = function(event) { const img = new Image(); img.onload = function() { const canvas = document.createElement('canvas'); let w = img.width; let h = img.height; if(w > 800) { h = Math.round((h * 800) / w); w = 800; } canvas.width = w; canvas.height = h; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, w, h); document.getElementById('base64Inp').value = canvas.toDataURL('image/jpeg', 0.7); mainText.innerText = 'เลือกไฟล์แล้ว'; subText.innerText = file.name; icon.className = 'fas fa-check-circle text-success mb-2 fs-1'; }; img.src = event.target.result; }; reader.readAsDataURL(file); };
 
   function registerNextPerson() { runnerSessionCount++; sessionStorage.setItem('runnerSessionCount', runnerSessionCount); location.reload(); }
 
+  // ส่งข้อมูล
   function handleFormSubmit(e) {
     e.preventDefault();
     let cache = JSON.parse(localStorage.getItem('phelaAppCacheData') || "{}");
@@ -272,6 +276,7 @@
     fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ action: "processForm", formObject: formObj }) }).then(r => r.json()).then(r => { if(r.status === 'SUCCESS') { document.getElementById('showOrderId').innerText = r.orderId; document.getElementById('regFormArea').style.display = 'none'; document.getElementById('successMsg').style.display = 'block'; window.scrollTo({ top: 0, behavior: 'smooth' }); } else { Swal.fire('เกิดข้อผิดพลาด', r.message, 'error'); btn.disabled = false; btn.innerText = 'ยืนยันการลงทะเบียน'; } }).catch(() => { Swal.fire('ข้อผิดพลาดเครือข่าย', 'กรุณาลองใหม่อีกครั้ง', 'error'); btn.disabled = false; btn.innerText = 'ยืนยันการลงทะเบียน'; });
   }
 
+  // ค้นหาสถานะ
   function doSearch() { let p = document.getElementById('schPhone').value; if(!p) return; let resBox = document.getElementById('searchResult'); resBox.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary"></div></div>'; fetch(GAS_URL + "?action=checkStatus&phone=" + p).then(res => res.json()).then(res => { if(res.length === 0) return resBox.innerHTML = `<div class="text-center py-5 bg-white rounded-4 border"><h5 class="fw-bold text-dark">ไม่พบประวัติ</h5></div>`; let h = `<div class="mb-3 text-muted small fw-bold">พบ ${res.length} รายการ</div>`; res.forEach(r => { let isPaid = r.status === 'ชำระเงินแล้ว'; h += `<div class="result-card"><div class="d-flex justify-content-between align-items-start mb-2"><div><span class="text-muted small">Ref Code</span><h4 class="fw-bold text-primary mb-0">${r.orderId}</h4></div><span class="badge ${isPaid?'bg-success text-white':'bg-warning text-dark'} px-3 py-2 rounded-pill">${r.status}</span></div><hr><div class="fw-bold text-dark fs-5">${r.name}</div><div class="text-muted small">${r.category}</div></div>`; }); resBox.innerHTML = h; }); }
 </script>
 </body>
