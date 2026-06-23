@@ -125,7 +125,7 @@
 
   function switchTab(tab) { ['info','reg','track'].forEach(t => document.getElementById('tab-'+t).style.display = 'none'); document.getElementById('tab-'+tab).style.display = 'block'; document.querySelectorAll('.nav-tab-item').forEach(el => el.classList.remove('active')); event.currentTarget.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
   function copyAccount() { navigator.clipboard.writeText(document.getElementById('bankAccNumber').innerText.replace(/-/g, '').trim()).then(() => { alert('คัดลอกเลขบัญชีสำเร็จ!'); }); }
-  function copyMyLink() { let temp = document.createElement("input"); temp.value = window.location.href; document.body.appendChild(temp); temp.select(); document.execCommand("copy"); document.body.removeChild(temp); alert('คัดลอกลิงก์สำเร็จ นำไปวางใน Safari หรือ Google Chrome ได้เลยครับ'); }
+  function copyMyLink() { let temp = document.createElement("input"); temp.value = window.location.href; document.body.appendChild(temp); temp.select(); document.execCommand("copy"); document.body.removeChild(temp); alert('คัดลอกลิงก์สำเร็จ นำไปเปิดใน Safari หรือ Google Chrome ได้เลยครับ'); }
 
   function renderSettingsData(s) {
     if(s['ชื่องาน']) document.getElementById('displayEventName').innerText = s['ชื่องาน'];
