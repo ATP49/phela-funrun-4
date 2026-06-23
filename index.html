@@ -39,14 +39,6 @@
     .section-title { font-weight: 700; color: var(--text-main); font-size: 1.25rem; margin: 40px 0 20px 0; display: flex; align-items: center; gap: 12px; }
     .section-title span { background: var(--primary-light); color: var(--primary); width: 34px; height: 34px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; }
 
-    .form-label { font-weight: 600; font-size: 0.9rem; color: #334155; margin-bottom: 8px; margin-left: 4px; }
-    .required::after { content: " *"; color: #ef4444; }
-    .form-control, .form-select { border: 2px solid transparent; background-color: #f8fafc; border-radius: 14px; padding: 15px 18px; font-size: 0.95rem; color: var(--text-main); box-shadow: none !important; }
-    .form-control:focus, .form-select:focus { border-color: var(--primary); background-color: var(--surface); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1) !important; }
-
-    .address-box { background: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 24px; }
-    .address-box .form-control { background-color: var(--surface); border: 1px solid var(--border); }
-    
     .checkout-box { background: var(--primary-light); border-radius: var(--radius-md); padding: 24px; border: 1px dashed rgba(37, 99, 235, 0.2); }
     .checkout-row { display: flex; justify-content: space-between; margin-bottom: 12px; color: #475569; font-size: 0.95rem; }
     .checkout-total { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(37, 99, 235, 0.15); font-weight: 700; color: var(--primary); font-size: 1.4rem; }
@@ -54,13 +46,6 @@
     .bank-card { background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border-radius: var(--radius-md); padding: 25px; border: 1px solid var(--border); text-align: center; margin-bottom: 30px; position: relative; overflow: hidden; }
     .bank-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--primary); }
     .acc-number { font-size: 1.8rem; font-weight: 700; color: var(--text-main); letter-spacing: 2px; margin: 15px 0; font-family: monospace; }
-
-    .upload-area { border: 2px dashed #cbd5e1; background: #f8fafc; border-radius: 14px; padding: 20px; text-align: center; transition: 0.3s; position: relative; cursor: pointer; }
-    .upload-area.success { border-color: #10b981; background: #dcfce7; }
-    .upload-area input[type="file"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10; }
-    
-    .btn-primary { background: var(--primary); border: none; border-radius: 14px; padding: 18px; font-weight: 700; font-size: 1.1rem; color: white; transition: 0.3s; width: 100%; }
-    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
     .btn-copy { background: #e2e8f0; border: none; border-radius: 10px; padding: 8px 16px; color: #475569; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
     .result-card { background: var(--surface); border-radius: var(--radius-md); padding: 24px; border: 1px solid var(--border); margin-bottom: 20px; }
 
@@ -98,7 +83,7 @@
     <div class="nav-tabs-custom">
       <div class="nav-tab-item active" onclick="switchTab('info')"><i class="fas fa-info-circle"></i> รายละเอียด</div>
       <div class="nav-tab-item" onclick="switchTab('reg')"><i class="fas fa-pen-nib"></i> สมัครวิ่ง</div>
-      <div class="nav-tab-item" onclick="switchTab('track')"><i class="fas fa-search"></i> ตวยสอบสถานะ</div>
+      <div class="nav-tab-item" onclick="switchTab('track')"><i class="fas fa-search"></i> ตรวจสอบสถานะ</div>
     </div>
   </div>
 
@@ -140,7 +125,7 @@
 
   function switchTab(tab) { ['info','reg','track'].forEach(t => document.getElementById('tab-'+t).style.display = 'none'); document.getElementById('tab-'+tab).style.display = 'block'; document.querySelectorAll('.nav-tab-item').forEach(el => el.classList.remove('active')); event.currentTarget.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
   function copyAccount() { navigator.clipboard.writeText(document.getElementById('bankAccNumber').innerText.replace(/-/g, '').trim()).then(() => { alert('คัดลอกเลขบัญชีสำเร็จ!'); }); }
-  function copyMyLink() { let temp = document.createElement("input"); temp.value = window.location.href; document.body.appendChild(temp); temp.select(); document.execCommand("copy"); document.body.removeChild(temp); alert('คัดลอกลิงก์สำเร็จ นำไปเปิดใน Safari หรือ Google Chrome ได้เลยครับ'); }
+  function copyMyLink() { let temp = document.createElement("input"); temp.value = window.location.href; document.body.appendChild(temp); temp.select(); document.execCommand("copy"); document.body.removeChild(temp); alert('คัดลอกลิงก์สำเร็จ นำไปวางใน Safari หรือ Google Chrome ได้เลยครับ'); }
 
   function renderSettingsData(s) {
     if(s['ชื่องาน']) document.getElementById('displayEventName').innerText = s['ชื่องาน'];
